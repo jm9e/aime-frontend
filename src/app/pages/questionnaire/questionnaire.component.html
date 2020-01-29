@@ -1,1 +1,140 @@
-<p>questionnaire works!</p>
+<div class="steps">
+
+  <div class="step-item" [ngClass]="{'is-active': stepComplete(1)}" (click)="goToStep(1)">
+    <div class="step-marker">1</div>
+    <div class="step-details">
+      <p class="step-title" [ngClass]="{'is-selected': step === 1}">Metadata</p>
+    </div>
+  </div>
+  <div class="step-item" [ngClass]="{'is-active': stepComplete(2)}" (click)="goToStep(2)">
+    <div class="step-marker">2</div>
+    <div class="step-details">
+      <p class="step-title" [ngClass]="{'is-selected': step === 2}">Purpose</p>
+    </div>
+  </div>
+  <div class="step-item" [ngClass]="{'is-active': stepComplete(3)}" (click)="goToStep(3)">
+    <div class="step-marker">3</div>
+    <div class="step-details">
+      <p class="step-title" [ngClass]="{'is-selected': step === 3}">Data</p>
+    </div>
+  </div>
+  <div class="step-item" [ngClass]="{'is-active': stepComplete(4)}" (click)="goToStep(4)">
+    <div class="step-marker">4</div>
+    <div class="step-details">
+      <p class="step-title" [ngClass]="{'is-selected': step === 4}">Method</p>
+    </div>
+  </div>
+  <div class="step-item" [ngClass]="{'is-active': stepComplete(5)}" (click)="goToStep(5)">
+    <div class="step-marker">5</div>
+    <div class="step-details">
+      <p class="step-title" [ngClass]="{'is-selected': step === 5}">Reproducibility</p>
+    </div>
+  </div>
+
+  <div class="steps-content">
+
+    <div class="step-content has-text-centered" [ngClass]="{'is-active': step === 1}">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">MD.1</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
+            </div>
+            <p class="help has-text-left">Title of the AI</p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">MD.2</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <textarea class="input" name="description" placeholder="Description"
+                        [(ngModel)]="questionnaire.description"></textarea>
+            </div>
+            <p class="help has-text-left">Short description of the AI</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-content has-text-centered" [ngClass]="{'is-active': step === 2}">
+
+    </div>
+
+    <div class="step-content has-text-centered" [ngClass]="{'is-active': step === 3}">
+      <div *ngFor="let dataset of questionnaire.datasets; let i = index;">
+        <h2 class="title is-4">Dataset #{{i + 1}}</h2>
+        <div class="has-text-right">
+          <button class="button is-danger is-small" (click)="removeDataset(i)">
+            Remove
+          </button>
+        </div>
+        <br>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">D.3</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" name="title" type="text" placeholder="Real or synthetic?" [(ngModel)]="dataset.synthetic">
+              </div>
+              <p class="help has-text-left">Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?</p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">D.4</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <textarea class="input" name="description" placeholder="Availability" [(ngModel)]="dataset.availability"></textarea>
+              </div>
+              <p class="help has-text-left">Is the data publicly available? If so, where?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button data-nav="next" class="button is-light" (click)="addDataset()">
+          Add dataset
+        </button>
+      </div>
+    </div>
+
+    <div class="steps-content" *ngIf="step === 4">
+
+    </div>
+
+    <div class="steps-content" *ngIf="step === 5">
+
+    </div>
+  </div>
+
+  <div class="steps-actions">
+    <div class="steps-action">
+      <button data-nav="previous" class="button is-light" (click)="step = step - 1" *ngIf="step > 1">Previous</button>
+    </div>
+    <div class="steps-action">
+      <button data-nav="next" class="button is-light" (click)="step = step + 1" *ngIf="step < 5"
+              [disabled]="!stepComplete(step)">Next
+      </button>
+      <button data-nav="next" class="button is-light" (click)="submitQuestionnaire()" *ngIf="step == 5"
+              [disabled]="!completeUntil(5)">Submit
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div>
+  {{representation()}}
+</div>
