@@ -1,5 +1,5 @@
 export interface IDataset {
-  clinical: boolean; // D.1
+  clinical: string; // D.1
   type: string; // D.2
   synthetic: string; // D.3
   availability: string; // D.4
