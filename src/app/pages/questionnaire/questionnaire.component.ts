@@ -98,7 +98,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   public representation() {
-    return JSON.stringify(this.questionnaire);
+    return JSON.stringify(this.questionnaire, null, 2);
   }
 
   public async submitQuestionnaire() {
