@@ -49,8 +49,8 @@ export class QuestionnaireComponent implements OnInit {
     validation: '',
   };
   public submitted = false;
-  public id = 'afdsf4';
-  public password = 'fdafdsf';
+  public id = '';
+  public password = '';
 
   constructor(private http: HttpClient) {
   }
