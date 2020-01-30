@@ -1,4 +1,4 @@
-<div class="steps">
+<div class="steps" *ngIf="!submitted">
 
   <div class="step-item" [ngClass]="{'is-active': stepComplete(1)}" (click)="goToStep(1)">
     <div class="step-marker">1</div>
@@ -33,31 +33,40 @@
 
   <div class="steps-content">
 
-    <div class="step-content has-text-centered" [ngClass]="{'is-active': step === 1}">
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">MD.1</label>
+    <div class="step-content card" [ngClass]="{'is-active': step === 1}">
+      <header class="card-header">
+        <div class="card-header-title">
+          <h2 class="title is-4">
+            Metadata
+          </h2>
         </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
+      </header>
+      <div class="card-content">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">MD.1</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
+              </div>
+              <p class="help has-text-left">Title of the AI</p>
             </div>
-            <p class="help has-text-left">Title of the AI</p>
           </div>
         </div>
-      </div>
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">MD.2</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <textarea class="input" name="description" placeholder="Description"
-                        [(ngModel)]="questionnaire.description"></textarea>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">MD.2</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <textarea class="input" name="description" placeholder="Description"
+                          [(ngModel)]="questionnaire.description"></textarea>
+              </div>
+              <p class="help has-text-left">Short description of the AI</p>
             </div>
-            <p class="help has-text-left">Short description of the AI</p>
           </div>
         </div>
       </div>
@@ -68,7 +77,7 @@
     </div>
 
     <div class="step-content has-text-centered" [ngClass]="{'is-active': step === 3}">
-      <div *ngFor="let dataset of questionnaire.datasets; let i = index;">
+      <div *ngFor="let dataset of questionnaire.datasets; let i = index;" class="dataset">
         <h2 class="title is-4">Dataset #{{i + 1}}</h2>
         <div class="has-text-right">
           <button class="button is-danger is-small" (click)="removeDataset(i)">
@@ -103,9 +112,9 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="add-form">
         <button data-nav="next" class="button is-light" (click)="addDataset()">
-          Add dataset
+          Add another dataset
         </button>
       </div>
     </div>
@@ -121,13 +130,13 @@
 
   <div class="steps-actions">
     <div class="steps-action">
-      <button data-nav="previous" class="button is-light" (click)="step = step - 1" *ngIf="step > 1">Previous</button>
+      <button data-nav="previous" class="button is-normal" (click)="step = step - 1" *ngIf="step > 1">Previous</button>
     </div>
     <div class="steps-action">
-      <button data-nav="next" class="button is-light" (click)="step = step + 1" *ngIf="step < 5"
+      <button data-nav="next" class="button is-success" (click)="step = step + 1" *ngIf="step < 5"
               [disabled]="!stepComplete(step)">Next
       </button>
-      <button data-nav="next" class="button is-light" (click)="submitQuestionnaire()" *ngIf="step == 5"
+      <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 5"
               [disabled]="!completeUntil(5)">Submit
       </button>
     </div>
@@ -135,6 +144,40 @@
 
 </div>
 
-<div>
-  {{representation()}}
+<div class="container" *ngIf="submitted">
+  <div class="notification is-info" *ngIf="!password || !id">
+    <span class="icon has-text-white">
+      <i class="fa fa-spinner fa-spin"></i>
+    </span>
+    Your report is being created...
+  </div>
+
+  <article class="message" *ngIf="password && id">
+    <header class="message-header">
+      <p>
+        Your AIMe report
+      </p>
+    </header>
+    <div class="message-body">
+      <p>
+        Your report <code>https://aime-standard.org/report/{{id}}.pdf</code> has been generated.
+      </p>
+      <br>
+      <p>
+        View your report here:
+        <a target="_blank" href="https://aime-standard.org/report/{{id}}.pdf">https://aime-standard.org/report/{{id}}.pdf</a>
+      </p>
+      <p>
+        Edit your report here:
+        <a target="_blank" href="https://aime-standard.org/questionnaire?id={{id}}&p={{password}}">https://aime-standard.org/questionnaire?id={{id}}&p={{password}}</a>
+      </p>
+      <p>
+        These links have also be sent to you by email.
+      </p>
+      <br>
+      <p>
+        Thank you for using the AIMe Standard.
+      </p>
+    </div>
+  </article>
 </div>

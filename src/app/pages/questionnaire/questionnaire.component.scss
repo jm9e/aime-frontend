@@ -1,7 +1,30 @@
+@import 'variables';
+
 .step-item {
   cursor: pointer;
 }
 
 .is-selected {
-  color: red;
+  color: $aime;
+}
+
+code {
+  color: $aime;
+}
+
+.steps {
+  padding-top: 30px;
+}
+
+.steps-content {
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.dataset {
+  padding: 30px;
+}
+
+.add-form {
+  padding: 30px;
 }

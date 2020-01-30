@@ -10,7 +10,6 @@ import { HttpClient } from '@angular/common/http';
 export class QuestionnaireComponent implements OnInit {
 
   public step = 1;
-  public stepDone = 1;
   public questionnaire: IQuestionnaire = {
     author: '',
     availability: '',
@@ -49,6 +48,9 @@ export class QuestionnaireComponent implements OnInit {
     url: '',
     validation: '',
   };
+  public submitted = false;
+  public id = 'afdsf4';
+  public password = 'fdafdsf';
 
   constructor(private http: HttpClient) {
   }
@@ -100,7 +102,10 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   public async submitQuestionnaire() {
-    this.http.post(`/api/questionnaire`, this.questionnaire).subscribe((r) => {
+    this.submitted = true;
+    this.http.post<any>(`/api/questionnaire`, this.questionnaire).subscribe((r) => {
+      this.id = r.id;
+      this.password = r.password;
     });
   }
 

@@ -1,7 +1,46 @@
-<div>
-  Navigation:
-  <a routerLink="/questionnaire">New report</a>
+<div id="wrapper">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="/assets/logo.png" height="28">
+      </a>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a routerLink="/" class="navbar-item">
+          Start
+        </a>
+
+        <a routerLink="/questionnaire" class="navbar-item">
+          New report
+        </a>
+
+        <a routerLink="/database" class="navbar-item">
+          Database
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <img src="/assets/logo.png" style="height: 42px">
+    </p>
+    <p>
+      <a href="https://aime-standard.org">aime-standard.org</a>
+    </p>
+  </div>
+</footer>
