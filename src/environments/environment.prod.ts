@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  url: 'http://localhost:9000/',
+  url: 'https://aime-standard.org/',
   urlDisplay: 'https://aime-standard.org/',
   domainDisplay: 'aime-standard.org',
 };
