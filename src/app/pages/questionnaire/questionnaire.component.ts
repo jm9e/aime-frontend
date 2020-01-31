@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IQuestionnaire } from '../../questionnaire';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-questionnaire',
@@ -20,7 +21,7 @@ export class QuestionnaireComponent implements OnInit {
         availability: '',
         bias: false,
         biasAddressed: '',
-        clinical: false,
+        clinical: '',
         normalized: '',
         preprocessing: '',
         samples: '',
@@ -52,10 +53,20 @@ export class QuestionnaireComponent implements OnInit {
   public id = '';
   public password = '';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
 
   public ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.id = params.id;
+      this.password = params.p;
+
+      if (this.id) {
+        this.http.get<IQuestionnaire>(`/api/questionnaire?id=${this.id}`).subscribe((resp) => {
+          this.questionnaire = resp;
+        });
+      }
+    });
   }
 
   public stepComplete(step: number): boolean {
@@ -83,7 +94,7 @@ export class QuestionnaireComponent implements OnInit {
       availability: '',
       bias: false,
       biasAddressed: '',
-      clinical: false,
+      clinical: '',
       normalized: '',
       preprocessing: '',
       samples: '',
@@ -103,10 +114,17 @@ export class QuestionnaireComponent implements OnInit {
 
   public async submitQuestionnaire() {
     this.submitted = true;
-    this.http.post<any>(`/api/questionnaire`, this.questionnaire).subscribe((r) => {
-      this.id = r.id;
-      this.password = r.password;
-    });
+    if (this.id && this.password) {
+      this.http.post<any>(`/api/questionnaire?id=${this.id}&p=${this.password}`, this.questionnaire).subscribe((r) => {
+        this.id = r.id;
+        this.password = r.password;
+      });
+    } else {
+      this.http.post<any>(`/api/questionnaire`, this.questionnaire).subscribe((r) => {
+        this.id = r.id;
+        this.password = r.password;
+      });
+    }
   }
 
 }
