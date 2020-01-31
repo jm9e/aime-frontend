@@ -25,3 +25,11 @@ code {
 .add-form {
   padding: 30px;
 }
+
+.viewer {
+  height: 800px;
+
+  .invisible {
+    display: none;
+  }
+}

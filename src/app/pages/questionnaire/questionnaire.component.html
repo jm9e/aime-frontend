@@ -606,14 +606,17 @@
               finalized and referenceable report.
             </p>
             <br>
-            <div class="notification is-success" *ngIf="generatingPreview">
+            <div class="notification is-success" *ngIf="generatingPDF">
               <span class="icon has-text-white">
                 <i class="fa fa-spinner fa-spin"></i>
               </span>
               Generating preview report...
             </div>
-            <div *ngIf="previewPdf && !generatingPreview">
-              {{previewPdf}}
+            <div class="viewer">
+              <h3 class="title is-5" [ngClass]="{'invisible': !displayPDF}">
+                Preview report
+              </h3>
+              <ng2-pdfjs-viewer #pdfViewer [ngClass]="{'invisible': !displayPDF}"></ng2-pdfjs-viewer>
             </div>
           </div>
         </div>

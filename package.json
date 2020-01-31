@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.8",
     "bulma": "^0.8.0",
     "bulma-steps": "^2.2.1",
+    "ng2-pdfjs-viewer": "^5.0.5",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

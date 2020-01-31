@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {createDataset, createQuestionnaire, IQuestionnaire} from '../../questionnaire';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-questionnaire',
@@ -10,13 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class QuestionnaireComponent implements OnInit {
 
+  @ViewChild('pdfViewer', {static: false}) pdfViewer;
+
   public step = 1;
   public questionnaire = createQuestionnaire();
   public submitted = false;
   public id = '';
   public password = '';
-  public generatingPreview = false;
-  public previewPdf: any = undefined;
+  public generatingPDF = false;
+  public displayPDF = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -66,10 +69,6 @@ export class QuestionnaireComponent implements OnInit {
     this.questionnaire.datasets.splice(i, 1);
   }
 
-  public representation() {
-    return JSON.stringify(this.questionnaire, null, 2);
-  }
-
   public async submitQuestionnaire() {
     this.submitted = true;
     if (this.id && this.password) {
@@ -86,11 +85,19 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   public async generatePreview() {
-    this.generatingPreview = true;
-    this.http.post(`/api/preview`, this.questionnaire).subscribe((r) => {
-      this.previewPdf = r;
-      this.generatingPreview = false;
-    });
+    this.displayPDF = false;
+    this.generatingPDF = true;
+    this.http
+      .post(`/api/preview`, JSON.stringify(this.questionnaire), {responseType: 'blob'})
+      .pipe(map((result: any) => {
+        return result;
+      }))
+      .subscribe((res) => {
+        this.generatingPDF = false;
+        this.pdfViewer.pdfSrc = res;
+        this.pdfViewer.refresh();
+        this.displayPDF = true;
+      });
   }
 
 }

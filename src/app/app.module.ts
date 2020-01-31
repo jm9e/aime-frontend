@@ -8,6 +8,7 @@ import {IndexComponent} from './pages/index/index.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {EnvPipe} from './pipes/env.pipe';
+import {PdfJsViewerModule} from "ng2-pdfjs-viewer";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {EnvPipe} from './pipes/env.pipe';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    PdfJsViewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
