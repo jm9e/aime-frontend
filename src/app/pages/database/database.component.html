@@ -1,3 +1,67 @@
-<p>
-  Coming soon...
-</p>
+<section class="section">
+  <div class="container">
+    <h2 class="title is-3">Search AIMe Database</h2>
+
+    <div class="field has-addons">
+      <div class="control has-icons-left is-expanded">
+        <input class="input" type="text" placeholder="Find a report"
+               [ngModel]="query.getValue()" (ngModelChange)="query.next($event)">
+        <span class="icon is-small is-left">
+          <i class="fa fa-search"></i>
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="resultsCount === 0">
+      <div *ngIf="!lastQuery">
+        <i>No database entries yet</i>
+      </div>
+      <div *ngIf="lastQuery">
+        <i>No results found for '{{lastQuery}}'</i>
+      </div>
+    </div>
+    <div *ngIf="resultsCount === 1">
+      <div *ngIf="!lastQuery">
+        <i>1 database entry in total</i>
+      </div>
+      <div *ngIf="lastQuery">
+        <i>Found 1 result matching '{{lastQuery}}'</i>
+      </div>
+    </div>
+    <div *ngIf="resultsCount > 1">
+      <div *ngIf="!lastQuery">
+        <i>{{resultsCount}} database entries in total</i>
+      </div>
+      <div *ngIf="lastQuery">
+        <i>Found {{resultsCount}} results matching '{{lastQuery}}'</i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div *ngIf="resultsCount > 0">
+      <table class="table is-striped is-fullwidth">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Last modified</th>
+          <th>Revisions</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let result of results">
+          <td>{{result.id}}</td>
+          <td>{{result.questionnaire.title}}</td>
+          <td>{{result.date | date: 'medium'}}</td>
+          <td>{{result.revisions.length}}</td>
+          <td><a class="button is-small is-info" href="/report/{{result.id}}.pdf">open</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

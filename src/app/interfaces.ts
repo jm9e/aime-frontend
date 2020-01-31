@@ -41,6 +41,18 @@ export interface IQuestionnaire {
   highPerformance: string; // R.5
 }
 
+export interface IRevision {
+  revision: number;
+  date: Date;
+}
+
+export interface IReport {
+  id: string;
+  date: Date;
+  revisions: IRevision[];
+  questionnaire: IQuestionnaire;
+}
+
 export function createQuestionnaire(): IQuestionnaire {
   return {
     author: '',

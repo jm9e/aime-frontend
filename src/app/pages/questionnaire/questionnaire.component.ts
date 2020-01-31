@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {createDataset, createQuestionnaire, IQuestionnaire} from '../../questionnaire';
+import {createDataset, createQuestionnaire, IQuestionnaire} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
@@ -20,6 +20,9 @@ export class QuestionnaireComponent implements OnInit {
   public password = '';
   public generatingPDF = false;
   public displayPDF = false;
+  public email = '';
+  public attachReport = true;
+  public revising = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -32,6 +35,7 @@ export class QuestionnaireComponent implements OnInit {
       if (this.id) {
         this.http.get<IQuestionnaire>(`/api/questionnaire?id=${this.id}`).subscribe((resp) => {
           this.questionnaire = resp;
+          this.revising = true;
         });
       }
     });
@@ -72,12 +76,18 @@ export class QuestionnaireComponent implements OnInit {
   public async submitQuestionnaire() {
     this.submitted = true;
     if (this.id && this.password) {
-      this.http.post<any>(`/api/questionnaire?id=${this.id}&p=${this.password}`, this.questionnaire).subscribe((r) => {
+      this.http.post<any>(`/api/questionnaire?id=${this.id}&p=${this.password}`, {
+        questionnaire: this.questionnaire,
+      }).subscribe((r) => {
         this.id = r.id;
         this.password = r.password;
       });
     } else {
-      this.http.post<any>(`/api/questionnaire`, this.questionnaire).subscribe((r) => {
+      this.http.post<any>(`/api/questionnaire`, {
+        questionnaire: this.questionnaire,
+        attachReport: this.attachReport,
+        email: this.email,
+      }).subscribe((r) => {
         this.id = r.id;
         this.password = r.password;
       });

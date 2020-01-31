@@ -595,28 +595,55 @@
             <p>
               Below, you can find a preview report.
               Review all answers carefully.
-              You can edit everything later on, but it will create another revision.
+              You can still edit your report later on, but it will create another revision.
             </p>
             <p>
               If you want to correct something, either use the <span class="tag">Previous</span> button below,
               or click on the according step above.
             </p>
-            <p>
+            <p *ngIf="!revising">
               If you are done, click the <span class="tag is-info">Submit</span> button below to generate a
               finalized and referenceable report.
             </p>
+            <p *ngIf="revising">
+              If you are done, click the <span class="tag is-info">Create Revision</span> button below to update
+              your report and create a new revision.
+            </p>
             <br>
-            <div class="notification is-success" *ngIf="generatingPDF">
-              <span class="icon has-text-white">
-                <i class="fa fa-spinner fa-spin"></i>
-              </span>
-              Generating preview report...
+            <div class="viewer-wrapper" [ngClass]="{'loading': generatingPDF}">
+              <div class="notification is-success" *ngIf="generatingPDF">
+                <span class="icon has-text-white">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </span>
+                Generating preview report...
+              </div>
+              <div class="viewer">
+                <h3 class="title is-5" [ngClass]="{'invisible': !displayPDF}">
+                  Preview report
+                </h3>
+                <ng2-pdfjs-viewer #pdfViewer [ngClass]="{'invisible': !displayPDF}"></ng2-pdfjs-viewer>
+              </div>
             </div>
-            <div class="viewer">
-              <h3 class="title is-5" [ngClass]="{'invisible': !displayPDF}">
-                Preview report
-              </h3>
-              <ng2-pdfjs-viewer #pdfViewer [ngClass]="{'invisible': !displayPDF}"></ng2-pdfjs-viewer>
+            <br>
+            <div *ngIf="!revising">
+              <br>
+              <div class="field">
+                <div class="control">
+                  <input type="email" class="input" name="email" placeholder="Your email address" [(ngModel)]="email">
+                </div>
+                <p class="help has-text-left">
+                  Enter an email address to receive the report and admin link.
+                  Make sure that it is a valid address that you have access to, otherwise you will not be able to create revisions later on.
+                </p>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input type="checkbox" class="checkbox" name="attachReport" [(ngModel)]="attachReport">
+                    Attach report to email
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -631,7 +658,9 @@
                   [disabled]="!stepComplete(step)">Next
           </button>
           <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6"
-                  [disabled]="!completeUntil(6)">Submit
+                  [disabled]="!completeUntil(6) || (!email && !revising)">
+            <span *ngIf="!revising">Submit</span>
+            <span *ngIf="revising">Create Revision</span>
           </button>
         </div>
       </div>
@@ -652,7 +681,7 @@
             Your AIMe report
           </p>
         </header>
-        <div class="message-body">
+        <div class="message-body" *ngIf="!revising">
           <p>
             Your report <code>{{'urlDisplay' | env}}report/{{id}}.pdf</code> has been generated.
           </p>
@@ -666,7 +695,28 @@
             <a target="_blank" href="{{'url' | env}}questionnaire?id={{id}}&p={{password}}">{{'urlDisplay' | env}}questionnaire?id={{id}}&p={{password}}</a>
           </p>
           <p>
-            These links have also been sent to you by email.
+            These links have also been sent to {{email}}.
+          </p>
+          <br>
+          <p>
+            Thank you for using the AIMe Standard.
+          </p>
+        </div>
+        <div class="message-body" *ngIf="revising">
+          <p>
+            Your report <code>{{'urlDisplay' | env}}report/{{id}}.pdf</code> has been generated.
+          </p>
+          <br>
+          <p>
+            View your report here:
+            <a target="_blank" href="{{'url' | env}}report/{{id}}.pdf">{{'urlDisplay' | env}}report/{{id}}.pdf</a>
+          </p>
+          <p>
+            Edit your report here:
+            <a target="_blank" href="{{'url' | env}}questionnaire?id={{id}}&p={{password}}">{{'urlDisplay' | env}}questionnaire?id={{id}}&p={{password}}</a>
+          </p>
+          <p>
+            These links have also been sent to {{email}}.
           </p>
           <br>
           <p>
