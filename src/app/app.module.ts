@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {EnvPipe} from './pipes/env.pipe';
 import {PdfJsViewerModule} from "ng2-pdfjs-viewer";
+import { DatabaseComponent } from './pages/database/database.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {PdfJsViewerModule} from "ng2-pdfjs-viewer";
     QuestionnaireComponent,
     IndexComponent,
     EnvPipe,
+    DatabaseComponent,
   ],
   imports: [
     HttpClientModule,

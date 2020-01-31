@@ -41,7 +41,10 @@
     </div>
     <div class="content has-text-centered">
       <a routerLink="/questionnaire" class="button is-medium is-success is-rounded">
-        Create Report
+        <span class="icon">
+          <i class="fa fa-plus-circle"></i>
+        </span>
+        <span>Create Report</span>
       </a>
     </div>
   </div>
@@ -56,17 +59,13 @@
       You can search our database to look for AI reports that might interest you.
       Save time and spot the relevant information faster than browsing papers for it.
     </div>
-    <div class="content">
-      <div class="field has-addons">
-        <div class="control">
-          <input class="input" type="text" placeholder="Search reports">
-        </div>
-        <div class="control">
-          <a class="button is-info">
-            Search
-          </a>
-        </div>
-      </div>
+    <div class="content has-text-centered">
+      <a routerLink="/database" class="button is-medium is-info is-rounded">
+        <span class="icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <span>Search Database</span>
+      </a>
     </div>
   </div>
 </section>
