@@ -1,5 +1,5 @@
 export interface IDataset {
-  clinical: string; // D.1
+  clinical: 'clinical' | 'omics'; // D.1
   type: string; // D.2
   synthetic: string; // D.3
   availability: string; // D.4
@@ -39,4 +39,48 @@ export interface IQuestionnaire {
   dependencies: string; // R.3
   operatingSystem: string; // R.4
   highPerformance: string; // R.5
+}
+
+export function createQuestionnaire(): IQuestionnaire {
+  return {
+    author: '',
+    availability: '',
+    category: '',
+    confoundingFactors: '',
+    datasets: [
+      createDataset(),
+    ],
+    dependencies: '',
+    description: '',
+    highPerformance: '',
+    hyperparameters: '',
+    method: '',
+    operatingSystem: '',
+    overfitting: '',
+    public: false,
+    purpose: '',
+    randomBaseline: '',
+    reproducibility: '',
+    sourceCode: '',
+    stateOfTheArt: '',
+    surrogate: '',
+    testMetrics: '',
+    title: '',
+    url: '',
+    validation: ''
+  };
+}
+
+export function createDataset(): IDataset {
+  return {
+    availability: '',
+    bias: false,
+    clinical: 'clinical',
+    normalized: '',
+    preprocessing: '',
+    samples: '',
+    synthetic: '',
+    training: false,
+    type: '',
+  };
 }

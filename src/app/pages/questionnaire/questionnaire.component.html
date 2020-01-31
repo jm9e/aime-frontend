@@ -593,7 +593,9 @@
           </header>
           <div class="card-content">
             <p>
-              Review all answers carefully. You can edit everything later, but it will create another revision.
+              Below, you can find a preview report.
+              Review all answers carefully.
+              You can edit everything later on, but it will create another revision.
             </p>
             <p>
               If you want to correct something, either use the <span class="tag">Previous</span> button below,
@@ -601,19 +603,28 @@
             </p>
             <p>
               If you are done, click the <span class="tag is-info">Submit</span> button below to generate a
-              referenceable report.
+              finalized and referenceable report.
             </p>
-            <pre>{{representation()}}</pre>
+            <br>
+            <div class="notification is-success" *ngIf="generatingPreview">
+              <span class="icon has-text-white">
+                <i class="fa fa-spinner fa-spin"></i>
+              </span>
+              Generating preview report...
+            </div>
+            <div *ngIf="previewPdf && !generatingPreview">
+              {{previewPdf}}
+            </div>
           </div>
         </div>
       </div>
 
       <div class="steps-actions">
         <div class="steps-action">
-          <button data-nav="previous" class="button is-normal" (click)="step = step - 1" *ngIf="step > 1">Previous</button>
+          <button data-nav="previous" class="button is-normal" (click)="goToStep(step - 1)" *ngIf="step > 1">Previous</button>
         </div>
         <div class="steps-action">
-          <button data-nav="next" class="button is-success" (click)="step = step + 1" *ngIf="step < 6"
+          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < 6"
                   [disabled]="!stepComplete(step)">Next
           </button>
           <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6"
@@ -640,16 +651,16 @@
         </header>
         <div class="message-body">
           <p>
-            Your report <code>https://aime-standard.org/report/{{id}}.pdf</code> has been generated.
+            Your report <code>{{'urlDisplay' | env}}report/{{id}}.pdf</code> has been generated.
           </p>
           <br>
           <p>
             View your report here:
-            <a target="_blank" href="https://aime-standard.org/report/{{id}}.pdf">https://aime-standard.org/report/{{id}}.pdf</a>
+            <a target="_blank" href="{{'url' | env}}report/{{id}}.pdf">{{'urlDisplay' | env}}report/{{id}}.pdf</a>
           </p>
           <p>
             Edit your report here:
-            <a target="_blank" href="https://aime-standard.org/questionnaire?id={{id}}&p={{password}}">https://aime-standard.org/questionnaire?id={{id}}&p={{password}}</a>
+            <a target="_blank" href="{{'url' | env}}questionnaire?id={{id}}&p={{password}}">{{'urlDisplay' | env}}questionnaire?id={{id}}&p={{password}}</a>
           </p>
           <p>
             These links have also been sent to you by email.

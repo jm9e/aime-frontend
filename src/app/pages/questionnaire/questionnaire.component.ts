@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IQuestionnaire } from '../../questionnaire';
+import {createDataset, createQuestionnaire, IQuestionnaire} from '../../questionnaire';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -10,47 +10,12 @@ import { HttpClient } from '@angular/common/http';
 export class QuestionnaireComponent implements OnInit {
 
   public step = 1;
-  public questionnaire: IQuestionnaire = {
-    author: '',
-    availability: '',
-    category: '',
-    confoundingFactors: '',
-    datasets: [
-      {
-        availability: '',
-        bias: false,
-        biasAddressed: '',
-        clinical: false,
-        normalized: '',
-        preprocessing: '',
-        samples: '',
-        synthetic: '',
-        training: false,
-        type: '',
-      },
-    ],
-    dependencies: '',
-    description: '',
-    highPerformance: '',
-    hyperparameters: '',
-    method: '',
-    operatingSystem: '',
-    overfitting: '',
-    public: false,
-    purpose: '',
-    randomBaseline: '',
-    reproducibility: '',
-    sourceCode: '',
-    stateOfTheArt: '',
-    surrogate: '',
-    testMetrics: '',
-    title: '',
-    url: '',
-    validation: '',
-  };
+  public questionnaire = createQuestionnaire();
   public submitted = false;
   public id = '';
   public password = '';
+  public generatingPreview = false;
+  public previewPdf: any = undefined;
 
   constructor(private http: HttpClient) {
   }
@@ -71,26 +36,19 @@ export class QuestionnaireComponent implements OnInit {
     return true;
   }
 
-  public goToStep(step: number) {
+  public async goToStep(step: number) {
     if (!this.completeUntil(step - 1)) {
       return;
     }
     this.step = step;
+
+    if (this.step === 6) {
+      await this.generatePreview();
+    }
   }
 
   public addDataset() {
-    this.questionnaire.datasets.push({
-      availability: '',
-      bias: false,
-      biasAddressed: '',
-      clinical: false,
-      normalized: '',
-      preprocessing: '',
-      samples: '',
-      synthetic: '',
-      training: false,
-      type: '',
-    });
+    this.questionnaire.datasets.push(createDataset());
   }
 
   public removeDataset(i) {
@@ -106,6 +64,14 @@ export class QuestionnaireComponent implements OnInit {
     this.http.post<any>(`/api/questionnaire`, this.questionnaire).subscribe((r) => {
       this.id = r.id;
       this.password = r.password;
+    });
+  }
+
+  public async generatePreview() {
+    this.generatingPreview = true;
+    this.http.post(`/api/preview`, this.questionnaire).subscribe((r) => {
+      this.previewPdf = r;
+      this.generatingPreview = false;
     });
   }
 
