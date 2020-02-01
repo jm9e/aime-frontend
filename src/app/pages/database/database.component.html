@@ -46,18 +46,21 @@
         <thead>
         <tr>
           <th>ID</th>
-          <th>Title</th>
-          <th>Last modified</th>
-          <th>Revisions</th>
+          <th>Title & Description</th>
+          <th>Revisions (last modified)</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let result of results">
           <td>{{result.id}}</td>
-          <td>{{result.questionnaire.title}}</td>
-          <td>{{result.date | date: 'medium'}}</td>
-          <td>{{result.revisions.length}}</td>
+          <td>
+            <strong>{{result.questionnaire.title}}</strong>
+            <p class="content">
+              {{result.questionnaire.description}}
+            </p>
+          </td>
+          <td>{{result.revisions.length}} ({{result.date | date: 'medium'}})</td>
           <td><a class="button is-small is-info" href="/report/{{result.id}}.pdf">open</a></td>
         </tr>
         </tbody>

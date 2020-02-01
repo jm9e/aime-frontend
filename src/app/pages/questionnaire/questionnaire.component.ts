@@ -26,6 +26,7 @@ export class QuestionnaireComponent implements OnInit {
 
   public surrogateTicked = false;
 
+  public dataAvailableTicked = [false];
   public biasTicked = [false];
   public biasAddressedTicked = [false];
   public normalizedTicked = [false];
@@ -140,6 +141,7 @@ export class QuestionnaireComponent implements OnInit {
 
     for (let i = 0; i < this.questionnaire.datasets.length; i++) {
       const dataset = this.questionnaire.datasets[i];
+      this.dataAvailableTicked[i] = !!dataset.availability;
       this.biasTicked[i] = !!dataset.bias;
       this.biasAddressedTicked[i] = !!dataset.biasAddressed;
       this.normalizedTicked[i] = !!dataset.preprocessing;

@@ -245,7 +245,7 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <input class="input" name="synthetic" type="text" placeholder="Real or synthetic?" [(ngModel)]="dataset.synthetic">
+                      <input class="input" name="synthetic" type="text" placeholder="Describe whether your data is real or synthetic" [(ngModel)]="dataset.synthetic">
                     </div>
                     <p class="help has-text-left">Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?</p>
                   </div>
@@ -259,7 +259,13 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <input class="input" name="availability" placeholder="Availability" [(ngModel)]="dataset.availability">
+                      <div class="control">
+                        <label class="checkbox">
+                          <input type="checkbox" name="training" [(ngModel)]="dataAvailableTicked[i]">
+                          Publicly available
+                        </label>
+                      </div>
+                      <input class="input" name="availability" placeholder="Describe where the data can be accessed" [(ngModel)]="dataset.availability" *ngIf="dataAvailableTicked[i]">
                     </div>
                     <p class="help has-text-left">Is the data publicly available? If so, where?</p>
                   </div>
@@ -294,7 +300,7 @@
                         <input type="checkbox" name="answer" [(ngModel)]="biasTicked[i]" (ngModelChange)="dataset.bias = ''">
                         Subject to biases
                       </label>
-                      <input class="input" name="surrogate" type="text" placeholder="Describe biases" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]">
+                      <input class="input" name="surrogate" type="text" placeholder="Describe data biases" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]">
                     </div>
                     <p class="help has-text-left">Is the data subject to biases? If so, to which?</p>
                   </div>
@@ -312,7 +318,7 @@
                         <input type="checkbox" name="answer" [(ngModel)]="biasAddressedTicked[i]" (ngModelChange)="dataset.biasAddressed = ''">
                         Biases addressed
                       </label>
-                      <textarea class="input" name="surrogate" type="text" placeholder="Describe how you addressed the biases" [(ngModel)]="dataset.biasAddressed" *ngIf="biasAddressedTicked[i]"></textarea>
+                      <textarea class="input" name="surrogate" type="text" placeholder="Describe how you addressed the data biases" [(ngModel)]="dataset.biasAddressed" *ngIf="biasAddressedTicked[i]"></textarea>
                     </div>
                     <p class="help has-text-left">Did you address your data biases? If so, how?</p>
                   </div>
