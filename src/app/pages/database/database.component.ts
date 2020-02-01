@@ -16,15 +16,8 @@ interface IResults {
 })
 export class DatabaseComponent implements OnInit {
 
-  public results: IReport[] = [
-    {
-      id: 'Test',
-      date: new Date(),
-      questionnaire: createQuestionnaire(),
-      revisions: [],
-    }
-  ];
-  public resultsCount = 1;
+  public results: IReport[] = [];
+  public resultsCount = 0;
   public lastQuery = '';
   public query = new BehaviorSubject<string>('');
 
@@ -46,14 +39,14 @@ export class DatabaseComponent implements OnInit {
   public search() {
     this.http.get<any>(`/api/search?q=${escape(this.query.getValue())}`).subscribe((resp) => {
       this.resultsCount = resp.count;
-      // this.results = resp.results.map((result) => {
-      //   result.date = new Date(result.date);
-      //   result.revisions = result.revisions.map((revision) => {
-      //     revision.date = new Date(revision.date);
-      //     return revision;
-      //   });
-      //   return result;
-      // });
+      this.results = resp.results.map((result) => {
+        result.date = new Date(result.date);
+        result.revisions = result.revisions.map((revision) => {
+          revision.date = new Date(revision.date);
+          return revision;
+        });
+        return result;
+      });
       this.lastQuery = resp.query;
     });
   }
