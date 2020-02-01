@@ -33,6 +33,9 @@ export class QuestionnaireComponent implements OnInit {
   public preprocessingTicked = [false];
 
   public hyperparametersTicked = false;
+  public reproducibilityTicked = false;
+  public randomBaselineTicked = false;
+  public stateOfTheArtTicked = false;
 
   public availableTicked = false;
   public sourceCodeTicked = false;
@@ -149,6 +152,9 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     this.highperformanceTicked = !!this.questionnaire.highPerformance;
+    this.reproducibilityTicked = !!this.questionnaire.reproducibility;
+    this.randomBaselineTicked = !!this.questionnaire.randomBaseline;
+    this.stateOfTheArtTicked = !!this.questionnaire.stateOfTheArt;
 
     this.availableTicked = !!this.questionnaire.availability;
     this.sourceCodeTicked = !!this.questionnaire.sourceCode;

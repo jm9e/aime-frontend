@@ -102,8 +102,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="url" placeholder="Paper URL"
-                              [(ngModel)]="questionnaire.url"></textarea>
+                    <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
                   </div>
                   <p class="help has-text-left">Stable URL to a paper where the AI is described (optional)</p>
                 </div>
@@ -147,7 +146,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input class="input" name="purpose" type="text" placeholder="Purpose" [(ngModel)]="questionnaire.purpose">
+                    <textarea class="input" name="purpose" placeholder="Purpose" [(ngModel)]="questionnaire.purpose"></textarea>
                   </div>
                   <p class="help has-text-left">What is your AI designed to learn or predict?</p>
                 </div>
@@ -162,7 +161,7 @@
                 <div class="field">
                   <div class="control">
                     <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="surrogateTicked" (ngModelChange)="questionnaire.surrogate = ''">
+                      <textarea type="checkbox" name="answer" [(ngModel)]="surrogateTicked" (ngModelChange)="questionnaire.surrogate = ''"></textarea>
                       Has surrogate marker
                     </label>
                     <input class="input" name="surrogate" type="text" placeholder="Describe surrogate marker" [(ngModel)]="questionnaire.surrogate" *ngIf="surrogateTicked">
@@ -300,7 +299,7 @@
                         <input type="checkbox" name="answer" [(ngModel)]="biasTicked[i]" (ngModelChange)="dataset.bias = ''">
                         Subject to biases
                       </label>
-                      <input class="input" name="surrogate" type="text" placeholder="Describe data biases" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]">
+                      <textarea class="input" name="surrogate" type="text" placeholder="Describe data biases" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]"></textarea>
                     </div>
                     <p class="help has-text-left">Is the data subject to biases? If so, to which?</p>
                   </div>
@@ -416,10 +415,10 @@
                 <div class="field">
                   <div class="control">
                     <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="hyperparametersTicked" (ngModelChange)="questionnaire.sourceCode = ''">
+                      <input type="checkbox" name="answer" [(ngModel)]="hyperparametersTicked" (ngModelChange)="questionnaire.hyperparameters = ''">
                       Employs hyper-parameters
                     </label>
-                    <textarea class="input" name="hyperparameters" type="text" placeholder="Describe hyper-parameters" [(ngModel)]="questionnaire.hyperparameters" *ngIf="hyperparametersTicked"></textarea>
+                    <textarea class="input" name="hyperparameters" type="text" placeholder="Describe hyper-parameters of your method" [(ngModel)]="questionnaire.hyperparameters" *ngIf="hyperparametersTicked"></textarea>
                   </div>
                   <p class="help has-text-left">Does your method employ hyper-parameters? If so, which ones and how did you select them?</p>
                 </div>
@@ -433,7 +432,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="testMetrics" type="text" placeholder="Test metrics" [(ngModel)]="questionnaire.testMetrics"></textarea>
+                    <textarea class="input" name="testMetrics" type="text" placeholder="Describe test metrics you use for your method" [(ngModel)]="questionnaire.testMetrics"></textarea>
                   </div>
                   <p class="help has-text-left">Which test metrics do you report?</p>
                 </div>
@@ -447,7 +446,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="overfitting" type="text" placeholder="Overfitting" [(ngModel)]="questionnaire.overfitting"></textarea>
+                    <textarea class="input" name="overfitting" type="text" placeholder="Describe you how prevent overfitting" [(ngModel)]="questionnaire.overfitting"></textarea>
                   </div>
                   <p class="help has-text-left">How do you prevent overfitting?</p>
                 </div>
@@ -461,7 +460,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="validation" type="text" placeholder="Independent validation" [(ngModel)]="questionnaire.validation"></textarea>
+                    <textarea class="input" name="validation" type="text" placeholder="Describe how you validated your method on independent data" [(ngModel)]="questionnaire.validation"></textarea>
                   </div>
                   <p class="help has-text-left">Did you validate your method on independent data, e.g. from a different cohort?</p>
                 </div>
@@ -475,7 +474,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="confoundingFactors" type="text" placeholder="Confounding factors" [(ngModel)]="questionnaire.confoundingFactors"></textarea>
+                    <textarea class="input" name="confoundingFactors" type="text" placeholder="Describe how you checked for confounding factors" [(ngModel)]="questionnaire.confoundingFactors"></textarea>
                   </div>
                   <p class="help has-text-left">Did you check if your AI model is affected by confounding factors?</p>
                 </div>
@@ -489,7 +488,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="reproducibility" type="text" placeholder="Confounding factors" [(ngModel)]="questionnaire.reproducibility"></textarea>
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="reproducibilityTicked" (ngModelChange)="questionnaire.reproducibility = ''">
+                      Checked results are reproducible
+                    </label>
+                    <textarea class="input" name="reproducibility" type="text" placeholder="Describe how your results can be reproduced" [(ngModel)]="questionnaire.reproducibility" *ngIf="reproducibilityTicked"></textarea>
                   </div>
                   <p class="help has-text-left">Did you check whether your results are reproducible? If so, how?</p>
                 </div>
@@ -503,7 +506,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="randomBaseline" type="text" placeholder="Comparison against a random baseline model" [(ngModel)]="questionnaire.randomBaseline"></textarea>
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="randomBaselineTicked" (ngModelChange)="questionnaire.randomBaseline = ''">
+                      Compared against a random baseline model
+                    </label>
+                    <textarea class="input" name="randomBaseline" type="text" placeholder="Describe how you compared against random baseline model" [(ngModel)]="questionnaire.randomBaseline" *ngIf="randomBaselineTicked"></textarea>
                   </div>
                   <p class="help has-text-left">Did you compare against a random baseline model? If so, how?</p>
                 </div>
@@ -517,7 +524,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="stateOfTheArt" type="text" placeholder="Comparison against state of the art approaches" [(ngModel)]="questionnaire.stateOfTheArt"></textarea>
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="stateOfTheArtTicked" (ngModelChange)="questionnaire.stateOfTheArt = ''">
+                      Compared against a state of the art approaches
+                    </label>
+                    <textarea class="input" name="stateOfTheArt" type="text" placeholder="Describe how you compared against state of the art approaches" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="stateOfTheArtTicked"></textarea>
                   </div>
                   <p class="help has-text-left">Did you compare against state of the art approaches? If so, against which?</p>
                 </div>
