@@ -1,13 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {createQuestionnaire, IReport} from '../../interfaces';
+import {IReport} from '../../interfaces';
 import {BehaviorSubject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-
-interface IResults {
-  count: number;
-  results: IReport[];
-}
 
 @Component({
   selector: 'app-database',
