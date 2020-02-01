@@ -161,7 +161,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input class="input" name="surrogate" type="text" placeholder="Surrogate marker" [(ngModel)]="questionnaire.surrogate">
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="surrogateTicked" (ngModelChange)="questionnaire.surrogate = ''">
+                      Has surrogate marker
+                    </label>
+                    <input class="input" name="surrogate" type="text" placeholder="Describe surrogate marker" [(ngModel)]="questionnaire.surrogate" *ngIf="surrogateTicked">
                   </div>
                   <p class="help has-text-left">Does your AI predict a surrogate marker? If so, what does it represent?</p>
                 </div>
@@ -287,23 +291,28 @@
                   <div class="field">
                     <div class="control">
                       <label class="checkbox">
-                        <input type="checkbox" name="bias" [(ngModel)]="dataset.bias">
+                        <input type="checkbox" name="answer" [(ngModel)]="biasTicked[i]" (ngModelChange)="dataset.bias = ''">
                         Subject to biases
                       </label>
+                      <input class="input" name="surrogate" type="text" placeholder="Describe biases" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]">
                     </div>
-                    <p class="help has-text-left">Is the data subject to biases?</p>
+                    <p class="help has-text-left">Is the data subject to biases? If so, to which?</p>
                   </div>
                 </div>
               </div>
 
-              <div class="field is-horizontal" *ngIf="dataset.bias">
+              <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.7</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <textarea class="input" name="biasAddressed" placeholder="How did you address the biases?" [(ngModel)]="dataset.biasAddressed"></textarea>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="biasAddressedTicked[i]" (ngModelChange)="dataset.biasAddressed = ''">
+                        Biases addressed
+                      </label>
+                      <textarea class="input" name="surrogate" type="text" placeholder="Describe how you addressed the biases" [(ngModel)]="dataset.biasAddressed" *ngIf="biasAddressedTicked[i]"></textarea>
                     </div>
                     <p class="help has-text-left">Did you address your data biases? If so, how?</p>
                   </div>
@@ -331,7 +340,11 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <textarea class="input" name="normalized" placeholder="Normalization" [(ngModel)]="dataset.normalized"></textarea>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="normalizedTicked[i]" (ngModelChange)="dataset.normalized = ''">
+                        Normalized data
+                      </label>
+                      <textarea class="input" name="surrogate" type="text" placeholder="Describe how you normalized the data" [(ngModel)]="dataset.normalized" *ngIf="normalizedTicked[i]"></textarea>
                     </div>
                     <p class="help has-text-left">Did you normalize your data? If so, how?</p>
                   </div>
@@ -345,7 +358,11 @@
                 <div class="field-body">
                   <div class="field">
                     <div class="control">
-                      <textarea class="input" name="preprocessing" placeholder="Preprocessing" [(ngModel)]="dataset.preprocessing"></textarea>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="preprocessingTicked[i]" (ngModelChange)="dataset.preprocessing = ''">
+                        Pre-processed data
+                      </label>
+                      <textarea class="input" name="surrogate" type="text" placeholder="Describe how you pre-processed the data" [(ngModel)]="dataset.preprocessing" *ngIf="preprocessingTicked[i]"></textarea>
                     </div>
                     <p class="help has-text-left">Did you apply other pre-processing steps to your data? If so, which?</p>
                   </div>
@@ -392,7 +409,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="hyperparameters" type="text" placeholder="Hyperparameters" [(ngModel)]="questionnaire.hyperparameters"></textarea>
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="hyperparametersTicked" (ngModelChange)="questionnaire.sourceCode = ''">
+                      Employs hyper-parameters
+                    </label>
+                    <textarea class="input" name="hyperparameters" type="text" placeholder="Describe hyper-parameters" [(ngModel)]="questionnaire.hyperparameters" *ngIf="hyperparametersTicked"></textarea>
                   </div>
                   <p class="help has-text-left">Does your method employ hyper-parameters? If so, which ones and how did you select them?</p>
                 </div>
@@ -517,7 +538,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input class="input" name="method" type="text" placeholder="Availability of the tool/model" [(ngModel)]="questionnaire.availability">
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="availableTicked" (ngModelChange)="questionnaire.availability = ''">
+                      Publicly available
+                    </label>
+                    <input class="input" name="method" type="text" placeholder="Availability of the tool/model" [(ngModel)]="questionnaire.availability" *ngIf="availableTicked">
                   </div>
                   <p class="help has-text-left">Is your tool or model publicly available? If so, where?</p>
                 </div>
@@ -531,7 +556,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input class="input" name="sourceCode" type="text" placeholder="Availability of the source code" [(ngModel)]="questionnaire.sourceCode">
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="sourceCodeTicked" (ngModelChange)="questionnaire.sourceCode = ''">
+                      Source code available
+                    </label>
+                    <input class="input" name="sourceCode" type="text" placeholder="Availability of the source code" [(ngModel)]="questionnaire.sourceCode" *ngIf="sourceCodeTicked">
                   </div>
                   <p class="help has-text-left">Is the source code of your analysis publicly available? If so, where?</p>
                 </div>
@@ -573,7 +602,11 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <textarea class="input" name="highPerformance" type="text" placeholder="High performance" [(ngModel)]="questionnaire.highPerformance"></textarea>
+                    <label class="checkbox">
+                      <input type="checkbox" name="answer" [(ngModel)]="highperformanceTicked" (ngModelChange)="questionnaire.highPerformance = ''">
+                      Requires high-performance
+                    </label>
+                    <textarea class="input" name="highPerformance" type="text" placeholder="Describe high performance requirements" [(ngModel)]="questionnaire.highPerformance" *ngIf="highperformanceTicked"></textarea>
                   </div>
                   <p class="help has-text-left">Does your analysis require high-performance computing? If so, why?</p>
                 </div>

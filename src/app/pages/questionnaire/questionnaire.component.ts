@@ -24,6 +24,19 @@ export class QuestionnaireComponent implements OnInit {
   public attachReport = true;
   public revising = false;
 
+  public surrogateTicked = false;
+
+  public biasTicked = [false];
+  public biasAddressedTicked = [false];
+  public normalizedTicked = [false];
+  public preprocessingTicked = [false];
+
+  public hyperparametersTicked = false;
+
+  public availableTicked = false;
+  public sourceCodeTicked = false;
+  public highperformanceTicked = false;
+
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
 
@@ -36,6 +49,8 @@ export class QuestionnaireComponent implements OnInit {
         this.http.get<IQuestionnaire>(`/api/questionnaire?id=${this.id}`).subscribe((resp) => {
           this.questionnaire = resp;
           this.revising = true;
+
+          this.updateCheckboxes();
         });
       }
     });
@@ -67,10 +82,20 @@ export class QuestionnaireComponent implements OnInit {
 
   public addDataset() {
     this.questionnaire.datasets.push(createDataset());
+
+    this.biasTicked.push(false);
+    this.biasAddressedTicked.push(false);
+    this.normalizedTicked.push(false);
+    this.preprocessingTicked.push(false);
   }
 
   public removeDataset(i) {
     this.questionnaire.datasets.splice(i, 1);
+
+    this.biasTicked.splice(i, 1);
+    this.biasAddressedTicked.splice(i, 1);
+    this.normalizedTicked.splice(i, 1);
+    this.preprocessingTicked.splice(i, 1);
   }
 
   public async submitQuestionnaire() {
@@ -108,6 +133,24 @@ export class QuestionnaireComponent implements OnInit {
         this.pdfViewer.refresh();
         this.displayPDF = true;
       });
+  }
+
+  private updateCheckboxes() {
+    this.surrogateTicked = !!this.questionnaire.surrogate;
+
+    for (let i = 0; i < this.questionnaire.datasets.length; i++) {
+      const dataset = this.questionnaire.datasets[i];
+      this.biasTicked[i] = !!dataset.bias;
+      this.biasAddressedTicked[i] = !!dataset.biasAddressed;
+      this.normalizedTicked[i] = !!dataset.preprocessing;
+      this.preprocessingTicked[i] = !!dataset.bias;
+    }
+
+    this.highperformanceTicked = !!this.questionnaire.highPerformance;
+
+    this.availableTicked = !!this.questionnaire.availability;
+    this.sourceCodeTicked = !!this.questionnaire.sourceCode;
+    this.highperformanceTicked = !!this.questionnaire.highPerformance;
   }
 
 }

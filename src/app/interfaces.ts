@@ -4,8 +4,8 @@ export interface IDataset {
   synthetic: string; // D.3
   availability: string; // D.4
   training: boolean; // D.5
-  bias: boolean; // D.6
-  biasAddressed?: string; // D.7
+  bias: string; // D.6
+  biasAddressed: string; // D.7
   samples: string; // D.8
   normalized: string; // D.9
   preprocessing: string; // D.10
@@ -86,7 +86,8 @@ export function createQuestionnaire(): IQuestionnaire {
 export function createDataset(): IDataset {
   return {
     availability: '',
-    bias: false,
+    bias: '',
+    biasAddressed: '',
     clinical: 'clinical',
     normalized: '',
     preprocessing: '',
