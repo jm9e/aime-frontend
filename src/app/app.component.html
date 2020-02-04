@@ -25,6 +25,10 @@
         <a routerLink="/database" class="navbar-item">
           Database
         </a>
+
+        <a routerLink="/about" class="navbar-item">
+          About
+        </a>
       </div>
     </div>
   </nav>
@@ -40,7 +44,8 @@
       <img src="/assets/logo.png" style="height: 42px">
     </p>
     <p>
-      <a href="{{'url' | env}}">{{'domainDisplay' | env}}</a>
+      <a href="{{'url' | env}}">{{'domainDisplay' | env}}</a> |
+      <a routerLink="/about">About</a>
     </p>
   </div>
 </footer>

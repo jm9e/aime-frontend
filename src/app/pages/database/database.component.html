@@ -2,13 +2,38 @@
   <div class="container">
     <h2 class="title is-3">Search AIMe Database</h2>
 
-    <div class="field has-addons">
+    <div class="field">
       <div class="control has-icons-left is-expanded">
         <input class="input" type="text" placeholder="Find a report"
                [ngModel]="query.getValue()" (ngModelChange)="query.next($event)">
         <span class="icon is-small is-left">
           <i class="fa fa-search"></i>
         </span>
+      </div>
+    </div>
+
+    <div class="field search-toolbox">
+      <div class="control">
+        <label class="checkbox">
+          <input type="checkbox" [(ngModel)]="searchMetadata" (ngModelChange)="search()" />
+          Metadata
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" [(ngModel)]="searchPurpose" (ngModelChange)="search()" />
+          Purpose
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" [(ngModel)]="searchData" (ngModelChange)="search()" />
+          Data
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" [(ngModel)]="searchMethod" (ngModelChange)="search()" />
+          Method
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" [(ngModel)]="searchReproducibility" (ngModelChange)="search()" />
+          Reproducibility
+        </label>
       </div>
     </div>
 
