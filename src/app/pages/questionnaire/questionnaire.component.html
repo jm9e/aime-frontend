@@ -65,14 +65,19 @@
                     <a *ngIf="!helpExpanded['md1']" (click)="helpExpanded['md1'] = true">
                       <span class="tag is-small is-light is-outlined">
                         <span class="icon">
-                          <i class="fa fa-question"></i>
+                          <i class="fa fa-question-circle"></i>
                         </span>
                         <span>More info</span>
                       </span>
                     </a>
                   </p>
                   <div *ngIf="helpExpanded['md1']" class="notification more-info">
-                    Enter a title that identifies your AI, in most cases the title of your paper or a part of it.
+                    <span class="icon">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                    <span>
+                      Enter a title that identifies your AI, in most cases the title of your paper or a part of it.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -92,14 +97,19 @@
                     <a *ngIf="!helpExpanded['md2']" (click)="helpExpanded['md2'] = true">
                       <span class="tag is-small is-light is-outlined">
                         <span class="icon">
-                          <i class="fa fa-question"></i>
+                          <i class="fa fa-question-circle"></i>
                         </span>
                         <span>More info</span>
                       </span>
                     </a>
                   </p>
                   <div *ngIf="helpExpanded['md2']" class="notification more-info">
-                    Briefly describe your AI in a couple of sentences, similar to an abstract of a paper.
+                    <span class="icon">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                    <span>
+                      Briefly describe your AI in a couple of sentences, similar to an abstract of a paper.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -119,14 +129,19 @@
                     <a *ngIf="!helpExpanded['md3a']" (click)="helpExpanded['md3a'] = true">
                       <span class="tag is-small is-light is-outlined">
                         <span class="icon">
-                          <i class="fa fa-question"></i>
+                          <i class="fa fa-question-circle"></i>
                         </span>
                         <span>More info</span>
                       </span>
                     </a>
                   </p>
                   <div *ngIf="helpExpanded['md3a']" class="notification more-info">
-                    Enter the name of the corresponding author, which is in most cases the lead author.
+                    <span class="icon">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                    <span>
+                      Enter the name of the corresponding author, which is in most cases the lead author.
+                    </span>
                   </div>
                   <div class="control">
                     <textarea class="input" name="author" placeholder="Institutional address" [(ngModel)]="questionnaire.authorAddress"></textarea>
@@ -144,15 +159,20 @@
                     <a *ngIf="!helpExpanded['md3e']" (click)="helpExpanded['md3e'] = true">
                       <span class="tag is-small is-light is-outlined">
                         <span class="icon">
-                          <i class="fa fa-question"></i>
+                          <i class="fa fa-question-circle"></i>
                         </span>
                         <span>More info</span>
                       </span>
                     </a>
                   </p>
                   <div *ngIf="helpExpanded['md3e']" class="notification more-info">
-                    Enter your <a href="https://orcid.org/" target="_blank">ORCID iD</a> which distinguishes you from
-                    every other researcher and reliably associates the AIMe report with you.
+                    <span class="icon">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                    <span>
+                      Enter your <a href="https://orcid.org/" target="_blank">ORCID iD</a> which distinguishes you from
+                      every other researcher and reliably associates the AIMe report with you.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -172,15 +192,20 @@
                     <a *ngIf="!helpExpanded['md4']" (click)="helpExpanded['md4'] = true">
                       <span class="tag is-small is-light is-outlined">
                         <span class="icon">
-                          <i class="fa fa-question"></i>
+                          <i class="fa fa-question-circle"></i>
                         </span>
                         <span>More info</span>
                       </span>
                     </a>
                   </p>
                   <div *ngIf="helpExpanded['md4']" class="notification more-info">
-                    If available, you should report the paper's <a href="https://www.doi.org/" target="_blank">DOI</a> here.
-                    Otherwise, also other stable URLs such as <a href="https://arxiv.org/" target="_blank">arXiv</a> identifiers are admissible.
+                    <span class="icon">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                    <span>
+                      If available, you should report the paper's <a href="https://www.doi.org/" target="_blank">DOI</a> here.
+                      Otherwise, also other stable URLs such as <a href="https://arxiv.org/" target="_blank">arXiv</a> identifiers are admissible.
+                    </span>
                   </div>
                 </div>
               </div>
@@ -203,16 +228,21 @@
                     <a *ngIf="!helpExpanded['md5']" (click)="helpExpanded['md5'] = true">
                       <span class="tag is-small is-light is-outlined">
                         <span class="icon">
-                          <i class="fa fa-question"></i>
+                          <i class="fa fa-question-circle"></i>
                         </span>
                         <span>More info</span>
                       </span>
                     </a>
                   </p>
                   <div *ngIf="helpExpanded['md5']" class="notification more-info">
-                    AIMe provides a database so that AIs can be found and compared. If you tick the box,
-                    your report can be found in the AIMe database.
-                    You can publish and unpublish your report later at any point.
+                    <span class="icon">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                    <span>
+                      AIMe provides a database so that AIs can be found and compared. If you tick the box,
+                      your report can be found in the AIMe database.
+                      You can publish and unpublish your report later at any point.
+                    </span>
                   </div>
                 </div>
               </div>
