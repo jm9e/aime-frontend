@@ -1,0 +1,10 @@
+@import 'variables';
+
+pre {
+  color: $aime;
+}
+
+button.is-aime {
+  background-color: $aime;
+  color: white;
+}

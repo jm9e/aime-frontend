@@ -15,11 +15,11 @@ export class QuestionnaireComponent implements OnInit {
 
   public step = 1;
   public questionnaire = createQuestionnaire();
-  public submitted = false;
-  public id = '';
-  public password = '';
+  public submitted = true;
+  public id = 'tztztr';
+  public password = 'hgf';
   public generatingPDF = false;
-  public displayPDF = false;
+  public displayPDF = true;
   public email = '';
   public attachReport = true;
   public revising = false;

@@ -14,20 +14,50 @@
 
     <div id="navbarMain" class="navbar-menu" [ngClass]="{'is-active': navbarToggle}">
       <div class="navbar-start">
-        <a routerLink="/" class="navbar-item">
-          Start
+        <a routerLink="/" class="navbar-item" [routerLinkActive]="['is-active']" [routerLinkActiveOptions]="{exact: true}">
+          <span class="icon">
+            <i class="fad fa-home" aria-hidden="true"></i>
+          </span>
+          <span>
+            Start
+          </span>
         </a>
 
-        <a routerLink="/questionnaire" class="navbar-item">
-          New report
+        <a routerLink="/questionnaire" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-file-edit"></i>
+          </span>
+          <span>
+            New report
+          </span>
         </a>
 
-        <a routerLink="/database" class="navbar-item">
-          Database
+        <a routerLink="/database" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-file-chart-line"></i>
+          </span>
+          <span>
+            Database
+          </span>
+        </a>
+      </div>
+      <div class="navbar-end">
+        <a routerLink="/reference" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-link"></i>
+          </span>
+          <span>
+            Reference
+          </span>
         </a>
 
-        <a routerLink="/about" class="navbar-item">
-          About
+        <a routerLink="/about" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-info-square"></i>
+          </span>
+          <span>
+            About
+          </span>
         </a>
       </div>
     </div>
@@ -44,8 +74,26 @@
       <img src="/assets/logo.png" style="height: 42px">
     </p>
     <p>
-      <a href="{{'url' | env}}">{{'domainDisplay' | env}}</a> |
-      <a routerLink="/about">About</a>
+      <a href="{{'url' | env}}">{{'domainDisplay' | env}}</a>
+    </p>
+    <p>
+      <a routerLink="/reference">
+        <span class="is-icon">
+          <i class="fa fa-link"></i>
+        </span>
+        <span>
+          Reference
+        </span>
+      </a>
+      &mdash;
+      <a routerLink="/about">
+        <span class="is-icon">
+          <i class="fa fa-info-square"></i>
+        </span>
+        <span>
+          About
+        </span>
+      </a>
     </p>
   </div>
 </footer>

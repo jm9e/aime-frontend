@@ -3,7 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {QuestionnaireComponent} from './pages/questionnaire/questionnaire.component';
 import {IndexComponent} from './pages/index/index.component';
 import {DatabaseComponent} from './pages/database/database.component';
-import { AboutComponent } from './pages/about/about.component';
+import {AboutComponent} from './pages/about/about.component';
+import {ReferenceComponent} from './pages/reference/reference.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'database',
     component: DatabaseComponent,
+  },
+  {
+    path: 'reference',
+    component: ReferenceComponent,
   },
   {
     path: 'about',

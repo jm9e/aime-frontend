@@ -4,8 +4,17 @@
   cursor: pointer;
 }
 
-.is-selected {
-  color: $aime;
+.step-title {
+  &.is-selected {
+    color: $aime;
+
+    &::before {
+      content: '[';
+    }
+    &::after {
+      content: ']';
+    }
+  }
 }
 
 code {
@@ -44,4 +53,8 @@ code {
 
 textarea {
   height: 72px;
+}
+
+.help.subfield {
+  margin-bottom: 10px;
 }

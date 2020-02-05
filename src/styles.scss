@@ -1,4 +1,19 @@
+@import 'variables';
+
 @import '~bulma';
 @import '~bulma-steps';
 
 /* You can add global styles to this file, and also import other style files */
+
+.steps.is-aime {
+  .step-item {
+    .step-marker {
+      border-color: $aime;
+      color: $aime;
+    }
+
+    &::before {
+      background: $aime;
+    }
+  }
+}

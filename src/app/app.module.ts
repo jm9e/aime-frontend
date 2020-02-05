@@ -10,6 +10,7 @@ import { EnvPipe } from './pipes/env.pipe';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
+import { ReferenceComponent } from './pages/reference/reference.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AboutComponent } from './pages/about/about.component';
     EnvPipe,
     DatabaseComponent,
     AboutComponent,
+    ReferenceComponent,
   ],
   imports: [
     HttpClientModule,

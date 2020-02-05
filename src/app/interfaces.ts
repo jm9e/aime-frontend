@@ -14,7 +14,10 @@ export interface IDataset {
 export interface IQuestionnaire {
   title: string; // MD.1
   description: string; // MD.2
-  author: string; // MD.3
+  authorName: string; // MD.3
+  authorAddress: string; // MD.3
+  authorEmail: string; // MD.3
+  authorORCID: string; // MD.3
   url: string; // MD.4
   public: boolean; // MD.5
 
@@ -55,7 +58,10 @@ export interface IReport {
 
 export function createQuestionnaire(): IQuestionnaire {
   return {
-    author: '',
+    authorAddress: '',
+    authorEmail: '',
+    authorName: '',
+    authorORCID: '',
     availability: '',
     category: '',
     confoundingFactors: '',
