@@ -50,16 +50,16 @@
         url=&#123;https://aime-standard.org/report/{{id}}.pdf&#125;,
         year=&#123;2020&#125;,
 &#125;
-</span>
-@manual&#123;aime,
+
+</span>@manual&#123;aime,
         title=&#123;AIMe minimal information standard on artificial intelligence in biomedicine&#125;,
         author=&#123;...&#125;,
         url=&#123;https://aime-standard.org&#125;,
         year=&#123;2020&#125;,
 &#125;</pre>
-      <pre *ngIf="format === 'html'">&lt;a href="https://aime-standard.org/report/{{id}}.pdf"&gt;AIMe report {{id}}&lt;/a&gt;
+      <pre *ngIf="format === 'html'"><span *ngIf="id">&lt;a href="https://aime-standard.org/report/{{id}}.pdf"&gt;AIMe report {{id}}&lt;/a&gt;
 
-&lt;a href="https://aime-standard.org"&gt;AIMe minimal information standard on artificial intelligence in biomedicine&lt;/a&gt;</pre>
+</span>&lt;a href="https://aime-standard.org"&gt;AIMe minimal information standard on artificial intelligence in biomedicine&lt;/a&gt;</pre>
     </div>
   </div>
 </section>

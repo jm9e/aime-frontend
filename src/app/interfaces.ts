@@ -1,12 +1,14 @@
 export interface IDataset {
   clinical: 'clinical' | 'omics'; // D.1
   type: string; // D.2
-  synthetic: string; // D.3
+  synthetic: 'synthetic' | 'real'; // D.3
+  syntheticAvailable: string; // D.3
   availability: string; // D.4
   training: boolean; // D.5
   bias: string; // D.6
   biasAddressed: string; // D.7
   samples: string; // D.8
+  features: string; // D.8
   normalized: string; // D.9
   preprocessing: string; // D.10
 }
@@ -41,6 +43,7 @@ export interface IQuestionnaire {
   sourceCode: string; // R.2
   dependencies: string; // R.3
   operatingSystem: string; // R.4
+  hardwareSpecs: string; // R.4
   highPerformance: string; // R.5
 }
 
@@ -58,6 +61,7 @@ export interface IReport {
 
 export function createQuestionnaire(): IQuestionnaire {
   return {
+    hardwareSpecs: '',
     authorAddress: '',
     authorEmail: '',
     authorName: '',
@@ -91,6 +95,7 @@ export function createQuestionnaire(): IQuestionnaire {
 
 export function createDataset(): IDataset {
   return {
+    features: '',
     availability: '',
     bias: '',
     biasAddressed: '',
@@ -98,8 +103,9 @@ export function createDataset(): IDataset {
     normalized: '',
     preprocessing: '',
     samples: '',
-    synthetic: '',
+    synthetic: 'real',
+    syntheticAvailable: '',
     training: false,
-    type: '',
+    type: ''
   };
 }

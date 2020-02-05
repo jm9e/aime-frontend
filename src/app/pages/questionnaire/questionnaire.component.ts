@@ -41,6 +41,8 @@ export class QuestionnaireComponent implements OnInit {
   public sourceCodeTicked = false;
   public highperformanceTicked = false;
 
+  public helpExpanded = {};
+
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
 
