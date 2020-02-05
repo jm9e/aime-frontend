@@ -21,6 +21,7 @@ export class QuestionnaireComponent implements OnInit {
   public generatingPDF = false;
   public displayPDF = false;
   public email = '';
+  public emailChanged = false;
   public attachReport = true;
   public revising = false;
 
@@ -60,6 +61,14 @@ export class QuestionnaireComponent implements OnInit {
         });
       }
     });
+  }
+
+  public updateEmail() {
+    if (this.emailChanged) {
+      // In this case, the author already has entered something. We don't want to override this.
+      return;
+    }
+    this.email = this.questionnaire.authorEmail;
   }
 
   public stepComplete(step: number): boolean {
