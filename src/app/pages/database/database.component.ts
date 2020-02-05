@@ -44,6 +44,9 @@ export class DatabaseComponent implements OnInit {
   }
 
   public search() {
+    if (!this.query.getValue()) {
+      return;
+    }
     this.http.get<any>(`/api/search?q=${escape(this.query.getValue())}&f=${this.getFields()}`).subscribe((resp) => {
       this.resultsCount = resp.count;
       this.results = resp.results.map((result) => {
