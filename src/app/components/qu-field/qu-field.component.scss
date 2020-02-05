@@ -1,5 +1,17 @@
 .help {
   margin-bottom: 10px;
+
+  a.is-pulled-right {
+    margin-bottom: 10px;
+  }
+
+  &.expanded {
+    margin-bottom: 3px;
+
+    a {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .condfield {
@@ -8,8 +20,4 @@
 
 .more-info {
   margin-bottom: 15px;
-}
-
-a.is-pulled-right {
-  margin-bottom: 10px;
 }

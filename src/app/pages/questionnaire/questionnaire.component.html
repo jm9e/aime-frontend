@@ -2,40 +2,40 @@
   <div class="container">
     <div class="steps is-aime" *ngIf="!submitted">
 
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(1)}" (click)="goToStep(1)">
+      <div class="step-item" [ngClass]="{'is-active': stepComplete(1), 'is-selected': step === 1}" (click)="goToStep(1)">
         <div class="step-marker">1</div>
         <div class="step-details">
-          <p class="step-title" [ngClass]="{'is-selected': step === 1}">Metadata</p>
+          <p class="step-title">Metadata</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(2)}" (click)="goToStep(2)">
+      <div class="step-item" [ngClass]="{'is-active': stepComplete(2), 'is-selected': step === 2}" (click)="goToStep(2)">
         <div class="step-marker is-aime">2</div>
         <div class="step-details">
-          <p class="step-title" [ngClass]="{'is-selected': step === 2}">Purpose</p>
+          <p class="step-title">Purpose</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(3)}" (click)="goToStep(3)">
+      <div class="step-item" [ngClass]="{'is-active': stepComplete(3), 'is-selected': step === 3}" (click)="goToStep(3)">
         <div class="step-marker is-aime">3</div>
         <div class="step-details">
-          <p class="step-title" [ngClass]="{'is-selected': step === 3}">Data</p>
+          <p class="step-title">Data</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(4)}" (click)="goToStep(4)">
+      <div class="step-item" [ngClass]="{'is-active': stepComplete(4), 'is-selected': step === 4}" (click)="goToStep(4)">
         <div class="step-marker">4</div>
         <div class="step-details">
-          <p class="step-title" [ngClass]="{'is-selected': step === 4}">Method</p>
+          <p class="step-title">Method</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(5)}" (click)="goToStep(5)">
+      <div class="step-item" [ngClass]="{'is-active': stepComplete(5), 'is-selected': step === 5}" (click)="goToStep(5)">
         <div class="step-marker">5</div>
         <div class="step-details">
-          <p class="step-title" [ngClass]="{'is-selected': step === 5}">Reproducibility</p>
+          <p class="step-title">Reproducibility</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(6)}" (click)="goToStep(6)">
+      <div class="step-item" [ngClass]="{'is-active': stepComplete(6), 'is-selected': step === 6}" (click)="goToStep(6)">
         <div class="step-marker">6</div>
         <div class="step-details">
-          <p class="step-title" [ngClass]="{'is-selected': step === 6}">Review & Submit</p>
+          <p class="step-title">Review & Submit</p>
         </div>
       </div>
 

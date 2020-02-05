@@ -1,7 +1,7 @@
 <div class="control">
   <ng-content select="[qu-field]"></ng-content>
 </div>
-<p class="help has-text-left">
+<p class="help has-text-left" [ngClass]="{'expanded': expanded}">
   <span>
     {{title}}
   </span>

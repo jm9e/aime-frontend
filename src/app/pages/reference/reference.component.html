@@ -5,29 +5,41 @@
         <div class="field-body">
           <div class="field">
             <div class="field has-addons">
-              <p class="control">
+              <div class="control">
                 <button class="button" [ngClass]="{'is-aime': format === 'bibtex', 'is-light': format != 'bibtex'}" (click)="format = 'bibtex'">
                   <span class="icon is-small">
                     <i class="fas fa-brackets-curly"></i>
                   </span>
                   <span>BibTeX</span>
                 </button>
-              </p>
-              <p class="control">
+              </div>
+              <div class="control">
                 <button class="button" [ngClass]="{'is-aime': format === 'html', 'is-light': format != 'html'}" (click)="format = 'html'">
                   <span class="icon is-small">
                     <i class="fas fa-code"></i>
                   </span>
                   <span>HTML</span>
                 </button>
-              </p>
-              <p class="control">
-                <input class="input" placeholder="Your AIMe report ID"  [(ngModel)]="id"/>
-              </p>
+              </div>
+              <div class="control">
+                <input class="input" placeholder="AIMe report ID"  [(ngModel)]="id"/>
+                <p class="help">
+                  AIMe report ID.
+                </p>
+              </div>
+              <div class="control">
+                <input class="input" placeholder="AIMe report author"  [(ngModel)]="author"/>
+                <p class="help">
+                  AIMe report author.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <p *ngIf="!id || !author">
+        Enter an AIMe report id and author above to generate a citable reference.
+      </p>
     </div>
   </div>
 </section>
@@ -38,15 +50,15 @@
       Referencing AIMe report {{id}}
     </h1>
     <h1 class="title is-4" *ngIf="!id">
-      Referencing AIMe report
+      Referencing the AIMe standard
     </h1>
     <div class="content">
       <p>
         You can use the code below to reference your AIMe report.
       </p>
-      <pre *ngIf="format === 'bibtex'"><span *ngIf="id">@manual&#123;report{{id}},
+      <pre *ngIf="format === 'bibtex'"><span *ngIf="id && author">@manual&#123;report{{id}},
         title=&#123;AIMe Report {{id}}&#125;,
-        author=&#123;AIMe minimal information standard on artificial intelligence in biomedicine&#125;,
+        author={{'{' + author + '}' }},
         url=&#123;https://aime-standard.org/report/{{id}}.pdf&#125;,
         year=&#123;2020&#125;,
 &#125;

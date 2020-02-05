@@ -4,15 +4,21 @@
   cursor: pointer;
 }
 
-.step-title {
-  &.is-selected {
-    color: $aime;
-
-    &::before {
-      content: '[';
+.steps.is-aime {
+  .step-item.is-selected {
+    .step-marker {
+      background-color: lightgray;
     }
-    &::after {
-      content: ']';
+
+    .step-title {
+      // color: $aime;
+
+      //&::before {
+      //  content: '[';
+      //}
+      //&::after {
+      //  content: ']';
+      //}
     }
   }
 }

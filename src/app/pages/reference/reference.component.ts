@@ -10,6 +10,7 @@ export class ReferenceComponent implements OnInit {
 
   public format = 'bibtex';
   public id = '';
+  public author = '';
 
   constructor(private route: ActivatedRoute) { }
 
