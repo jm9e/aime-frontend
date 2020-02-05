@@ -50,163 +50,93 @@
             </div>
           </header>
           <div class="card-content">
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">MD.1</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
-                  </div>
-                  <p class="help has-text-left">
-                    Title of the AI.
-                    <a *ngIf="!helpExpanded['md1']" (click)="helpExpanded['md1'] = true">
-                      <span class="tag is-small is-light is-outlined">
-                        <span class="icon">
-                          <i class="fa fa-question-circle"></i>
-                        </span>
-                        <span>More info</span>
-                      </span>
-                    </a>
-                  </p>
-                  <div *ngIf="helpExpanded['md1']" class="notification more-info">
-                    <span class="icon">
-                      <i class="fa fa-info-circle"></i>
+                  <app-qu-field title="Title of the AI." [description]="true">
+                    <span qu-field>
+                      <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
                     </span>
-                    <span>
+                    <span qu-description>
                       Enter a title that identifies your AI, in most cases the title of your paper or a part of it.
                     </span>
-                  </div>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">MD.2</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="description" placeholder="Description" [(ngModel)]="questionnaire.description"></textarea>
-                  </div>
-                  <p class="help has-text-left">
-                    Short description of the AI.
-                    <a *ngIf="!helpExpanded['md2']" (click)="helpExpanded['md2'] = true">
-                      <span class="tag is-small is-light is-outlined">
-                        <span class="icon">
-                          <i class="fa fa-question-circle"></i>
-                        </span>
-                        <span>More info</span>
-                      </span>
-                    </a>
-                  </p>
-                  <div *ngIf="helpExpanded['md2']" class="notification more-info">
-                    <span class="icon">
-                      <i class="fa fa-info-circle"></i>
+                  <app-qu-field title="Short description of the AI." [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="description" placeholder="Description" [(ngModel)]="questionnaire.description"></textarea>
                     </span>
-                    <span>
+                    <span qu-description>
                       Briefly describe your AI in a couple of sentences, similar to an abstract of a paper.
                     </span>
-                  </div>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">MD.3</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <input class="input" name="author" type="text" placeholder="Name" [(ngModel)]="questionnaire.authorName">
-                  </div>
-                  <p class="help has-text-left">
-                    Name of the corresponding author.
-                    <a *ngIf="!helpExpanded['md3a']" (click)="helpExpanded['md3a'] = true">
-                      <span class="tag is-small is-light is-outlined">
-                        <span class="icon">
-                          <i class="fa fa-question-circle"></i>
-                        </span>
-                        <span>More info</span>
-                      </span>
-                    </a>
-                  </p>
-                  <div *ngIf="helpExpanded['md3a']" class="notification more-info">
-                    <span class="icon">
-                      <i class="fa fa-info-circle"></i>
+                  <app-qu-field title="Name of the corresponding author." [description]="true">
+                    <span qu-field>
+                      <input class="input" name="author" type="text" placeholder="Name" [(ngModel)]="questionnaire.authorName">
                     </span>
-                    <span>
+                    <span qu-description>
                       Enter the name of the corresponding author, which is in most cases the lead author.
                     </span>
-                  </div>
-                  <div class="control">
-                    <textarea class="input" name="author" placeholder="Institutional address" [(ngModel)]="questionnaire.authorAddress"></textarea>
-                  </div>
-                  <p class="help has-text-left">Institutional address.</p>
-                  <div class="control">
-                    <input class="input" name="author" type="email" placeholder="Email address" [(ngModel)]="questionnaire.authorEmail" (ngModelChange)="updateEmail()">
-                  </div>
-                  <p class="help has-text-left">Email address.</p>
-                  <div class="control">
-                    <input class="input" name="author" type="text" placeholder="ORCID iD" [(ngModel)]="questionnaire.authorORCID">
-                  </div>
-                  <p class="help has-text-left">
-                    ORCID iD.
-                    <a *ngIf="!helpExpanded['md3e']" (click)="helpExpanded['md3e'] = true">
-                      <span class="tag is-small is-light is-outlined">
-                        <span class="icon">
-                          <i class="fa fa-question-circle"></i>
-                        </span>
-                        <span>More info</span>
-                      </span>
-                    </a>
-                  </p>
-                  <div *ngIf="helpExpanded['md3e']" class="notification more-info">
-                    <span class="icon">
-                      <i class="fa fa-info-circle"></i>
+                  </app-qu-field>
+                  <app-qu-field title="Institutional address.">
+                    <span qu-field>
+                      <textarea class="input" name="author" placeholder="Institutional address" [(ngModel)]="questionnaire.authorAddress"></textarea>
                     </span>
-                    <span>
+                    <span qu-description></span>
+                  </app-qu-field>
+                  <app-qu-field title="Email address.">
+                    <span qu-field>
+                      <input class="input" name="author" type="email" placeholder="Email address" [(ngModel)]="questionnaire.authorEmail" (ngModelChange)="updateEmail()">
+                    </span>
+                    <span qu-description></span>
+                  </app-qu-field>
+                  <app-qu-field title="ORCID iD." [description]="true">
+                    <span qu-field>
+                      <input class="input" name="author" type="text" placeholder="ORCID iD" [(ngModel)]="questionnaire.authorORCID">
+                    </span>
+                    <span qu-description>
                       Enter your <a href="https://orcid.org/" target="_blank">ORCID iD</a> which distinguishes you from
                       every other researcher and reliably associates the AIMe report with you.
                     </span>
-                  </div>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">MD.4</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
-                  </div>
-                  <p class="help has-text-left">
-                    Stable URL to a paper where the AI is described (optional).
-                    <a *ngIf="!helpExpanded['md4']" (click)="helpExpanded['md4'] = true">
-                      <span class="tag is-small is-light is-outlined">
-                        <span class="icon">
-                          <i class="fa fa-question-circle"></i>
-                        </span>
-                        <span>More info</span>
-                      </span>
-                    </a>
-                  </p>
-                  <div *ngIf="helpExpanded['md4']" class="notification more-info">
-                    <span class="icon">
-                      <i class="fa fa-info-circle"></i>
+                  <app-qu-field title="Stable URL to a paper where the AI is described (optional)." [description]="true">
+                    <span qu-field>
+                      <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
                     </span>
-                    <span>
+                    <span qu-description>
                       If available, you should report the paper's <a href="https://www.doi.org/" target="_blank">DOI</a> here.
                       Otherwise, also other stable URLs such as <a href="https://arxiv.org/" target="_blank">arXiv</a> identifiers are admissible.
                     </span>
-                  </div>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
@@ -217,33 +147,19 @@
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="public" [(ngModel)]="questionnaire.public">
-                      Make public and include in database
-                    </label>
-                  </div>
-                  <p class="help has-text-left">
-                    Specification of whether the AIMe database entry should be public or private.
-                    <a *ngIf="!helpExpanded['md5']" (click)="helpExpanded['md5'] = true">
-                      <span class="tag is-small is-light is-outlined">
-                        <span class="icon">
-                          <i class="fa fa-question-circle"></i>
-                        </span>
-                        <span>More info</span>
-                      </span>
-                    </a>
-                  </p>
-                  <div *ngIf="helpExpanded['md5']" class="notification more-info">
-                    <span class="icon">
-                      <i class="fa fa-info-circle"></i>
+                  <app-qu-field title="Specification of whether the AIMe database entry should be public or private." [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="public" [(ngModel)]="questionnaire.public">
+                        Make public and include in database
+                      </label>
                     </span>
-                    <span>
-                      AIMe provides a database so that AIs can be found and compared. If you tick the box,
-                      your report can be found in the AIMe database.
+                    <span qu-description>
+                      AIMe provides a <a routerLink="/database" target="_blank">database</a> so that AIs can be found
+                      and compared. If you tick the box, your report can be found in the AIMe database.
                       You can publish and unpublish your report later at any point.
                     </span>
-                  </div>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
