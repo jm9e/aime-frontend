@@ -36,10 +36,15 @@ export class DatabaseComponent implements OnInit {
   private getFields(): string {
     let fields = '';
     fields += this.searchMetadata ? '1' : '0';
+    fields += ',';
     fields += this.searchPurpose ? '1' : '0';
+    fields += ',';
     fields += this.searchData ? '1' : '0';
+    fields += ',';
     fields += this.searchMethod ? '1' : '0';
+    fields += ',';
     fields += this.searchReproducibility ? '1' : '0';
+    fields += ',';
     return fields;
   }
 
