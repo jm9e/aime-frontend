@@ -7,8 +7,8 @@ export interface IDataset {
   training: boolean; // D.5
   bias: string; // D.6
   biasAddressed: string; // D.7
-  samples: string; // D.8
-  features: string; // D.8
+  samples: string; // D.8a
+  features: string; // D.8b
   normalized: string; // D.9
   preprocessing: string; // D.10
 }

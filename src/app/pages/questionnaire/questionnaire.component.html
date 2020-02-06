@@ -8,13 +8,13 @@
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(2), 'is-selected': step === 2}" (click)="goToStep(2)">
-        <div class="step-marker is-aime"><i class="fad fa-bullseye-arrow"></i></div>
+        <div class="step-marker"><i class="fad fa-bullseye-arrow"></i></div>
         <div class="step-details">
           <p class="step-title">Purpose</p>
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(3), 'is-selected': step === 3}" (click)="goToStep(3)">
-        <div class="step-marker is-aime"><i class="fad fa-database"></i></div>
+        <div class="step-marker"><i class="fad fa-database"></i></div>
         <div class="step-details">
           <p class="step-title">Data</p>
         </div>
@@ -968,7 +968,7 @@
           </p>
           <br>
           <p>
-            <a [routerLink]="['/reference']" [queryParams]="{id: id}" target="_blank">More information on how to reference your report.</a>
+            <a [routerLink]="['/reference']" [queryParams]="{id: id, author: questionnaire.authorName}" target="_blank">More information on how to reference your report.</a>
           </p>
           <br>
           <p>
