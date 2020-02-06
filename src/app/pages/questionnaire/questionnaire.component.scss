@@ -9,17 +9,6 @@
     .step-marker {
       background-color: lightgray;
     }
-
-    .step-title {
-      // color: $aime;
-
-      //&::before {
-      //  content: '[';
-      //}
-      //&::after {
-      //  content: ']';
-      //}
-    }
   }
 }
 
@@ -59,4 +48,8 @@ code {
 
 textarea {
   height: 72px;
+}
+
+.input {
+  margin-top: 7px;
 }

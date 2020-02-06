@@ -1,46 +1,43 @@
 <section class="section">
   <div class="container">
     <div class="steps is-aime" *ngIf="!submitted">
-
       <div class="step-item" [ngClass]="{'is-active': stepComplete(1), 'is-selected': step === 1}" (click)="goToStep(1)">
-        <div class="step-marker">1</div>
+        <div class="step-marker"><i class="fad fa-at"></i></div>
         <div class="step-details">
           <p class="step-title">Metadata</p>
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(2), 'is-selected': step === 2}" (click)="goToStep(2)">
-        <div class="step-marker is-aime">2</div>
+        <div class="step-marker is-aime"><i class="fad fa-bullseye-arrow"></i></div>
         <div class="step-details">
           <p class="step-title">Purpose</p>
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(3), 'is-selected': step === 3}" (click)="goToStep(3)">
-        <div class="step-marker is-aime">3</div>
+        <div class="step-marker is-aime"><i class="fad fa-database"></i></div>
         <div class="step-details">
           <p class="step-title">Data</p>
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(4), 'is-selected': step === 4}" (click)="goToStep(4)">
-        <div class="step-marker">4</div>
+        <div class="step-marker"><i class="fad fa-function"></i></div>
         <div class="step-details">
           <p class="step-title">Method</p>
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(5), 'is-selected': step === 5}" (click)="goToStep(5)">
-        <div class="step-marker">5</div>
+        <div class="step-marker"><i class="fad fa-redo"></i></div>
         <div class="step-details">
           <p class="step-title">Reproducibility</p>
         </div>
       </div>
       <div class="step-item" [ngClass]="{'is-active': stepComplete(6), 'is-selected': step === 6}" (click)="goToStep(6)">
-        <div class="step-marker">6</div>
+        <div class="step-marker"><i class="fad fa-check"></i></div>
         <div class="step-details">
           <p class="step-title">Review & Submit</p>
         </div>
       </div>
-
       <div class="steps-content">
-
         <div class="step-content card" [ngClass]="{'is-active': step === 1}">
           <header class="card-header">
             <div class="card-header-title">
@@ -56,6 +53,7 @@
               </div>
               <div class="field-body">
                 <div class="field">
+                  <!-- MD.1 -->
                   <app-qu-field title="Title of the AI." [description]="true">
                     <span qu-field>
                       <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
@@ -73,6 +71,7 @@
               </div>
               <div class="field-body">
                 <div class="field">
+                  <!-- MD.2 -->
                   <app-qu-field title="Short description of the AI." [description]="true">
                     <span qu-field>
                       <textarea class="input" name="description" placeholder="Description" [(ngModel)]="questionnaire.description"></textarea>
@@ -90,6 +89,7 @@
               </div>
               <div class="field-body">
                 <div class="field">
+                  <!-- MD.3a -->
                   <app-qu-field title="Name of the corresponding author." [description]="true">
                     <span qu-field>
                       <input class="input" name="author" type="text" placeholder="Name" [(ngModel)]="questionnaire.authorName">
@@ -98,18 +98,21 @@
                       Enter the name of the corresponding author, which is in most cases the lead author.
                     </span>
                   </app-qu-field>
+                  <!-- MD.3b -->
                   <app-qu-field title="Institutional address.">
                     <span qu-field>
                       <textarea class="input" name="author" placeholder="Institutional address" [(ngModel)]="questionnaire.authorAddress"></textarea>
                     </span>
                     <span qu-description></span>
                   </app-qu-field>
+                  <!-- MD.3c -->
                   <app-qu-field title="Email address.">
                     <span qu-field>
                       <input class="input" name="author" type="email" placeholder="Email address" [(ngModel)]="questionnaire.authorEmail" (ngModelChange)="updateEmail()">
                     </span>
                     <span qu-description></span>
                   </app-qu-field>
+                  <!-- MD.3d -->
                   <app-qu-field title="ORCID iD." [description]="true">
                     <span qu-field>
                       <input class="input" name="author" type="text" placeholder="ORCID iD" [(ngModel)]="questionnaire.authorORCID">
@@ -128,6 +131,7 @@
               </div>
               <div class="field-body">
                 <div class="field">
+                  <!-- MD.4 -->
                   <app-qu-field title="Stable URL to a paper where the AI is described (optional)." [description]="true">
                     <span qu-field>
                       <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
@@ -140,13 +144,13 @@
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">MD.5</label>
               </div>
               <div class="field-body">
                 <div class="field">
+                  <!-- MD.5 -->
                   <app-qu-field title="Specification of whether the AIMe database entry should be public or private." [description]="true">
                     <span qu-field>
                       <label class="checkbox">
@@ -163,10 +167,8 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-
         <div class="step-content card" [ngClass]="{'is-active': step === 2}">
           <header class="card-header">
             <div class="card-header-title">
@@ -176,56 +178,66 @@
             </div>
           </header>
           <div class="card-content">
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">P.1</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="purpose" placeholder="Purpose" [(ngModel)]="questionnaire.purpose"></textarea>
-                  </div>
-                  <p class="help has-text-left">What is your AI designed to learn or predict?</p>
+                  <!-- P.1 -->
+                  <app-qu-field title="What is your AI designed to learn or predict?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="purpose" placeholder="Purpose" [(ngModel)]="questionnaire.purpose"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">P.2</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="surrogateTicked" (ngModelChange)="questionnaire.surrogate = ''">
-                      Predicts surrogate marker
-                    </label>
-                    <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="surrogateTicked"></textarea>
-                  </div>
-                  <p class="help has-text-left">Does your AI predict a surrogate marker? If so, what does it represent?</p>
+                  <!-- P.2 -->
+                  <app-qu-field title="Does your AI predict a surrogate marker? If so, what does it represent?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['p2']" (ngModelChange)="questionnaire.surrogate = ''">
+                        Predicts surrogate marker
+                      </label>
+                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="fieldExpanded['p2']"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">P.3</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <input class="input" name="category" type="text" placeholder="Category" [(ngModel)]="questionnaire.category">
-                  </div>
-                  <p class="help has-text-left">To which category does your AI problem belong?</p>
+                  <!-- P.3 -->
+                  <app-qu-field title="To which category does your AI problem belong?" [description]="true">
+                    <span qu-field>
+                      <input class="input" name="category" type="text" placeholder="Category" [(ngModel)]="questionnaire.category">
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-
         <div class="step-content card" [ngClass]="{'is-active': step === 3}">
           <header class="card-header">
             <div class="card-header-title">
@@ -234,9 +246,9 @@
               </h2>
             </div>
           </header>
-          <div class="card-content has-text-centered">
+          <div class="card-content">
             <div *ngFor="let dataset of questionnaire.datasets; let i = index;" class="dataset">
-              <h2 class="title is-4">Dataset #{{i + 1}}</h2>
+              <h2 class="title is-4 has-text-centered">Dataset #{{i + 1}}</h2>
               <div class="has-text-right">
                 <button class="button is-danger is-small" (click)="removeDataset(i)">
                   <span class="icon">
@@ -246,185 +258,230 @@
                 </button>
               </div>
               <br>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.1</label>
                 </div>
                 <div class="field-body has-text-left">
                   <div class="field">
-                    <div class="select">
-                      <select name="clinical" [(ngModel)]="dataset.clinical">
-                        <option [value]="'clinical'">Clinical data</option>
-                        <option [value]="'omics'">Omics data</option>
-                      </select>
-                    </div>
-                    <p class="help has-text-left">Does this dataset contain clinical data or omics data?</p>
+                    <!-- D.1 -->
+                    <app-qu-field title="Does this dataset contain clinical data or omics data?" [description]="true">
+                      <span qu-field>
+                        <div class="select">
+                          <select name="clinical" [(ngModel)]="dataset.clinical">
+                            <option [value]="'clinical'">Clinical data</option>
+                            <option [value]="'omics'">Omics data</option>
+                          </select>
+                        </div>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.2</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <input class="input" name="type" type="text" placeholder="Type of data" [(ngModel)]="dataset.type">
-                    </div>
-                    <p class="help has-text-left">What is the type of the data?</p>
+                    <!-- D.2 -->
+                    <app-qu-field title="What is the type of the data?" [description]="true">
+                      <span qu-field>
+                        <input class="input" name="type" type="text" placeholder="Type of data" [(ngModel)]="dataset.type">
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.3</label>
                 </div>
                 <div class="field-body has-text-left">
                   <div class="field">
-                    <div class="select">
-                      <select name="clinical" [(ngModel)]="dataset.synthetic">
-                        <option [value]="'real'">Real data</option>
-                        <option [value]="'synthetic'">Synthetic data</option>
-                      </select>
-                    </div>
-                    <div class="control condfield" *ngIf="dataset.synthetic === 'synthetic'">
-                      <input class="input" name="synthetic" type="text" placeholder="Availability of the simulator" [(ngModel)]="dataset.syntheticAvailable">
-                    </div>
-                    <p class="help has-text-left">Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?</p>
+                    <!-- D.3 -->
+                    <app-qu-field title="Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?" [description]="true">
+                      <span qu-field>
+                        <div class="select">
+                          <select name="clinical" [(ngModel)]="dataset.synthetic">
+                            <option [value]="'real'">Real data</option>
+                            <option [value]="'synthetic'">Synthetic data</option>
+                          </select>
+                        </div>
+                        <div class="control condfield" *ngIf="dataset.synthetic === 'synthetic'">
+                          <input class="input" name="synthetic" type="text" placeholder="Availability of the simulator" [(ngModel)]="dataset.syntheticAvailable">
+                        </div>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.4</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <div class="control">
+                    <!-- D.4 -->
+                    <app-qu-field title="Is the data publicly available? If so, where?" [description]="true">
+                      <span qu-field>
                         <label class="checkbox">
                           <input type="checkbox" name="training" [(ngModel)]="dataAvailableTicked[i]">
                           Publicly available
                         </label>
-                      </div>
-                      <input class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="dataAvailableTicked[i]">
-                    </div>
-                    <p class="help has-text-left">Is the data publicly available? If so, where?</p>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.5</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <label class="checkbox">
-                        <input type="checkbox" name="training" [(ngModel)]="dataset.training">
-                        Used for training
-                      </label>
-                    </div>
-                    <p class="help has-text-left">Is this data used for training?</p>
+                    <!-- D.5 -->
+                    <app-qu-field title="Is this data used for training?" [description]="true">
+                      <span qu-field>
+                        <label class="checkbox">
+                          <input type="checkbox" name="training" [(ngModel)]="dataset.training">
+                          Used for training
+                        </label>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.6</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="biasTicked[i]" (ngModelChange)="dataset.bias = ''">
-                        Subject to biases
-                      </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]"></textarea>
-                    </div>
-                    <p class="help has-text-left">Is the data subject to biases? If so, to which?</p>
+                    <!-- D.6 -->
+                    <app-qu-field title="Is the data subject to biases? If so, to which?" [description]="true">
+                      <span qu-field>
+                        <label class="checkbox">
+                          <input type="checkbox" name="answer" [(ngModel)]="biasTicked[i]" (ngModelChange)="dataset.bias = ''">
+                          Subject to biases
+                        </label>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]"></textarea>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.7</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="biasAddressedTicked[i]" (ngModelChange)="dataset.biasAddressed = ''">
-                        Biases addressed
-                      </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="biasAddressedTicked[i]"></textarea>
-                    </div>
-                    <p class="help has-text-left">Did you address your data biases? If so, how?</p>
+                    <!-- D.7 -->
+                    <app-qu-field title="Did you address your data biases? If so, how?" [description]="true">
+                      <span qu-field>
+                        <label class="checkbox">
+                          <input type="checkbox" name="answer" [(ngModel)]="biasAddressedTicked[i]" (ngModelChange)="dataset.biasAddressed = ''">
+                          Biases addressed
+                        </label>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="biasAddressedTicked[i]"></textarea>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.8</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <input class="input" name="samples" placeholder="Number of samples" [(ngModel)]="dataset.samples">
-                    </div>
-                    <p class="help has-text-left">How many samples do you have?</p>
-                    <div class="control">
-                      <input class="input" name="features" placeholder="Number of features" [(ngModel)]="dataset.features">
-                    </div>
-                    <p class="help has-text-left">How many features do you have?</p>
+                    <!-- D.8a -->
+                    <app-qu-field title="How many samples do you have?" [description]="true">
+                      <span qu-field>
+                        <input class="input" name="samples" placeholder="Number of samples" [(ngModel)]="dataset.samples">
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
+                    <!-- D.8b -->
+                    <app-qu-field title="How many features do you have?" [description]="true">
+                      <span qu-field>
+                        <input class="input" name="features" placeholder="Number of features" [(ngModel)]="dataset.features">
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.9</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="normalizedTicked[i]" (ngModelChange)="dataset.normalized = ''">
-                        Normalized data
-                      </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="normalizedTicked[i]"></textarea>
-                    </div>
-                    <p class="help has-text-left">Did you normalize your data? If so, how?</p>
+                    <!-- D.9 -->
+                    <app-qu-field title="Did you normalize your data? If so, how?" [description]="true">
+                      <span qu-field>
+                        <label class="checkbox">
+                          <input type="checkbox" name="answer" [(ngModel)]="normalizedTicked[i]" (ngModelChange)="dataset.normalized = ''">
+                          Normalized data
+                        </label>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="normalizedTicked[i]"></textarea>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.10</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <div class="control">
-                      <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="preprocessingTicked[i]" (ngModelChange)="dataset.preprocessing = ''">
-                        Pre-processed data
-                      </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="preprocessingTicked[i]"></textarea>
-                    </div>
-                    <p class="help has-text-left">Did you apply other pre-processing steps to your data? If so, which?</p>
+                    <!-- D10 -->
+                    <app-qu-field title="Did you apply other pre-processing steps to your data? If so, which?" [description]="true">
+                      <span qu-field>
+                        <label class="checkbox">
+                          <input type="checkbox" name="answer" [(ngModel)]="preprocessingTicked[i]" (ngModelChange)="dataset.preprocessing = ''">
+                          Pre-processed data
+                        </label>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="preprocessingTicked[i]"></textarea>
+                      </span>
+                      <span qu-description>
+                        ...
+                      </span>
+                    </app-qu-field>
                   </div>
                 </div>
               </div>
-
             </div>
             <div class="add-form">
               <button data-nav="next" class="button is-success" (click)="addDataset()">
@@ -436,7 +493,6 @@
             </div>
           </div>
         </div>
-
         <div class="step-content card" [ngClass]="{'is-active': step === 4}">
           <header class="card-header">
             <div class="card-header-title">
@@ -446,152 +502,186 @@
             </div>
           </header>
           <div class="card-content">
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.1</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <input class="input" name="method" type="text" placeholder="AI method" [(ngModel)]="questionnaire.method">
-                  </div>
-                  <p class="help has-text-left">Which AI method did you use?</p>
+                  <!-- M.1  -->
+                  <app-qu-field title="Which AI method did you use?" [description]="true">
+                    <span qu-field>
+                      <input class="input" name="method" type="text" placeholder="AI method" [(ngModel)]="questionnaire.method">
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.2</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="hyperparametersTicked" (ngModelChange)="questionnaire.hyperparameters = ''">
-                      Employs hyper-parameters
-                    </label>
-                    <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="hyperparametersTicked"></textarea>
-                  </div>
-                  <p class="help has-text-left">Does your method employ hyper-parameters? If so, which ones and how did you select them?</p>
+                  <!-- M.2 -->
+                  <app-qu-field title="Does your method employ hyper-parameters? If so, which ones and how did you select them?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="hyperparametersTicked" (ngModelChange)="questionnaire.hyperparameters = ''">
+                        Employs hyper-parameters
+                      </label>
+                      <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="hyperparametersTicked"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.3</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="testMetrics" placeholder="Test metrics" [(ngModel)]="questionnaire.testMetrics"></textarea>
-                  </div>
-                  <p class="help has-text-left">Which test metrics do you report?</p>
+                  <!-- M.3 -->
+                  <app-qu-field title="Which test metrics do you report?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="testMetrics" placeholder="Test metrics" [(ngModel)]="questionnaire.testMetrics"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.4</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="overfitting" placeholder="Overfitting" [(ngModel)]="questionnaire.overfitting"></textarea>
-                  </div>
-                  <p class="help has-text-left">How do you prevent overfitting?</p>
+                  <!-- M.4 -->
+                  <app-qu-field title="How do you prevent overfitting?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="overfitting" placeholder="Overfitting" [(ngModel)]="questionnaire.overfitting"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.5</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="validation" placeholder="Validation on independent data" [(ngModel)]="questionnaire.validation"></textarea>
-                  </div>
-                  <p class="help has-text-left">Did you validate your method on independent data, e.g. from a different cohort?</p>
+                  <!-- M.5 -->
+                  <app-qu-field title="Did you validate your method on independent data, e.g. from a different cohort?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="validation" placeholder="Validation on independent data" [(ngModel)]="questionnaire.validation"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.6</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="confoundingFactors" placeholder="Confounding factors" [(ngModel)]="questionnaire.confoundingFactors"></textarea>
-                  </div>
-                  <p class="help has-text-left">Did you check if your AI model is affected by confounding factors?</p>
+                  <!-- M.6 -->
+                  <app-qu-field title="Did you check if your AI model is affected by confounding factors?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="confoundingFactors" placeholder="Confounding factors" [(ngModel)]="questionnaire.confoundingFactors"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.7</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="reproducibilityTicked" (ngModelChange)="questionnaire.reproducibility = ''">
-                      Checked results are reproducible
-                    </label>
-                    <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="reproducibilityTicked"></textarea>
-                  </div>
-                  <p class="help has-text-left">Did you check whether your results are reproducible? If so, how?</p>
+                  <!-- M.7 -->
+                  <app-qu-field title="Did you check whether your results are reproducible? If so, how?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="reproducibilityTicked" (ngModelChange)="questionnaire.reproducibility = ''">
+                        Checked results are reproducible
+                      </label>
+                      <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="reproducibilityTicked"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.8</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="randomBaselineTicked" (ngModelChange)="questionnaire.randomBaseline = ''">
-                      Compared against a random baseline model
-                    </label>
-                    <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="randomBaselineTicked"></textarea>
-                  </div>
-                  <p class="help has-text-left">Did you compare against a random baseline model? If so, how?</p>
+                  <!-- M.8 -->
+                  <app-qu-field title="Did you compare against a random baseline model? If so, how?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="randomBaselineTicked" (ngModelChange)="questionnaire.randomBaseline = ''">
+                        Compared against a random baseline model
+                      </label>
+                      <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="randomBaselineTicked"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">M.9</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="stateOfTheArtTicked" (ngModelChange)="questionnaire.stateOfTheArt = ''">
-                      Compared against a state of the art approaches
-                    </label>
-                    <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="stateOfTheArtTicked"></textarea>
-                  </div>
-                  <p class="help has-text-left">Did you compare against state of the art approaches? If so, against which?</p>
+                  <!-- M.9 -->
+                  <app-qu-field title="Did you compare against state of the art approaches? If so, against which?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="stateOfTheArtTicked" (ngModelChange)="questionnaire.stateOfTheArt = ''">
+                        Compared against a state of the art approaches
+                      </label>
+                      <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="stateOfTheArtTicked"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-
         <div class="step-content card" [ngClass]="{'is-active': step === 5}">
           <header class="card-header">
             <div class="card-header-title">
@@ -601,96 +691,119 @@
             </div>
           </header>
           <div class="card-content">
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">R.1</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
+                  <!-- R.1 -->
+                  <app-qu-field title="Is your tool or model publicly available? If so, where?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
                       <input type="checkbox" name="answer" [(ngModel)]="availableTicked" (ngModelChange)="questionnaire.availability = ''">
                       Publicly available
                     </label>
                     <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="availableTicked">
-                  </div>
-                  <p class="help has-text-left">Is your tool or model publicly available? If so, where?</p>
+                      </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">R.2</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="sourceCodeTicked" (ngModelChange)="questionnaire.sourceCode = ''">
-                      Source code available
-                    </label>
-                    <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="sourceCodeTicked">
-                  </div>
-                  <p class="help has-text-left">Is the source code of your analysis publicly available? If so, where?</p>
+                  <!-- R.2 -->
+                  <app-qu-field title="Is the source code of your analysis publicly available? If so, where?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="sourceCodeTicked" (ngModelChange)="questionnaire.sourceCode = ''">
+                        Source code available
+                      </label>
+                      <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="sourceCodeTicked">
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">R.3</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <textarea class="input" name="dependencies" placeholder="Dependencies" [(ngModel)]="questionnaire.dependencies"></textarea>
-                  </div>
-                  <p class="help has-text-left">How did you report on your dependencies?</p>
+                  <!-- R.3 -->
+                  <app-qu-field title="How did you report on your dependencies?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="dependencies" placeholder="Dependencies" [(ngModel)]="questionnaire.dependencies"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">R.4</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <input class="input" name="operatingSystem" type="text" placeholder="Operating system" [(ngModel)]="questionnaire.operatingSystem">
-                  </div>
-                  <p class="help has-text-left">On which operating system(s) did you run your analysis?</p>
-                  <div class="control">
-                    <input class="input" name="operatingSystem" type="text" placeholder="Hardware specifications" [(ngModel)]="questionnaire.hardwareSpecs">
-                  </div>
-                  <p class="help has-text-left">What were the hardware specifications?</p>
+                  <!-- R.4a -->
+                  <app-qu-field title="On which operating system(s) did you run your analysis?" [description]="true">
+                    <span qu-field>
+                      <input class="input" name="operatingSystem" type="text" placeholder="Operating system" [(ngModel)]="questionnaire.operatingSystem">
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
+                  <!-- R.4b -->
+                  <app-qu-field title="What were the hardware specifications?" [description]="true">
+                    <span qu-field>
+                      <input class="input" name="operatingSystem" type="text" placeholder="Hardware specifications" [(ngModel)]="questionnaire.hardwareSpecs">
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
             <div class="field is-horizontal">
               <div class="field-label is-normal">
                 <label class="label">R.5</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <div class="control">
-                    <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="highperformanceTicked" (ngModelChange)="questionnaire.highPerformance = ''">
-                      Requires high-performance computing
-                    </label>
-                    <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="highperformanceTicked"></textarea>
-                  </div>
-                  <p class="help has-text-left">Does your analysis require high-performance computing? If so, why?</p>
+                  <!-- R.5 -->
+                  <app-qu-field title="Does your analysis require high-performance computing? If so, why?" [description]="true">
+                    <span qu-field>
+                      <label class="checkbox">
+                        <input type="checkbox" name="answer" [(ngModel)]="highperformanceTicked" (ngModelChange)="questionnaire.highPerformance = ''">
+                        Requires high-performance computing
+                      </label>
+                      <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="highperformanceTicked"></textarea>
+                    </span>
+                    <span qu-description>
+                      ...
+                    </span>
+                  </app-qu-field>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-
         <div class="step-content card" [ngClass]="{'is-active': step === 6}">
           <header class="card-header">
             <div class="card-header-title">
