@@ -17,7 +17,8 @@ export class ReferenceComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
-        this.id = params.id;
+        this.id = params.id || '';
+        this.author = params.author || '';
       }
     });
   }

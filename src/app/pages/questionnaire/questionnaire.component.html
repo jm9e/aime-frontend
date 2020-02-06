@@ -348,7 +348,7 @@
                           <input type="checkbox" name="training" [(ngModel)]="fieldExpanded['D4-' + i]" (ngModelChange)="dataset.availability = ''">
                           Publicly available
                         </label>
-                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="fieldExpanded['D4' + i]"></textarea>
+                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="fieldExpanded['D4-' + i]"></textarea>
                       </span>
                       <span qu-description></span>
                     </app-qu-field>
@@ -725,11 +725,11 @@
                   <app-qu-field title="Is your tool or model publicly available? If so, where?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R1']" (ngModelChange)="questionnaire.availability = ''">
-                      Publicly available
-                    </label>
-                    <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="fieldExpanded['R1']">
-                      </span>
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R1']" (ngModelChange)="questionnaire.availability = ''">
+                        Publicly available
+                      </label>
+                      <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="fieldExpanded['R1']">
+                    </span>
                     <span qu-description>
                       State whether or not the employed tool is publicly available and, if so, provide a link to it.
                       In most cases, you will probably use existing tools such as Python or R packages, but it might
