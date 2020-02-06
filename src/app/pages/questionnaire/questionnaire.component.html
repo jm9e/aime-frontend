@@ -99,14 +99,14 @@
                     </span>
                   </app-qu-field>
                   <!-- MD.3b -->
-                  <app-qu-field title="Institutional address.">
+                  <app-qu-field title="Institutional address." [description]="false">
                     <span qu-field>
                       <textarea class="input" name="author" placeholder="Institutional address" [(ngModel)]="questionnaire.authorAddress"></textarea>
                     </span>
                     <span qu-description></span>
                   </app-qu-field>
                   <!-- MD.3c -->
-                  <app-qu-field title="Email address.">
+                  <app-qu-field title="Email address." [description]="false">
                     <span qu-field>
                       <input class="input" name="author" type="email" placeholder="Email address" [(ngModel)]="questionnaire.authorEmail" (ngModelChange)="updateEmail()">
                     </span>
@@ -190,7 +190,9 @@
                       <textarea class="input" name="purpose" placeholder="Purpose" [(ngModel)]="questionnaire.purpose"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      State what your AI is designed to learn or predict.
+                      This allows practitioners or authors of competitor AI systems to easily verify if the reported AI
+                      is relevant in their problem setting.
                     </span>
                   </app-qu-field>
                 </div>
@@ -206,13 +208,16 @@
                   <app-qu-field title="Does your AI predict a surrogate marker? If so, what does it represent?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['p2']" (ngModelChange)="questionnaire.surrogate = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['P2']" (ngModelChange)="questionnaire.surrogate = ''">
                         Predicts surrogate marker
                       </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="fieldExpanded['p2']"></textarea>
+                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="fieldExpanded['P2']"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      The predicted outcome does not necessarily have to be a directly measurable clinical variable but
+                      can also be a surrogate marker.
+                      If a surrogate marker is predicted, please clarify which clinical outcome is represented by the
+                      marker.
                     </span>
                   </app-qu-field>
                 </div>
@@ -230,7 +235,12 @@
                       <input class="input" name="category" type="text" placeholder="Category" [(ngModel)]="questionnaire.category">
                     </span>
                     <span qu-description>
-                      ...
+                      Specify to which category their AI problem belongs.
+                      Typical categories are classification (assign discrete labels to all items),
+                      regression (predict a real values for all items),
+                      clustering (partition a set of items into subsets of homogeneous groups),
+                      ranking (learn an ordering for a set of items), and
+                      dimensionality reduction (compress all items' initial high dimensional representations).
                     </span>
                   </app-qu-field>
                 </div>
@@ -265,7 +275,7 @@
                 <div class="field-body has-text-left">
                   <div class="field">
                     <!-- D.1 -->
-                    <app-qu-field title="Does this dataset contain clinical data or omics data?" [description]="true">
+                    <app-qu-field title="Does this dataset contain clinical data or omics data?" [description]="false">
                       <span qu-field>
                         <div class="select">
                           <select name="clinical" [(ngModel)]="dataset.clinical">
@@ -274,9 +284,7 @@
                           </select>
                         </div>
                       </span>
-                      <span qu-description>
-                        ...
-                      </span>
+                      <span qu-description></span>
                     </app-qu-field>
                   </div>
                 </div>
@@ -293,7 +301,8 @@
                         <input class="input" name="type" type="text" placeholder="Type of data" [(ngModel)]="dataset.type">
                       </span>
                       <span qu-description>
-                        ...
+                        Report the type of the data for this dataset, e.g. BMI, age, or blood pressure for clinical data and
+                        expression, methylation, or SNPs for omics data.
                       </span>
                     </app-qu-field>
                   </div>
@@ -306,7 +315,7 @@
                 <div class="field-body has-text-left">
                   <div class="field">
                     <!-- D.3 -->
-                    <app-qu-field title="Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?" [description]="true">
+                    <app-qu-field title="Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?" [description]="false">
                       <span qu-field>
                         <div class="select">
                           <select name="clinical" [(ngModel)]="dataset.synthetic">
@@ -319,7 +328,8 @@
                         </div>
                       </span>
                       <span qu-description>
-                        ...
+                        Specify whether this dataset is real or simulated.
+                        If the latter is the case, please provide a pointer to the employed simulator.
                       </span>
                     </app-qu-field>
                   </div>
@@ -332,16 +342,15 @@
                 <div class="field-body">
                   <div class="field">
                     <!-- D.4 -->
-                    <app-qu-field title="Is the data publicly available? If so, where?" [description]="true">
+                    <app-qu-field title="Is the data publicly available? If so, where?" [description]="false">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="training" [(ngModel)]="dataAvailableTicked[i]">
+                          <input type="checkbox" name="training" [(ngModel)]="fieldExpanded['D4-' + i]" (ngModelChange)="dataset.availability = ''">
                           Publicly available
                         </label>
+                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="fieldExpanded['D4' + i]"></textarea>
                       </span>
-                      <span qu-description>
-                        ...
-                      </span>
+                      <span qu-description></span>
                     </app-qu-field>
                   </div>
                 </div>
@@ -361,7 +370,7 @@
                         </label>
                       </span>
                       <span qu-description>
-                        ...
+                        Specify if this dataset was used for training the AI method.
                       </span>
                     </app-qu-field>
                   </div>
@@ -377,10 +386,10 @@
                     <app-qu-field title="Is the data subject to biases? If so, to which?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="biasTicked[i]" (ngModelChange)="dataset.bias = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D6-' + i]" (ngModelChange)="dataset.bias = ''">
                           Subject to biases
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="biasTicked[i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="fieldExpanded['D6-' + i]"></textarea>
                       </span>
                       <span qu-description>
                         ...
@@ -399,10 +408,10 @@
                     <app-qu-field title="Did you address your data biases? If so, how?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="biasAddressedTicked[i]" (ngModelChange)="dataset.biasAddressed = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D7-' + i]" (ngModelChange)="dataset.biasAddressed = ''">
                           Biases addressed
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="biasAddressedTicked[i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="fieldExpanded['D7-' + i]"></textarea>
                       </span>
                       <span qu-description>
                         ...
@@ -448,10 +457,10 @@
                     <app-qu-field title="Did you normalize your data? If so, how?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="normalizedTicked[i]" (ngModelChange)="dataset.normalized = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D9-' + i]" (ngModelChange)="dataset.normalized = ''">
                           Normalized data
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="normalizedTicked[i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="fieldExpanded['D9-' + i]"></textarea>
                       </span>
                       <span qu-description>
                         ...
@@ -470,10 +479,10 @@
                     <app-qu-field title="Did you apply other pre-processing steps to your data? If so, which?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="preprocessingTicked[i]" (ngModelChange)="dataset.preprocessing = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D10-' + i]" (ngModelChange)="dataset.preprocessing = ''">
                           Pre-processed data
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="preprocessingTicked[i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="fieldExpanded['D10-' + i]"></textarea>
                       </span>
                       <span qu-description>
                         ...
@@ -530,10 +539,10 @@
                   <app-qu-field title="Does your method employ hyper-parameters? If so, which ones and how did you select them?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="hyperparametersTicked" (ngModelChange)="questionnaire.hyperparameters = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M2']" (ngModelChange)="questionnaire.hyperparameters = ''">
                         Employs hyper-parameters
                       </label>
-                      <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="hyperparametersTicked"></textarea>
+                      <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="fieldExpanded['M2']"></textarea>
                     </span>
                     <span qu-description>
                       ...
@@ -624,10 +633,10 @@
                   <app-qu-field title="Did you check whether your results are reproducible? If so, how?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="reproducibilityTicked" (ngModelChange)="questionnaire.reproducibility = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M7']" (ngModelChange)="questionnaire.reproducibility = ''">
                         Checked results are reproducible
                       </label>
-                      <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="reproducibilityTicked"></textarea>
+                      <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="fieldExpanded['M7']"></textarea>
                     </span>
                     <span qu-description>
                       ...
@@ -646,10 +655,10 @@
                   <app-qu-field title="Did you compare against a random baseline model? If so, how?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="randomBaselineTicked" (ngModelChange)="questionnaire.randomBaseline = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M8']" (ngModelChange)="questionnaire.randomBaseline = ''">
                         Compared against a random baseline model
                       </label>
-                      <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="randomBaselineTicked"></textarea>
+                      <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="fieldExpanded['M8']"></textarea>
                     </span>
                     <span qu-description>
                       ...
@@ -668,10 +677,10 @@
                   <app-qu-field title="Did you compare against state of the art approaches? If so, against which?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="stateOfTheArtTicked" (ngModelChange)="questionnaire.stateOfTheArt = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M9']" (ngModelChange)="questionnaire.stateOfTheArt = ''">
                         Compared against a state of the art approaches
                       </label>
-                      <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="stateOfTheArtTicked"></textarea>
+                      <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="fieldExpanded['M9']"></textarea>
                     </span>
                     <span qu-description>
                       ...
@@ -701,10 +710,10 @@
                   <app-qu-field title="Is your tool or model publicly available? If so, where?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                      <input type="checkbox" name="answer" [(ngModel)]="availableTicked" (ngModelChange)="questionnaire.availability = ''">
+                      <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R1']" (ngModelChange)="questionnaire.availability = ''">
                       Publicly available
                     </label>
-                    <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="availableTicked">
+                    <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="fieldExpanded['R1']">
                       </span>
                     <span qu-description>
                       ...
@@ -723,10 +732,10 @@
                   <app-qu-field title="Is the source code of your analysis publicly available? If so, where?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="sourceCodeTicked" (ngModelChange)="questionnaire.sourceCode = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R2']" (ngModelChange)="questionnaire.sourceCode = ''">
                         Source code available
                       </label>
-                      <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="sourceCodeTicked">
+                      <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="fieldExpanded['R2']">
                     </span>
                     <span qu-description>
                       ...
@@ -790,10 +799,10 @@
                   <app-qu-field title="Does your analysis require high-performance computing? If so, why?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="highperformanceTicked" (ngModelChange)="questionnaire.highPerformance = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R5']" (ngModelChange)="questionnaire.highPerformance = ''">
                         Requires high-performance computing
                       </label>
-                      <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="highperformanceTicked"></textarea>
+                      <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="fieldExpanded['R5']"></textarea>
                     </span>
                     <span qu-description>
                       ...
