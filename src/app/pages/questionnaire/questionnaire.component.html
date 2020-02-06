@@ -392,7 +392,9 @@
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="fieldExpanded['D6-' + i]"></textarea>
                       </span>
                       <span qu-description>
-                        ...
+                        Omics data are often subject to various biases.
+                        Even if these biases can be addressed appropriately, readers should be aware of them to avoid possible misinterpretations.
+                        Therefore, please disclose whether this dataset is subject to a priori known biases (e. g. class imbalance, batch effect).
                       </span>
                     </app-qu-field>
                   </div>
@@ -405,7 +407,7 @@
                 <div class="field-body">
                   <div class="field">
                     <!-- D.7 -->
-                    <app-qu-field title="Did you address your data biases? If so, how?" [description]="true">
+                    <app-qu-field title="Did you address your data biases? If so, how?" [description]="false">
                       <span qu-field>
                         <label class="checkbox">
                           <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D7-' + i]" (ngModelChange)="dataset.biasAddressed = ''">
@@ -413,9 +415,7 @@
                         </label>
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="fieldExpanded['D7-' + i]"></textarea>
                       </span>
-                      <span qu-description>
-                        ...
-                      </span>
+                      <span qu-description></span>
                     </app-qu-field>
                   </div>
                 </div>
@@ -427,13 +427,11 @@
                 <div class="field-body">
                   <div class="field">
                     <!-- D.8a -->
-                    <app-qu-field title="How many samples do you have?" [description]="true">
+                    <app-qu-field title="How many samples do you have?" [description]="false">
                       <span qu-field>
                         <input class="input" name="samples" placeholder="Number of samples" [(ngModel)]="dataset.samples">
                       </span>
-                      <span qu-description>
-                        ...
-                      </span>
+                      <span qu-description></span>
                     </app-qu-field>
                     <!-- D.8b -->
                     <app-qu-field title="How many features do you have?" [description]="true">
@@ -441,7 +439,7 @@
                         <input class="input" name="features" placeholder="Number of features" [(ngModel)]="dataset.features">
                       </span>
                       <span qu-description>
-                        ...
+                        Specify the number of features of this dataset. This is especially important because high dimensional data often exhibits multicollinearityand sparsity, which in turn tends to negatively affect the efficiency of AI systems and often leads to overfitting in the case of supervised methods.
                       </span>
                     </app-qu-field>
                   </div>
@@ -463,7 +461,12 @@
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="fieldExpanded['D9-' + i]"></textarea>
                       </span>
                       <span qu-description>
-                        ...
+                        Since most AI methods are not scale-invariant, the data usually needs to be normalized during
+                        pre-processing.
+                        Please report if this is applicable to this dataset and if so, how this is done here.
+                        For instance, some methods such as principal component analysis perform optimally with
+                        zero-centered data, while others such as typical neural network architectures require the data
+                        to be scaled between zero and one.
                       </span>
                     </app-qu-field>
                   </div>
@@ -485,7 +488,9 @@
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="fieldExpanded['D10-' + i]"></textarea>
                       </span>
                       <span qu-description>
-                        ...
+                        There are various pre-processing techniques such feature engineering and pre-selection that can
+                        be used to make the data more suitable for AI-based algorithms.
+                        Whether or not such techniques have been employed should be reported here.
                       </span>
                     </app-qu-field>
                   </div>
@@ -523,7 +528,8 @@
                       <input class="input" name="method" type="text" placeholder="AI method" [(ngModel)]="questionnaire.method">
                     </span>
                     <span qu-description>
-                      ...
+                      Specify which AI method (e. g. logistic regression, random forest classification,
+                      deep neural networks) was used.
                     </span>
                   </app-qu-field>
                 </div>
@@ -545,7 +551,9 @@
                       <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="fieldExpanded['M2']"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Specify whether the employed method has any hyper-parameters (e. g. number of trees and maximal depth of random forest models).
+                      If so, please report how you picked the values for these hyper-parameters.
+                      Reporting the hyper-parameters is important because they typically have a huge impact on the algorithm's performance.
                     </span>
                   </app-qu-field>
                 </div>
@@ -563,7 +571,8 @@
                       <textarea class="input" name="testMetrics" placeholder="Test metrics" [(ngModel)]="questionnaire.testMetrics"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Specify which test metrics (e. g. Gini coefficient, running time, mean squared error) were used
+                      to evaluate the method.
                     </span>
                   </app-qu-field>
                 </div>
@@ -581,7 +590,10 @@
                       <textarea class="input" name="overfitting" placeholder="Overfitting" [(ngModel)]="questionnaire.overfitting"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Report how you prevented overfitting, i. e. how you ensured your AI model does not merely memorize
+                      the training data and can generalize to unseen, independent data.
+                      Overfitting can be prevented by using various techniques such as ensemble learning,
+                      cross-validation, and regularization.
                     </span>
                   </app-qu-field>
                 </div>
@@ -594,13 +606,11 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.5 -->
-                  <app-qu-field title="Did you validate your method on independent data, e.g. from a different cohort?" [description]="true">
+                  <app-qu-field title="Did you validate your method on independent data, e.g. from a different cohort?" [description]="false">
                     <span qu-field>
                       <textarea class="input" name="validation" placeholder="Validation on independent data" [(ngModel)]="questionnaire.validation"></textarea>
                     </span>
-                    <span qu-description>
-                      ...
-                    </span>
+                    <span qu-description></span>
                   </app-qu-field>
                 </div>
               </div>
@@ -617,7 +627,9 @@
                       <textarea class="input" name="confoundingFactors" placeholder="Confounding factors" [(ngModel)]="questionnaire.confoundingFactors"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Clarify how you checked your AI model has been affected by confounding factors.
+                      Confounding factors are variables that influence both the model input and output variables, and
+                      as a result, potentially distort the obtained results [24].
                     </span>
                   </app-qu-field>
                 </div>
@@ -639,7 +651,8 @@
                       <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="fieldExpanded['M7']"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      To make sure the results are stable and there are no random effects, please report how you made
+                      sure the obtained results are reproducible.
                     </span>
                   </app-qu-field>
                 </div>
@@ -661,7 +674,8 @@
                       <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="fieldExpanded['M8']"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Specify whether you made comparisons between your AI system and a random baseline model, and if
+                      so, explain how you compared them.
                     </span>
                   </app-qu-field>
                 </div>
@@ -683,7 +697,8 @@
                       <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="fieldExpanded['M9']"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Specify whether you made comparisons between your AI system and state of the art approaches that
+                      are designed for the same or for a similar purpose as your AI system.
                     </span>
                   </app-qu-field>
                 </div>
@@ -716,7 +731,9 @@
                     <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="fieldExpanded['R1']">
                       </span>
                     <span qu-description>
-                      ...
+                      State whether or not the employed tool is publicly available and, if so, provide a link to it.
+                      In most cases, you will probably use existing tools such as Python or R packages, but it might
+                      also be the case that your AI system is built upon self-implemented software.
                     </span>
                   </app-qu-field>
                 </div>
@@ -738,7 +755,15 @@
                       <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="fieldExpanded['R2']">
                     </span>
                     <span qu-description>
-                      ...
+                      Share a pointer to the source code of your analysis here, i. e. the code that has to be run to
+                      actually reproduce the experiments.
+                      To clearly see the difference between the questions (R.1) and (R.2), assume that an AI uses the
+                      K-means implementation of the widely used Python library
+                      <a href="https://scikit-learn.org/" target="_blank">scikit-learn</a> for a biomedical clustering
+                      problem.
+                      While in this case a link to scikit-learn suffices as an answer to (R.1), for answering this
+                      question, you should provide a link to the Python script which you implemented on top of
+                      scikit-learn.
                     </span>
                   </app-qu-field>
                 </div>
@@ -756,7 +781,8 @@
                       <textarea class="input" name="dependencies" placeholder="Dependencies" [(ngModel)]="questionnaire.dependencies"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      State how you reported the dependencies of your experiments, e.g. via README or requirements
+                      files.
                     </span>
                   </app-qu-field>
                 </div>
@@ -774,7 +800,7 @@
                       <input class="input" name="operatingSystem" type="text" placeholder="Operating system" [(ngModel)]="questionnaire.operatingSystem">
                     </span>
                     <span qu-description>
-                      ...
+                      Specify the operating system of the machine on which you ran the experiments.
                     </span>
                   </app-qu-field>
                   <!-- R.4b -->
@@ -783,7 +809,9 @@
                       <input class="input" name="operatingSystem" type="text" placeholder="Hardware specifications" [(ngModel)]="questionnaire.hardwareSpecs">
                     </span>
                     <span qu-description>
-                      ...
+                      Specify the hardware specifications.
+                      Knowing on which hardware the AI was run is especially important if runtime is among the reported
+                      metrics (cf. question (M.3)).
                     </span>
                   </app-qu-field>
                 </div>
@@ -805,7 +833,9 @@
                       <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="fieldExpanded['R5']"></textarea>
                     </span>
                     <span qu-description>
-                      ...
+                      Report whether, and if so why, your AI requires high-performance computing.
+                      The intended reading is that an AI requires high-performance computing if it is infeasible to run
+                      it on a personal computer.
                     </span>
                   </app-qu-field>
                 </div>
