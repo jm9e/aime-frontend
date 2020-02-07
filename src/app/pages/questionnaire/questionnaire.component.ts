@@ -151,7 +151,7 @@ export class QuestionnaireComponent implements OnInit {
       if (!ds.type) {
         missingFields.push({step: 3, id: `D${i + 1}.2`, name: 'What is the type of the data?'});
       }
-      if (ds.synthetic && !ds.syntheticAvailable) {
+      if (ds.synthetic === 'synthetic' && !ds.syntheticAvailable) {
         missingFields.push({step: 3, id: `D${i + 1}.3`, name: 'Is your simulator publicly available and, if so, where?'});
       }
       if (ds.fieldExpanded['D.4'] && !ds.availability) {
