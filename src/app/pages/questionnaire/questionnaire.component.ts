@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {createDataset, createQuestionnaire, IQuestionnaire} from '../../interfaces';
+import {createDataset, createQuestionnaire, IDataset, IQuestionnaire} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
@@ -8,6 +8,35 @@ interface MissingField {
   step: number;
   id: string;
   name: string;
+}
+
+function expandDatasetFields(dataset: IDataset) {
+  dataset.fieldExpanded = {};
+
+  dataset.fieldExpanded['D.4'] = !!dataset.availability;
+  dataset.fieldExpanded['D.6'] = !!dataset.bias;
+  dataset.fieldExpanded['D.7'] = !!dataset.biasAddressed;
+  dataset.fieldExpanded['D.9'] = !!dataset.normalized;
+  dataset.fieldExpanded['D.10'] = !!dataset.preprocessing;
+}
+
+function expandQuestionnaireFields(questionnaire: IQuestionnaire): IQuestionnaire {
+  questionnaire.fieldExpanded = {};
+
+  questionnaire.fieldExpanded['P.2'] = !!questionnaire.surrogate;
+
+  questionnaire.fieldExpanded['M.2'] = !!questionnaire.hyperparameters;
+  questionnaire.fieldExpanded['M.7'] = !!questionnaire.reproducibility;
+  questionnaire.fieldExpanded['M.8'] = !!questionnaire.randomBaseline;
+  questionnaire.fieldExpanded['M.9'] = !!questionnaire.stateOfTheArt;
+
+  questionnaire.fieldExpanded['R.1'] = !!questionnaire.availability;
+  questionnaire.fieldExpanded['R.2'] = !!questionnaire.sourceCode;
+  questionnaire.fieldExpanded['R.5'] = !!questionnaire.highPerformance;
+
+  questionnaire.datasets.forEach(ds => expandDatasetFields(ds));
+
+  return questionnaire;
 }
 
 @Component({
@@ -42,7 +71,7 @@ export class QuestionnaireComponent implements OnInit {
 
       if (this.id) {
         this.http.get<IQuestionnaire>(`/api/questionnaire?id=${this.id}`).subscribe((resp) => {
-          this.questionnaire = resp;
+          this.questionnaire = expandQuestionnaireFields(resp);
           this.revising = true;
         });
       }
