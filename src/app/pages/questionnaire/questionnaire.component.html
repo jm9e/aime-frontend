@@ -963,12 +963,12 @@
           <p>
             To cite your report, you can use the following BibTeX code:
           </p>
-          <pre>@misc&#123;aimeReport{{id}},
-  title=&#123;AIMe Report {{id}}&#125;,
-  author=&#123;{{questionnaire.authorName}}&#125;,
-  howpublished="\url&#123;https://aime-standard.org/report/{{id}}.pdf&#125;",
-  year=&#123;2020&#125;,
-&#125;</pre>
+          <pre>@misc{{'{aimeReport' + id}},
+  title={{'{AIMe Report' + id + '}'}},
+  author={{'{' + questionnaire.authorName + '}'}},
+  howpublished={{'"\\url{https://aime-standard.org/report/' + id + '.pdf"}'}},
+  year={{'{2020}'}},
+{{'}'}}</pre>
           <br>
           <p>
             These links have also been sent to {{email}}.
