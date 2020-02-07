@@ -58,7 +58,7 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   public async goToStep(step: number) {
-    this.step = step;
+    this.step = Number(step);
 
     if (this.step === 6) {
       this.missingFields = this.checkFields();

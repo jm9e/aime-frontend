@@ -1,40 +1,62 @@
 <section class="section">
   <div class="container">
     <div class="steps is-aime" *ngIf="!submitted">
-      <div class="step-item is-active" [ngClass]="{'is-selected': step === 1}" (click)="goToStep(1)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 1}" (click)="goToStep(1)">
         <div class="step-marker"><i class="fad fa-at"></i></div>
         <div class="step-details">
           <p class="step-title">Metadata</p>
         </div>
       </div>
-      <div class="step-item is-active" [ngClass]="{'is-selected': step === 2}" (click)="goToStep(2)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 2}" (click)="goToStep(2)">
         <div class="step-marker"><i class="fad fa-bullseye-arrow"></i></div>
         <div class="step-details">
           <p class="step-title">Purpose</p>
         </div>
       </div>
-      <div class="step-item is-active" [ngClass]="{'is-selected': step === 3}" (click)="goToStep(3)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 3}" (click)="goToStep(3)">
         <div class="step-marker"><i class="fad fa-database"></i></div>
         <div class="step-details">
           <p class="step-title">Data</p>
         </div>
       </div>
-      <div class="step-item is-active" [ngClass]="{'is-selected': step === 4}" (click)="goToStep(4)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 4}" (click)="goToStep(4)">
         <div class="step-marker"><i class="fad fa-function"></i></div>
         <div class="step-details">
           <p class="step-title">Method</p>
         </div>
       </div>
-      <div class="step-item is-active" [ngClass]="{'is-selected': step === 5}" (click)="goToStep(5)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 5}" (click)="goToStep(5)">
         <div class="step-marker"><i class="fad fa-redo"></i></div>
         <div class="step-details">
           <p class="step-title">Reproducibility</p>
         </div>
       </div>
-      <div class="step-item is-active" [ngClass]="{'is-selected': step === 6}" (click)="goToStep(6)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 6}" (click)="goToStep(6)">
         <div class="step-marker"><i class="fad fa-check"></i></div>
         <div class="step-details">
           <p class="step-title">Review & Submit</p>
+        </div>
+      </div>
+      <div class="is-hidden-tablet mobile-nav">
+        <h1 class="title is-4">
+          Questionnaire
+        </h1>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <div class="select is-fullwidth">
+              <select name="clinical" [ngModel]="step" (ngModelChange)="goToStep($event)">
+                <option [value]="1">Metadata</option>
+                <option [value]="2">Purpose</option>
+                <option [value]="3">Datasets</option>
+                <option [value]="4">Method</option>
+                <option [value]="5">Reproducibility</option>
+                <option [value]="6">Review & Submit</option>
+              </select>
+            </div>
+            <p class="help">
+              Questionnaire step.
+            </p>
+          </div>
         </div>
       </div>
       <div class="steps-content">
