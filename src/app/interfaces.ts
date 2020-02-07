@@ -51,7 +51,7 @@ export interface IQuestionnaire {
   fieldExpanded: any;
 }
 
-export interface IRevision {
+export interface IVersion {
   revision: number;
   date: Date;
 }
@@ -59,7 +59,7 @@ export interface IRevision {
 export interface IReport {
   id: string;
   date: Date;
-  revisions: IRevision[];
+  versions: IVersion[];
   questionnaire: IQuestionnaire;
 }
 
