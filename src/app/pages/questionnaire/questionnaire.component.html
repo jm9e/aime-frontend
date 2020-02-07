@@ -54,13 +54,11 @@
               <div class="field-body">
                 <div class="field">
                   <!-- MD.1 -->
-                  <app-qu-field title="Title of the AI." [description]="true">
+                  <app-qu-field title="Title of the AI." [description]="false">
                     <span qu-field>
                       <input class="input" name="title" type="text" placeholder="Title" [(ngModel)]="questionnaire.title">
                     </span>
-                    <span qu-description>
-                      Enter a title that identifies your AI, in most cases the title of your paper or a part of it.
-                    </span>
+                    <span qu-description></span>
                   </app-qu-field>
                 </div>
               </div>
@@ -72,13 +70,11 @@
               <div class="field-body">
                 <div class="field">
                   <!-- MD.2 -->
-                  <app-qu-field title="Short description of the AI." [description]="true">
+                  <app-qu-field title="Short description of the AI." [description]="false">
                     <span qu-field>
                       <textarea class="input" name="description" placeholder="Description" [(ngModel)]="questionnaire.description"></textarea>
                     </span>
-                    <span qu-description>
-                      Briefly describe your AI in a couple of sentences, similar to an abstract of a paper.
-                    </span>
+                    <span qu-description></span>
                   </app-qu-field>
                 </div>
               </div>
@@ -90,13 +86,11 @@
               <div class="field-body">
                 <div class="field">
                   <!-- MD.3a -->
-                  <app-qu-field title="Name of the corresponding author." [description]="true">
+                  <app-qu-field title="Name of the corresponding author." [description]="false">
                     <span qu-field>
                       <input class="input" name="author" type="text" placeholder="Name" [(ngModel)]="questionnaire.authorName">
                     </span>
-                    <span qu-description>
-                      Enter the name of the corresponding author, which is in most cases the lead author.
-                    </span>
+                    <span qu-description></span>
                   </app-qu-field>
                   <!-- MD.3b -->
                   <app-qu-field title="Institutional address." [description]="false">
@@ -113,13 +107,12 @@
                     <span qu-description></span>
                   </app-qu-field>
                   <!-- MD.3d -->
-                  <app-qu-field title="ORCID iD." [description]="true">
+                  <app-qu-field title="ORCID iD (optional)." [description]="true">
                     <span qu-field>
                       <input class="input" name="author" type="text" placeholder="ORCID iD" [(ngModel)]="questionnaire.authorORCID">
                     </span>
                     <span qu-description>
-                      Enter your <a href="https://orcid.org/" target="_blank">ORCID iD</a> which distinguishes you from
-                      every other researcher and reliably associates the AIMe report with you.
+                      If you have an <a href="https://orcid.org/" target="_blank">ORCID iD</a>, please enter it here.
                     </span>
                   </app-qu-field>
                 </div>
@@ -137,7 +130,7 @@
                       <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
                     </span>
                     <span qu-description>
-                      If available, you should report the paper's <a href="https://www.doi.org/" target="_blank">DOI</a> here.
+                      If available, please enter the paper's <a href="https://www.doi.org/" target="_blank">DOI</a> here.
                       Otherwise, also other stable URLs such as <a href="https://arxiv.org/" target="_blank">arXiv</a> identifiers are admissible.
                     </span>
                   </app-qu-field>
@@ -629,7 +622,7 @@
                     <span qu-description>
                       Clarify how you checked your AI model has been affected by confounding factors.
                       Confounding factors are variables that influence both the model input and output variables, and
-                      as a result, potentially distort the obtained results [24].
+                      as a result, potentially distort the obtained results.
                     </span>
                   </app-qu-field>
                 </div>
@@ -726,7 +719,7 @@
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R1']" (ngModelChange)="questionnaire.availability = ''">
-                        Publicly available
+                        Tool publicly available
                       </label>
                       <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="fieldExpanded['R1']">
                     </span>
@@ -750,7 +743,7 @@
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R2']" (ngModelChange)="questionnaire.sourceCode = ''">
-                        Source code available
+                        Source code of analysis publicly available
                       </label>
                       <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="fieldExpanded['R2']">
                     </span>
@@ -800,18 +793,18 @@
                       <input class="input" name="operatingSystem" type="text" placeholder="Operating system" [(ngModel)]="questionnaire.operatingSystem">
                     </span>
                     <span qu-description>
-                      Specify the operating system of the machine on which you ran the experiments.
+                      Specify the operating system(s) of the machine(s) on which you ran the experiments.
                     </span>
                   </app-qu-field>
                   <!-- R.4b -->
-                  <app-qu-field title="What were the hardware specifications?" [description]="true">
+                  <app-qu-field title="On which hardware did you run your analysis?" [description]="true">
                     <span qu-field>
                       <input class="input" name="operatingSystem" type="text" placeholder="Hardware specifications" [(ngModel)]="questionnaire.hardwareSpecs">
                     </span>
                     <span qu-description>
-                      Specify the hardware specifications.
+                      Report the hardware specification of the machine on which you ran the experiments.
                       Knowing on which hardware the AI was run is especially important if runtime is among the reported
-                      metrics (cf. question (M.3)).
+                      metrics (cf. question M.3).
                     </span>
                   </app-qu-field>
                 </div>
