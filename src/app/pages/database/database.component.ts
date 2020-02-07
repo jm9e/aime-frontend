@@ -56,7 +56,7 @@ export class DatabaseComponent implements OnInit {
       this.resultsCount = resp.count;
       this.results = resp.results.map((result) => {
         result.date = new Date(result.date);
-        result.revisions = result.revisions.map((revision) => {
+        result.versions = result.versions.map((revision) => {
           revision.date = new Date(revision.date);
           return revision;
         });
