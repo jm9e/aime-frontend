@@ -11,6 +11,8 @@ export interface IDataset {
   features: string; // D.8b
   normalized: string; // D.9
   preprocessing: string; // D.10
+
+  fieldExpanded: any;
 }
 
 export interface IQuestionnaire {
@@ -45,6 +47,8 @@ export interface IQuestionnaire {
   operatingSystem: string; // R.4
   hardwareSpecs: string; // R.4
   highPerformance: string; // R.5
+
+  fieldExpanded: any;
 }
 
 export interface IRevision {
@@ -89,7 +93,8 @@ export function createQuestionnaire(): IQuestionnaire {
     testMetrics: '',
     title: '',
     url: '',
-    validation: ''
+    validation: '',
+    fieldExpanded: {},
   };
 }
 
@@ -106,6 +111,7 @@ export function createDataset(): IDataset {
     synthetic: 'real',
     syntheticAvailable: '',
     training: false,
-    type: ''
+    type: '',
+    fieldExpanded: {},
   };
 }

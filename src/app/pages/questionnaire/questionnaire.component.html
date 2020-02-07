@@ -1,37 +1,37 @@
 <section class="section">
   <div class="container">
     <div class="steps is-aime" *ngIf="!submitted">
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(1), 'is-selected': step === 1}" (click)="goToStep(1)">
+      <div class="step-item is-active" [ngClass]="{'is-selected': step === 1}" (click)="goToStep(1)">
         <div class="step-marker"><i class="fad fa-at"></i></div>
         <div class="step-details">
           <p class="step-title">Metadata</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(2), 'is-selected': step === 2}" (click)="goToStep(2)">
+      <div class="step-item is-active" [ngClass]="{'is-selected': step === 2}" (click)="goToStep(2)">
         <div class="step-marker"><i class="fad fa-bullseye-arrow"></i></div>
         <div class="step-details">
           <p class="step-title">Purpose</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(3), 'is-selected': step === 3}" (click)="goToStep(3)">
+      <div class="step-item is-active" [ngClass]="{'is-selected': step === 3}" (click)="goToStep(3)">
         <div class="step-marker"><i class="fad fa-database"></i></div>
         <div class="step-details">
           <p class="step-title">Data</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(4), 'is-selected': step === 4}" (click)="goToStep(4)">
+      <div class="step-item is-active" [ngClass]="{'is-selected': step === 4}" (click)="goToStep(4)">
         <div class="step-marker"><i class="fad fa-function"></i></div>
         <div class="step-details">
           <p class="step-title">Method</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(5), 'is-selected': step === 5}" (click)="goToStep(5)">
+      <div class="step-item is-active" [ngClass]="{'is-selected': step === 5}" (click)="goToStep(5)">
         <div class="step-marker"><i class="fad fa-redo"></i></div>
         <div class="step-details">
           <p class="step-title">Reproducibility</p>
         </div>
       </div>
-      <div class="step-item" [ngClass]="{'is-active': stepComplete(6), 'is-selected': step === 6}" (click)="goToStep(6)">
+      <div class="step-item is-active" [ngClass]="{'is-selected': step === 6}" (click)="goToStep(6)">
         <div class="step-marker"><i class="fad fa-check"></i></div>
         <div class="step-details">
           <p class="step-title">Review & Submit</p>
@@ -201,10 +201,10 @@
                   <app-qu-field title="Does your AI predict a surrogate marker? If so, what does it represent?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['P2']" (ngModelChange)="questionnaire.surrogate = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['P.2']" (ngModelChange)="questionnaire.surrogate = ''">
                         Predicts surrogate marker
                       </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="fieldExpanded['P2']"></textarea>
+                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="questionnaire.fieldExpanded['P.2']"></textarea>
                     </span>
                     <span qu-description>
                       The predicted outcome does not necessarily have to be a directly measurable clinical variable but
@@ -338,10 +338,10 @@
                     <app-qu-field title="Is the data publicly available? If so, where?" [description]="false">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="training" [(ngModel)]="fieldExpanded['D4-' + i]" (ngModelChange)="dataset.availability = ''">
+                          <input type="checkbox" name="training" [(ngModel)]="dataset.fieldExpanded['D.4']" (ngModelChange)="dataset.availability = ''">
                           Publicly available
                         </label>
-                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="fieldExpanded['D4-' + i]"></textarea>
+                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="dataset.fieldExpanded['D.4']"></textarea>
                       </span>
                       <span qu-description></span>
                     </app-qu-field>
@@ -379,10 +379,10 @@
                     <app-qu-field title="Is the data subject to biases? If so, to which?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D6-' + i]" (ngModelChange)="dataset.bias = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.6']" (ngModelChange)="dataset.bias = ''">
                           Subject to biases
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="fieldExpanded['D6-' + i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="dataset.fieldExpanded['D.6']"></textarea>
                       </span>
                       <span qu-description>
                         Omics data are often subject to various biases.
@@ -403,10 +403,10 @@
                     <app-qu-field title="Did you address your data biases? If so, how?" [description]="false">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D7-' + i]" (ngModelChange)="dataset.biasAddressed = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.7']" (ngModelChange)="dataset.biasAddressed = ''">
                           Biases addressed
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="fieldExpanded['D7-' + i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="dataset.fieldExpanded['D.7']"></textarea>
                       </span>
                       <span qu-description></span>
                     </app-qu-field>
@@ -448,10 +448,10 @@
                     <app-qu-field title="Did you normalize your data? If so, how?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D9-' + i]" (ngModelChange)="dataset.normalized = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.9']" (ngModelChange)="dataset.normalized = ''">
                           Normalized data
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="fieldExpanded['D9-' + i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="dataset.fieldExpanded['D.9']"></textarea>
                       </span>
                       <span qu-description>
                         Since most AI methods are not scale-invariant, the data usually needs to be normalized during
@@ -475,10 +475,10 @@
                     <app-qu-field title="Did you apply other pre-processing steps to your data? If so, which?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['D10-' + i]" (ngModelChange)="dataset.preprocessing = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.10']" (ngModelChange)="dataset.preprocessing = ''">
                           Pre-processed data
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="fieldExpanded['D10-' + i]"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="dataset.fieldExpanded['D.10']"></textarea>
                       </span>
                       <span qu-description>
                         There are various pre-processing techniques such feature engineering and pre-selection that can
@@ -538,10 +538,10 @@
                   <app-qu-field title="Does your method employ hyper-parameters? If so, which ones and how did you select them?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M2']" (ngModelChange)="questionnaire.hyperparameters = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.2']" (ngModelChange)="questionnaire.hyperparameters = ''">
                         Employs hyper-parameters
                       </label>
-                      <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="fieldExpanded['M2']"></textarea>
+                      <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="questionnaire.fieldExpanded['M.2']"></textarea>
                     </span>
                     <span qu-description>
                       Specify whether the employed method has any hyper-parameters (e. g. number of trees and maximal depth of random forest models).
@@ -638,10 +638,10 @@
                   <app-qu-field title="Did you check whether your results are reproducible? If so, how?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M7']" (ngModelChange)="questionnaire.reproducibility = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.7']" (ngModelChange)="questionnaire.reproducibility = ''">
                         Checked results are reproducible
                       </label>
-                      <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="fieldExpanded['M7']"></textarea>
+                      <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="questionnaire.fieldExpanded['M.7']"></textarea>
                     </span>
                     <span qu-description>
                       To make sure the results are stable and there are no random effects, please report how you made
@@ -661,10 +661,10 @@
                   <app-qu-field title="Did you compare against a random baseline model? If so, how?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M8']" (ngModelChange)="questionnaire.randomBaseline = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.8']" (ngModelChange)="questionnaire.randomBaseline = ''">
                         Compared against a random baseline model
                       </label>
-                      <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="fieldExpanded['M8']"></textarea>
+                      <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="questionnaire.fieldExpanded['M.8']"></textarea>
                     </span>
                     <span qu-description>
                       Specify whether you made comparisons between your AI system and a random baseline model, and if
@@ -684,10 +684,10 @@
                   <app-qu-field title="Did you compare against state of the art approaches? If so, against which?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['M9']" (ngModelChange)="questionnaire.stateOfTheArt = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.9']" (ngModelChange)="questionnaire.stateOfTheArt = ''">
                         Compared against a state of the art approaches
                       </label>
-                      <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="fieldExpanded['M9']"></textarea>
+                      <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="questionnaire.fieldExpanded['M.9']"></textarea>
                     </span>
                     <span qu-description>
                       Specify whether you made comparisons between your AI system and state of the art approaches that
@@ -718,10 +718,10 @@
                   <app-qu-field title="Is your tool or model publicly available? If so, where?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R1']" (ngModelChange)="questionnaire.availability = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['R.1']" (ngModelChange)="questionnaire.availability = ''">
                         Tool publicly available
                       </label>
-                      <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="fieldExpanded['R1']">
+                      <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="questionnaire.fieldExpanded['R.1']">
                     </span>
                     <span qu-description>
                       State whether or not the employed tool is publicly available and, if so, provide a link to it.
@@ -742,10 +742,10 @@
                   <app-qu-field title="Is the source code of your analysis publicly available? If so, where?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R2']" (ngModelChange)="questionnaire.sourceCode = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['R.2']" (ngModelChange)="questionnaire.sourceCode = ''">
                         Source code of analysis publicly available
                       </label>
-                      <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="fieldExpanded['R2']">
+                      <input class="input" name="sourceCode" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.sourceCode" *ngIf="questionnaire.fieldExpanded['R.2']">
                     </span>
                     <span qu-description>
                       Share a pointer to the source code of your analysis here, i. e. the code that has to be run to
@@ -820,10 +820,10 @@
                   <app-qu-field title="Does your analysis require high-performance computing? If so, why?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="fieldExpanded['R5']" (ngModelChange)="questionnaire.highPerformance = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['R.5']" (ngModelChange)="questionnaire.highPerformance = ''">
                         Requires high-performance computing
                       </label>
-                      <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="fieldExpanded['R5']"></textarea>
+                      <textarea class="input" name="highPerformance" placeholder="More detailed information" [(ngModel)]="questionnaire.highPerformance" *ngIf="questionnaire.fieldExpanded['R.5']"></textarea>
                     </span>
                     <span qu-description>
                       Report whether, and if so why, your AI requires high-performance computing.
@@ -844,7 +844,16 @@
               </h2>
             </div>
           </header>
-          <div class="card-content">
+          <div class="card-content" *ngIf="missingFields.length > 0">
+            <p>
+              The preview report cannot be generated because some of the answers are incorrect or missing:
+            </p>
+            <br>
+            <ul class="incorrect">
+              <li *ngFor="let field of missingFields" (click)="goToStep(field.step)"><strong>{{field.id}}</strong> - {{field.name}}</li>
+            </ul>
+          </div>
+          <div class="card-content" *ngIf="missingFields.length === 0">
             <p>
               Below, you can find a preview report.
               Review all answers carefully.
@@ -912,14 +921,13 @@
           </button>
         </div>
         <div class="steps-action">
-          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < 6" [disabled]="!stepComplete(step)">
+          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < 6">
             <span>Next</span>
             <span class="icon">
               <i class="fa fa-arrow-right"></i>
             </span>
           </button>
-          <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6"
-                  [disabled]="!completeUntil(6) || (!email && !revising)">
+          <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6" [disabled]="(!email && !revising) || missingFields.length > 0">
             <span class="icon">
               <i class="fa fa-paper-plane"></i>
             </span>
@@ -966,16 +974,16 @@
           <pre>@misc{{'{aimeReport' + id}},
   title={{'{AIMe Report' + id + '}'}},
   author={{'{' + questionnaire.authorName + '}'}},
-  howpublished={{'"\\url{https://aime-standard.org/report/' + id + '.pdf"}'}},
+  howpublished={{'{\\url{https://aime-standard.org/report/' + id + '.pdf}' + '}'}},
   year={{'{2020}'}},
 {{'}'}}</pre>
           <br>
           <p>
-            These links have also been sent to {{email}}.
+            These instructions have also been sent to {{email}}.
           </p>
           <br>
           <p>
-            Thank you for using the AIMe Standard.
+            Thank you for using the AIMe standard.
           </p>
         </div>
         <div class="message-body" *ngIf="revising">
@@ -994,11 +1002,17 @@
           </p>
           <br>
           <p>
-            <a [routerLink]="['/reference']" [queryParams]="{id: id}" target="_blank">More information on how to reference your report.</a>
+            To cite your report, you can use the following BibTeX code:
           </p>
+          <pre>@misc{{'{aimeReport' + id}},
+  title={{'{AIMe Report' + id + '}'}},
+  author={{'{' + questionnaire.authorName + '}'}},
+  howpublished={{'{\\url{https://aime-standard.org/report/' + id + '.pdf}' + '}'}},
+  year={{'{2020}'}},
+{{'}'}}</pre>
           <br>
           <p>
-            Thank you for using the AIMe Standard.
+            Thank you for using the AIMe standard.
           </p>
         </div>
       </article>

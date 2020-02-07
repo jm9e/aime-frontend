@@ -53,3 +53,27 @@ textarea {
 .input {
   margin-top: 7px;
 }
+
+.incorrect {
+  li {
+    list-style-type: circle;
+    margin-left: 20px;
+    cursor: pointer;
+    color: red;
+
+    strong {
+      color: red;
+    }
+  }
+
+  li:hover {
+    list-style-type: circle;
+    margin-left: 20px;
+    cursor: pointer;
+    color: #ff7d7d;
+
+    strong {
+      color: #ff7d7d;
+    }
+  }
+}
