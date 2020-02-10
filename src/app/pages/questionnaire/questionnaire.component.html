@@ -993,12 +993,7 @@
           <p>
             To cite your report, you can use the following BibTeX code:
           </p>
-          <pre>@misc{{'{aimeReport' + id}},
-  title={{'{AIMe Report ' + id + '}'}},
-  author={{'{' + questionnaire.authorName + '}'}},
-  howpublished={{'{\\url{https://aime-standard.org/report/' + id + '.pdf}' + '}'}},
-  year={{'{2020}'}},
-{{'}'}}</pre>
+          <app-cite-report [id]="id" [questionnaire]="questionnaire"></app-cite-report>
           <br>
           <p>
             These instructions have also been sent to {{email}}.

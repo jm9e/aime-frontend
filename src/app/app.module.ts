@@ -11,6 +11,7 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
 import { QuFieldComponent } from './components/qu-field/qu-field.component';
+import { CiteReportComponent } from './components/cite-report/cite-report.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { QuFieldComponent } from './components/qu-field/qu-field.component';
     DatabaseComponent,
     AboutComponent,
     QuFieldComponent,
+    CiteReportComponent,
   ],
   imports: [
     HttpClientModule,

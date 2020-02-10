@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IReport } from '../../interfaces';
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {createQuestionnaire, IReport} from '../../interfaces';
+import {BehaviorSubject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'app-database',
@@ -20,13 +20,14 @@ export class DatabaseComponent implements OnInit {
   public searchData = true;
   public searchMethod = true;
   public searchReproducibility = true;
+  public reportCited: IReport | null = null;
 
   constructor(private http: HttpClient) {
     this.query.pipe(
       debounceTime(300),
       distinctUntilChanged())
       .subscribe(() => {
-        this.search();
+        // this.search();
       });
   }
 
