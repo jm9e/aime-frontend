@@ -30,7 +30,6 @@ function expandQuestionnaireFields(questionnaire: IQuestionnaire): IQuestionnair
   questionnaire.fieldExpanded['M.8'] = !!questionnaire.randomBaseline;
   questionnaire.fieldExpanded['M.9'] = !!questionnaire.stateOfTheArt;
 
-  questionnaire.fieldExpanded['R.1'] = !!questionnaire.availability;
   questionnaire.fieldExpanded['R.2'] = !!questionnaire.sourceCode;
   questionnaire.fieldExpanded['R.5'] = !!questionnaire.highPerformance;
 

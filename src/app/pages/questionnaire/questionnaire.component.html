@@ -538,13 +538,13 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.1  -->
-                  <app-qu-field title="Which AI method did you use?" [description]="true">
+                  <app-qu-field title="Which AI methods did you use?" [description]="true">
                     <span qu-field>
-                      <input class="input" name="method" type="text" placeholder="AI method" [(ngModel)]="questionnaire.method">
+                      <input class="input" name="method" type="text" placeholder="AI methods" [(ngModel)]="questionnaire.method">
                     </span>
                     <span qu-description>
-                      Specify which AI method (e. g. logistic regression, random forest classification,
-                      deep neural networks) was used.
+                      Specify which AI methods (e. g. logistic regression, random forest classification,
+                      deep neural networks) were used.
                     </span>
                   </app-qu-field>
                 </div>
@@ -557,7 +557,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.2 -->
-                  <app-qu-field title="Does your method employ hyper-parameters? If so, which ones and how did you select them?" [description]="true">
+                  <app-qu-field title="Do your methods employ hyper-parameters? If so, which ones and how did you select them?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.2']" (ngModelChange)="questionnaire.hyperparameters = ''">
@@ -621,7 +621,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.5 -->
-                  <app-qu-field title="Did you validate your method on independent data, e.g. from a different cohort?" [description]="false">
+                  <app-qu-field title="Did you validate your AI on independent data, e.g. from a different cohort?" [description]="false">
                     <span qu-field>
                       <textarea class="input" name="validation" placeholder="Validation on independent data" [(ngModel)]="questionnaire.validation"></textarea>
                     </span>
@@ -737,13 +737,9 @@
               <div class="field-body">
                 <div class="field">
                   <!-- R.1 -->
-                  <app-qu-field title="Are your tools or models publicly available? If so, where?" [description]="true">
+                  <app-qu-field title="Which tools did you use for implementing your AI? Are these tools publicly available and, if so, where?" [description]="true">
                     <span qu-field>
-                      <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['R.1']" (ngModelChange)="questionnaire.availability = ''">
-                        Tools or models publicly available
-                      </label>
-                      <textarea class="input" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="questionnaire.fieldExpanded['R.1']"></textarea>
+                      <textarea class="input" placeholder="More detailed information" [(ngModel)]="questionnaire.availability"></textarea>
                     </span>
                     <span qu-description>
                       State whether or not the employed tools are publicly available and, if so, provide a link to it.
