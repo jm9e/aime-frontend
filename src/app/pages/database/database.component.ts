@@ -27,7 +27,7 @@ export class DatabaseComponent implements OnInit {
       debounceTime(300),
       distinctUntilChanged())
       .subscribe(() => {
-        // this.search();
+        this.search();
       });
   }
 
