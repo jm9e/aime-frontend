@@ -147,7 +147,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- MD.4 -->
-                  <app-qu-field title="Stable URL to a paper where the AI is described (optional)." [description]="true">
+                  <app-qu-field title="DOI or stable URL to a paper where the AI is described (optional)." [description]="true">
                     <span qu-field>
                       <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
                     </span>
@@ -737,16 +737,16 @@
               <div class="field-body">
                 <div class="field">
                   <!-- R.1 -->
-                  <app-qu-field title="Is your tool or model publicly available? If so, where?" [description]="true">
+                  <app-qu-field title="Are your tools or models publicly available? If so, where?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['R.1']" (ngModelChange)="questionnaire.availability = ''">
-                        Tool publicly available
+                        Tools or models publicly available
                       </label>
-                      <input class="input" name="method" type="text" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="questionnaire.fieldExpanded['R.1']">
+                      <textarea class="input" placeholder="More detailed information" [(ngModel)]="questionnaire.availability" *ngIf="questionnaire.fieldExpanded['R.1']"></textarea>
                     </span>
                     <span qu-description>
-                      State whether or not the employed tool is publicly available and, if so, provide a link to it.
+                      State whether or not the employed tools are publicly available and, if so, provide a link to it.
                       In most cases, you will probably use existing tools such as Python or R packages, but it might
                       also be the case that your AI system is built upon self-implemented software.
                     </span>
