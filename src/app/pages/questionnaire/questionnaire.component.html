@@ -147,7 +147,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- MD.4 -->
-                  <app-qu-field title="DOI or stable URL to a paper where the AI is described (optional)." [description]="true">
+                  <app-qu-field title="Stable ID or URL to a paper where the AI is described (optional)." [description]="true">
                     <span qu-field>
                       <input class="input" name="url" placeholder="Paper URL" [(ngModel)]="questionnaire.url">
                     </span>
@@ -316,7 +316,7 @@
                         <input class="input" name="type" type="text" placeholder="Type of data" [(ngModel)]="dataset.type">
                       </span>
                       <span qu-description>
-                        Report the type of the data for this dataset, e.g. BMI, age, or blood pressure for clinical data and
+                        Report the type of the data for this dataset, e.g., BMI, age, or blood pressure for clinical data and
                         expression, methylation, or SNPs for omics data.
                       </span>
                     </app-qu-field>
@@ -561,12 +561,12 @@
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.2']" (ngModelChange)="questionnaire.hyperparameters = ''">
-                        Employs hyper-parameters
+                        Employ hyper-parameters
                       </label>
                       <textarea class="input" name="hyperparameters" placeholder="More detailed information" [(ngModel)]="questionnaire.hyperparameters" *ngIf="questionnaire.fieldExpanded['M.2']"></textarea>
                     </span>
                     <span qu-description>
-                      Specify whether the employed method has any hyper-parameters (e. g. number of trees and maximal depth of random forest models).
+                      Specify whether the employed methods have any hyper-parameters (e. g. number of trees and maximal depth of random forest models).
                       If so, please report how you picked the values for these hyper-parameters.
                       Reporting the hyper-parameters is important because they typically have a huge impact on the algorithm's performance.
                     </span>
@@ -621,7 +621,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.5 -->
-                  <app-qu-field title="Did you validate your AI on independent data, e.g. from a different cohort?" [description]="false">
+                  <app-qu-field title="Did you validate your AI on independent data, e.g., from a different cohort?" [description]="false">
                     <span qu-field>
                       <textarea class="input" name="validation" placeholder="Validation on independent data" [(ngModel)]="questionnaire.validation"></textarea>
                     </span>
@@ -661,7 +661,7 @@
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.7']" (ngModelChange)="questionnaire.reproducibility = ''">
-                        Checked results are reproducible
+                        Checked that results are reproducible
                       </label>
                       <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="questionnaire.fieldExpanded['M.7']"></textarea>
                     </span>
@@ -703,16 +703,16 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.9 -->
-                  <app-qu-field title="Did you compare against state of the art approaches? If so, against which?" [description]="true">
+                  <app-qu-field title="Did you compare against state-of-the-art approaches? If so, against which?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.9']" (ngModelChange)="questionnaire.stateOfTheArt = ''">
-                        Compared against a state of the art approaches
+                        Compared against state-of-the-art approaches
                       </label>
                       <textarea class="input" name="stateOfTheArt" placeholder="More detailed information" [(ngModel)]="questionnaire.stateOfTheArt" *ngIf="questionnaire.fieldExpanded['M.9']"></textarea>
                     </span>
                     <span qu-description>
-                      Specify whether you made comparisons between your AI system and state of the art approaches that
+                      Specify whether you made comparisons between your AI system and state-of-the-art approaches that
                       are designed for the same or for a similar purpose as your AI system.
                     </span>
                   </app-qu-field>
@@ -792,7 +792,7 @@
                       <textarea class="input" name="dependencies" placeholder="Dependencies" [(ngModel)]="questionnaire.dependencies"></textarea>
                     </span>
                     <span qu-description>
-                      State how you reported the dependencies of your experiments, e.g. via README or requirements
+                      State how you reported the dependencies of your experiments, e.g., via README or requirements
                       files.
                     </span>
                   </app-qu-field>
