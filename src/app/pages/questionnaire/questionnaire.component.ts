@@ -104,6 +104,12 @@ export class QuestionnaireComponent implements OnInit {
     this.questionnaire.datasets.splice(i, 1);
   }
 
+  public isFalse(v: boolean | null): boolean {
+    console.log(v);
+    console.log(v === false);
+    return v === false;
+  }
+
   public async submitQuestionnaire() {
     this.submitted = true;
     if (this.id && this.password) {

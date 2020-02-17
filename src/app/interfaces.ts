@@ -4,7 +4,7 @@ export interface IDataset {
   synthetic: 'synthetic' | 'real'; // D.3
   syntheticAvailable: string; // D.3
   availability: string; // D.4
-  training: boolean; // D.5
+  training: boolean | null; // D.5
   bias: string; // D.6
   biasAddressed: string; // D.7
   samples: string; // D.8a
@@ -110,7 +110,7 @@ export function createDataset(): IDataset {
     samples: '',
     synthetic: 'real',
     syntheticAvailable: '',
-    training: false,
+    training: null,
     type: '',
     fieldExpanded: {},
   };

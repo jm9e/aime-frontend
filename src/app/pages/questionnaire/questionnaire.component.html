@@ -379,9 +379,17 @@
                     <!-- D.5 -->
                     <app-qu-field title="Is this data used for training?" [description]="true">
                       <span qu-field>
-                        <label class="checkbox">
-                          <input type="checkbox" name="training" [(ngModel)]="dataset.training">
+                        <label class="radio">
+                          <input type="radio" name="training" [value]="true" [(ngModel)]="dataset.training">
                           Used for training
+                        </label>
+                        <label class="radio">
+                          <input type="radio" name="training" [value]="false" [(ngModel)]="dataset.training">
+                          Not used for training
+                        </label>
+                        <label class="radio">
+                          <input type="radio" name="training" [value]="null" [(ngModel)]="dataset.training">
+                          Not applicable
                         </label>
                       </span>
                       <span qu-description>
@@ -538,13 +546,13 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.1  -->
-                  <app-qu-field title="Which AI methods did you use?" [description]="true">
+                  <app-qu-field title="Which AI or optimization methods did you use?" [description]="true">
                     <span qu-field>
                       <input class="input" name="method" type="text" placeholder="AI methods" [(ngModel)]="questionnaire.method">
                     </span>
                     <span qu-description>
-                      Specify which AI methods (e. g. logistic regression, random forest classification,
-                      deep neural networks) were used.
+                      Specify which AI or optimization methods (e.g., logistic regression,random forest classification,
+                      deep neural networks, ant colony optimization, genetic programming) were used.
                     </span>
                   </app-qu-field>
                 </div>
@@ -657,17 +665,17 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.7 -->
-                  <app-qu-field title="Did you check whether your results are reproducible? If so, how?" [description]="true">
+                  <app-qu-field title="Did you check whether your AI is robust? If so, how?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.7']" (ngModelChange)="questionnaire.reproducibility = ''">
-                        Checked that results are reproducible
+                        Checked that results are robust
                       </label>
                       <textarea class="input" name="reproducibility" placeholder="More detailed information" [(ngModel)]="questionnaire.reproducibility" *ngIf="questionnaire.fieldExpanded['M.7']"></textarea>
                     </span>
                     <span qu-description>
                       To make sure the results are stable and there are no random effects, please report how you made
-                      sure the obtained results are reproducible.
+                      sure your AI is robust.
                     </span>
                   </app-qu-field>
                 </div>
@@ -680,7 +688,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.8 -->
-                  <app-qu-field title="Did you compare against a random baseline model? If so, how?" [description]="true">
+                  <app-qu-field title="Did you compare against a simple baseline model? If so, how?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.8']" (ngModelChange)="questionnaire.randomBaseline = ''">
@@ -689,7 +697,7 @@
                       <textarea class="input" name="randomBaseline" placeholder="More detailed information" [(ngModel)]="questionnaire.randomBaseline" *ngIf="questionnaire.fieldExpanded['M.8']"></textarea>
                     </span>
                     <span qu-description>
-                      Specify whether you made comparisons between your AI system and a random baseline model, and if
+                      Specify whether you made comparisons between your AI system and a simple baseline model, and if
                       so, explain how you compared them.
                     </span>
                   </app-qu-field>
@@ -737,7 +745,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- R.1 -->
-                  <app-qu-field title="Which tools did you use for implementing your AI? Are these tools publicly available and, if so, where?" [description]="true">
+                  <app-qu-field title="Which AI or optimization tools did you use for implementing your system? Are these tools publicly available and, if so, where?" [description]="true">
                     <span qu-field>
                       <textarea class="input" placeholder="More detailed information" [(ngModel)]="questionnaire.availability"></textarea>
                     </span>
