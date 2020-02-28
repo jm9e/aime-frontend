@@ -23,7 +23,7 @@ function expandDatasetFields(dataset: IDataset) {
 function expandQuestionnaireFields(questionnaire: IQuestionnaire): IQuestionnaire {
   questionnaire.fieldExpanded = {};
 
-  questionnaire.fieldExpanded['P.2'] = !!questionnaire.surrogate;
+  questionnaire.fieldExpanded['P.3'] = !!questionnaire.surrogate;
 
   questionnaire.fieldExpanded['M.2'] = !!questionnaire.hyperparameters;
   questionnaire.fieldExpanded['M.7'] = !!questionnaire.reproducibility;
@@ -168,14 +168,17 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Purpose
-    if (!this.questionnaire.purpose) {
-      missingFields.push({step: 2, id: 'P.1', name: 'What is your AI designed to learn or predict?'});
+    if (!this.questionnaire.newResults) {
+      missingFields.push({step: 2, id: 'P.1', name: 'Do you present a new AI method, new results, or both?'});
     }
-    if (this.questionnaire.fieldExpanded['P.2'] && !this.questionnaire.surrogate) {
-      missingFields.push({step: 2, id: 'P.2', name: 'What does your surrogate marker represent?'});
+    if (!this.questionnaire.purpose) {
+      missingFields.push({step: 2, id: 'P.2', name: 'What is your AI designed to learn or predict?'});
+    }
+    if (this.questionnaire.fieldExpanded['P.3'] && !this.questionnaire.surrogate) {
+      missingFields.push({step: 2, id: 'P.3', name: 'What does your surrogate marker represent?'});
     }
     if (!this.questionnaire.category) {
-      missingFields.push({step: 2, id: 'P.3', name: 'To which category does your AI problem belong?'});
+      missingFields.push({step: 2, id: 'P.4', name: 'To which category does your AI problem belong?'});
     }
 
     // Datasets

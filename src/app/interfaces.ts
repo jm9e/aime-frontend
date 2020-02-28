@@ -1,16 +1,15 @@
 export interface IDataset {
-  clinical: 'clinical' | 'omics'; // D.1
-  type: string; // D.2
-  synthetic: 'synthetic' | 'real'; // D.3
-  syntheticAvailable: string; // D.3
-  availability: string; // D.4
-  training: boolean | null; // D.5
-  bias: string; // D.6
-  biasAddressed: string; // D.7
-  samples: string; // D.8a
-  features: string; // D.8b
-  normalized: string; // D.9
-  preprocessing: string; // D.10
+  type: string; // D.1
+  synthetic: 'synthetic' | 'real'; // D.2
+  syntheticAvailable: string; // D.2
+  availability: string; // D.3
+  training: boolean | null; // D.4
+  bias: string; // D.5
+  biasAddressed: string; // D.6
+  samples: string; // D.7a
+  features: string; // D.7b
+  normalized: string; // D.8
+  preprocessing: string; // D.9
 
   fieldExpanded: any;
 }
@@ -25,9 +24,10 @@ export interface IQuestionnaire {
   url: string; // MD.4
   public: boolean; // MD.5
 
-  purpose: string; // P.1
-  surrogate: string; // P.2
-  category: string; // P.3
+  newResults: string; // P.1
+  purpose: string; // P.2
+  surrogate: string; // P.3
+  category: string; // P.4
 
   datasets: IDataset[]; // D.*
 
@@ -81,6 +81,7 @@ export function createQuestionnaire(): IQuestionnaire {
     highPerformance: '',
     hyperparameters: '',
     method: '',
+    newResults: '',
     operatingSystem: '',
     overfitting: '',
     public: false,
@@ -104,7 +105,6 @@ export function createDataset(): IDataset {
     availability: '',
     bias: '',
     biasAddressed: '',
-    clinical: 'clinical',
     normalized: '',
     preprocessing: '',
     samples: '',

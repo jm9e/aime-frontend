@@ -200,6 +200,25 @@
               <div class="field-body">
                 <div class="field">
                   <!-- P.1 -->
+                  <app-qu-field title="Do you present a new AI method, new results, or both?" [description]="true">
+                    <span qu-field>
+                      <textarea class="input" name="results" placeholder="Type of contribution" [(ngModel)]="questionnaire.newResults"></textarea>
+                    </span>
+                    <span qu-description>
+                      Specify whether your are presenting a new AI method, new results (possibly achieved with existing
+                      techniques on new data), or both.
+                    </span>
+                  </app-qu-field>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">P.2</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <!-- P.2 -->
                   <app-qu-field title="What is your AI designed to learn or predict?" [description]="true">
                     <span qu-field>
                       <textarea class="input" name="purpose" placeholder="Purpose" [(ngModel)]="questionnaire.purpose"></textarea>
@@ -215,18 +234,18 @@
             </div>
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">P.2</label>
+                <label class="label">P.3</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <!-- P.2 -->
+                  <!-- P.3 -->
                   <app-qu-field title="Does your AI predict a surrogate marker? If so, what does it represent?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
-                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['P.2']" (ngModelChange)="questionnaire.surrogate = ''">
+                        <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['P.3']" (ngModelChange)="questionnaire.surrogate = ''">
                         Predicts surrogate marker
                       </label>
-                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="questionnaire.fieldExpanded['P.2']"></textarea>
+                      <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="questionnaire.surrogate" *ngIf="questionnaire.fieldExpanded['P.3']"></textarea>
                     </span>
                     <span qu-description>
                       The predicted outcome does not necessarily have to be a directly measurable clinical variable but
@@ -240,11 +259,11 @@
             </div>
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">P.3</label>
+                <label class="label">P.4</label>
               </div>
               <div class="field-body">
                 <div class="field">
-                  <!-- P.3 -->
+                  <!-- P.4 -->
                   <app-qu-field title="To which category does your AI problem belong?" [description]="true">
                     <span qu-field>
                       <input class="input" name="category" type="text" placeholder="Category" [(ngModel)]="questionnaire.category">
@@ -287,30 +306,9 @@
                 <div class="field-label is-normal">
                   <label class="label">D{{i + 1}}.1</label>
                 </div>
-                <div class="field-body has-text-left">
-                  <div class="field">
-                    <!-- D.1 -->
-                    <app-qu-field title="Does this dataset contain clinical data or omics data?" [description]="false">
-                      <span qu-field>
-                        <div class="select">
-                          <select name="clinical" [(ngModel)]="dataset.clinical">
-                            <option [value]="'clinical'">Clinical data</option>
-                            <option [value]="'omics'">Omics data</option>
-                          </select>
-                        </div>
-                      </span>
-                      <span qu-description></span>
-                    </app-qu-field>
-                  </div>
-                </div>
-              </div>
-              <div class="field is-horizontal">
-                <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.2</label>
-                </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.2 -->
+                    <!-- D.1 -->
                     <app-qu-field title="What is the type of the data?" [description]="true">
                       <span qu-field>
                         <input class="input" name="type" type="text" placeholder="Type of data" [(ngModel)]="dataset.type">
@@ -325,11 +323,11 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.3</label>
+                  <label class="label">D{{i + 1}}.2</label>
                 </div>
                 <div class="field-body has-text-left">
                   <div class="field">
-                    <!-- D.3 -->
+                    <!-- D.2 -->
                     <app-qu-field title="Is the data real or simulated? If it is simulated, is the simulator publicly available and, if so, where?" [description]="false">
                       <span qu-field>
                         <div class="select">
@@ -352,15 +350,15 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.4</label>
+                  <label class="label">D{{i + 1}}.3</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.4 -->
+                    <!-- D.3 -->
                     <app-qu-field title="Is the data publicly available? If so, where?" [description]="false">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="training" [(ngModel)]="dataset.fieldExpanded['D.4']" (ngModelChange)="dataset.availability = ''">
+                          <input type="checkbox" name="training" [(ngModel)]="dataset.fieldExpanded['D.3']" (ngModelChange)="dataset.availability = ''">
                           Publicly available
                         </label>
                         <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="dataset.fieldExpanded['D.4']"></textarea>
@@ -372,11 +370,11 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.5</label>
+                  <label class="label">D{{i + 1}}.4</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.5 -->
+                    <!-- D.4 -->
                     <app-qu-field title="Is this data used for training?" [description]="true">
                       <span qu-field>
                         <label class="radio">
@@ -401,15 +399,15 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.6</label>
+                  <label class="label">D{{i + 1}}.5</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.6 -->
+                    <!-- D.5 -->
                     <app-qu-field title="Is the data subject to biases? If so, to which?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.6']" (ngModelChange)="dataset.bias = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.5']" (ngModelChange)="dataset.bias = ''">
                           Subject to biases
                         </label>
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="dataset.fieldExpanded['D.6']"></textarea>
@@ -425,15 +423,15 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.7</label>
+                  <label class="label">D{{i + 1}}.6</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.7 -->
+                    <!-- D.6 -->
                     <app-qu-field title="Did you address your data biases? If so, how?" [description]="false">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.7']" (ngModelChange)="dataset.biasAddressed = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.6']" (ngModelChange)="dataset.biasAddressed = ''">
                           Biases addressed
                         </label>
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="dataset.fieldExpanded['D.7']"></textarea>
@@ -445,18 +443,18 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.8</label>
+                  <label class="label">D{{i + 1}}.7</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.8a -->
+                    <!-- D.7a -->
                     <app-qu-field title="How many samples do you have?" [description]="false">
                       <span qu-field>
                         <input class="input" name="samples" placeholder="Number of samples" [(ngModel)]="dataset.samples">
                       </span>
                       <span qu-description></span>
                     </app-qu-field>
-                    <!-- D.8b -->
+                    <!-- D.7b -->
                     <app-qu-field title="How many features do you have?" [description]="true">
                       <span qu-field>
                         <input class="input" name="features" placeholder="Number of features" [(ngModel)]="dataset.features">
@@ -470,15 +468,15 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.9</label>
+                  <label class="label">D{{i + 1}}.8</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D.9 -->
+                    <!-- D.8 -->
                     <app-qu-field title="Did you normalize your data? If so, how?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.9']" (ngModelChange)="dataset.normalized = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.8']" (ngModelChange)="dataset.normalized = ''">
                           Normalized data
                         </label>
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="dataset.fieldExpanded['D.9']"></textarea>
@@ -497,15 +495,15 @@
               </div>
               <div class="field is-horizontal">
                 <div class="field-label is-normal">
-                  <label class="label">D{{i + 1}}.10</label>
+                  <label class="label">D{{i + 1}}.9</label>
                 </div>
                 <div class="field-body">
                   <div class="field">
-                    <!-- D10 -->
+                    <!-- D9 -->
                     <app-qu-field title="Did you apply other pre-processing steps to your data? If so, which?" [description]="true">
                       <span qu-field>
                         <label class="checkbox">
-                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.10']" (ngModelChange)="dataset.preprocessing = ''">
+                          <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.9']" (ngModelChange)="dataset.preprocessing = ''">
                           Pre-processed data
                         </label>
                         <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="dataset.fieldExpanded['D.10']"></textarea>
@@ -546,7 +544,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.1  -->
-                  <app-qu-field title="Which AI or optimization methods did you use?" [description]="true">
+                  <app-qu-field title="Which AI or optimization methods did you use and how did you select them?" [description]="true">
                     <span qu-field>
                       <input class="input" name="method" type="text" placeholder="AI methods" [(ngModel)]="questionnaire.method">
                     </span>
@@ -711,7 +709,7 @@
               <div class="field-body">
                 <div class="field">
                   <!-- M.9 -->
-                  <app-qu-field title="Did you compare against state-of-the-art approaches? If so, against which?" [description]="true">
+                  <app-qu-field title="Did you compare against state-of-the-art approaches? If so, against which, and how did you select the competitors?" [description]="true">
                     <span qu-field>
                       <label class="checkbox">
                         <input type="checkbox" name="answer" [(ngModel)]="questionnaire.fieldExpanded['M.9']" (ngModelChange)="questionnaire.stateOfTheArt = ''">
@@ -721,7 +719,8 @@
                     </span>
                     <span qu-description>
                       Specify whether you made comparisons between your AI system and state-of-the-art approaches that
-                      are designed for the same or for a similar purpose as your AI system.
+                      are designed for the same or for a similar purpose as your AI system and if so, justify your
+                      choice of the competitors.
                     </span>
                   </app-qu-field>
                 </div>
