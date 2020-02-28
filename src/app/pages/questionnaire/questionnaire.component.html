@@ -361,7 +361,7 @@
                           <input type="checkbox" name="training" [(ngModel)]="dataset.fieldExpanded['D.3']" (ngModelChange)="dataset.availability = ''">
                           Publicly available
                         </label>
-                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="dataset.fieldExpanded['D.4']"></textarea>
+                        <textarea class="input" name="availability" placeholder="More detailed information" [(ngModel)]="dataset.availability" *ngIf="dataset.fieldExpanded['D.3']"></textarea>
                       </span>
                       <span qu-description></span>
                     </app-qu-field>
@@ -410,7 +410,7 @@
                           <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.5']" (ngModelChange)="dataset.bias = ''">
                           Subject to biases
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="dataset.fieldExpanded['D.6']"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.bias" *ngIf="dataset.fieldExpanded['D.5']"></textarea>
                       </span>
                       <span qu-description>
                         Omics data are often subject to various biases.
@@ -434,7 +434,7 @@
                           <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.6']" (ngModelChange)="dataset.biasAddressed = ''">
                           Biases addressed
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="dataset.fieldExpanded['D.7']"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.biasAddressed" *ngIf="dataset.fieldExpanded['D.6']"></textarea>
                       </span>
                       <span qu-description></span>
                     </app-qu-field>
@@ -479,7 +479,7 @@
                           <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.8']" (ngModelChange)="dataset.normalized = ''">
                           Normalized data
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="dataset.fieldExpanded['D.9']"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.normalized" *ngIf="dataset.fieldExpanded['D.8']"></textarea>
                       </span>
                       <span qu-description>
                         Since most AI methods are not scale-invariant, the data usually needs to be normalized during
@@ -506,7 +506,7 @@
                           <input type="checkbox" name="answer" [(ngModel)]="dataset.fieldExpanded['D.9']" (ngModelChange)="dataset.preprocessing = ''">
                           Pre-processed data
                         </label>
-                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="dataset.fieldExpanded['D.10']"></textarea>
+                        <textarea class="input" name="surrogate" placeholder="More detailed information" [(ngModel)]="dataset.preprocessing" *ngIf="dataset.fieldExpanded['D.9']"></textarea>
                       </span>
                       <span qu-description>
                         There are various pre-processing techniques such feature engineering and pre-selection that can
