@@ -101,8 +101,11 @@
           <td>{{result.id}}</td>
           <td>
             <strong>{{result.questionnaire.title}}</strong>
-            <p class="content">
+            <p class="content" *ngIf="expanded[result.id]">
               {{result.questionnaire.description}}
+            </p>
+            <p class="content" *ngIf="!expanded[result.id]">
+              <button class="button" (click)="expanded[result.id] = true">Show description</button>
             </p>
           </td>
           <td>{{result.versions.length}} ({{result.date | date: 'medium'}})</td>
