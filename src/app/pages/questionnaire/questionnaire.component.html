@@ -378,15 +378,15 @@
                     <app-qu-field title="Is this data used for training?" [description]="true">
                       <span qu-field>
                         <label class="radio">
-                          <input type="radio" name="training" [value]="true" [(ngModel)]="dataset.training">
+                          <input type="radio" name="training{{i}}" [value]="true" [(ngModel)]="dataset.training">
                           Used for training
                         </label>
                         <label class="radio">
-                          <input type="radio" name="training" [value]="false" [(ngModel)]="dataset.training">
+                          <input type="radio" name="training{{i}}" [value]="false" [(ngModel)]="dataset.training">
                           Not used for training
                         </label>
                         <label class="radio">
-                          <input type="radio" name="training" [value]="null" [(ngModel)]="dataset.training">
+                          <input type="radio" name="training{{i}}" [value]="null" [(ngModel)]="dataset.training">
                           Not applicable
                         </label>
                       </span>
