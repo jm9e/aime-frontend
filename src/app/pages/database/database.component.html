@@ -90,15 +90,15 @@
       <table class="table is-striped is-fullwidth">
         <thead>
         <tr>
-          <th>ID</th>
+          <th class="is-hidden-mobile">ID</th>
           <th>Title & Description</th>
-          <th>Revisions (last modified)</th>
+          <th class="w250 is-hidden-mobile">Revisions (last modified)</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let result of results">
-          <td>{{result.id}}</td>
+          <td class="is-hidden-mobile">{{result.id}}</td>
           <td>
             <strong>{{result.questionnaire.title}}</strong>
             <p class="content" *ngIf="expanded[result.id]">
@@ -115,7 +115,9 @@
               </button>
             </p>
           </td>
-          <td>{{result.versions.length}} ({{result.date | date: 'medium'}})</td>
+          <td class="is-hidden-mobile">
+            {{result.versions.length}} ({{result.date | date: 'medium'}})
+          </td>
           <td>
             <div class="buttons">
               <a class="button is-small is-info" href="/report/{{result.id}}.pdf">
