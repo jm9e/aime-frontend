@@ -22,6 +22,9 @@ export class DatabaseComponent implements OnInit {
   public searchReproducibility = true;
   public reportCited: IReport | null = null;
   public expanded: {[key: string]: any} = {};
+  public currentPage = 0;
+  public pages: number[] = [];
+  private ITEMS_PER_PAGE = 5;
 
   constructor(private http: HttpClient) {
     this.query.pipe(
@@ -50,8 +53,8 @@ export class DatabaseComponent implements OnInit {
     return fields;
   }
 
-  public search() {
-    this.http.get<any>(`/api/search?q=${escape(this.query.getValue())}&f=${this.getFields()}`).subscribe((resp) => {
+  public search(offset = 0) {
+    this.http.get<any>(`/api/search?q=${escape(this.query.getValue())}&f=${this.getFields()}&o=${offset}`).subscribe((resp) => {
       this.resultsCount = resp.count;
       this.results = resp.results.map((result) => {
         result.date = new Date(result.date);
@@ -62,7 +65,13 @@ export class DatabaseComponent implements OnInit {
         return result;
       });
       this.lastQuery = resp.query;
+      this.currentPage = 0;
+      this.pages = Array(Math.ceil(this.resultsCount / this.ITEMS_PER_PAGE)).fill(0).map((x, i) => i);
     });
+  }
+
+  public setPage(i) {
+    this.search(i * this.ITEMS_PER_PAGE);
   }
 
 }

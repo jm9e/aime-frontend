@@ -144,3 +144,17 @@
     </div>
   </div>
 </section>
+
+<section>
+  <div class="container">
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <button class="pagination-previous" [disabled]="currentPage <= 0" (click)="setPage(currentPage - 1)">Previous</button>
+      <button class="pagination-next" [disabled]="currentPage >= pages.length - 1" (click)="setPage(currentPage + 1)">Next page</button>
+      <ul class="pagination-list">
+        <li *ngFor="let page of pages">
+          <a class="pagination-link" [ngClass]="{'is-current': currentPage === page}" aria-current="page" (click)="setPage(page)">{{page + 1}}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</section>
