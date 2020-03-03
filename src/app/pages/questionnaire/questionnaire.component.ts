@@ -244,8 +244,8 @@ export class QuestionnaireComponent implements OnInit {
     }
 
     // Reproducibility
-    if (this.questionnaire.fieldExpanded['R.1'] && !this.questionnaire.availability) {
-      missingFields.push({step: 5, id: 'R.1', name: 'Where can your tool be found?'});
+    if (!this.questionnaire.availability) {
+      missingFields.push({step: 5, id: 'R.1', name: 'Which AI or optimization tools did you use for implementing your system?'});
     }
     if (this.questionnaire.fieldExpanded['R.2'] && !this.questionnaire.sourceCode) {
       missingFields.push({step: 5, id: 'R.2', name: 'Where can your source code be found?'});
