@@ -13,11 +13,11 @@ interface MissingField {
 function expandDatasetFields(dataset: IDataset) {
   dataset.fieldExpanded = {};
 
-  dataset.fieldExpanded['D.4'] = !!dataset.availability;
-  dataset.fieldExpanded['D.6'] = !!dataset.bias;
-  dataset.fieldExpanded['D.7'] = !!dataset.biasAddressed;
-  dataset.fieldExpanded['D.9'] = !!dataset.normalized;
-  dataset.fieldExpanded['D.10'] = !!dataset.preprocessing;
+  dataset.fieldExpanded['D.3'] = !!dataset.availability;
+  dataset.fieldExpanded['D.5'] = !!dataset.bias;
+  dataset.fieldExpanded['D.6'] = !!dataset.biasAddressed;
+  dataset.fieldExpanded['D.8'] = !!dataset.normalized;
+  dataset.fieldExpanded['D.9'] = !!dataset.preprocessing;
 }
 
 function expandQuestionnaireFields(questionnaire: IQuestionnaire): IQuestionnaire {
@@ -186,31 +186,31 @@ export class QuestionnaireComponent implements OnInit {
       const ds = this.questionnaire.datasets[i];
 
       if (!ds.type) {
-        missingFields.push({step: 3, id: `D${i + 1}.2`, name: 'What is the type of the data?'});
+        missingFields.push({step: 3, id: `D${i + 1}.1`, name: 'What is the type of the data?'});
       }
       if (ds.synthetic === 'synthetic' && !ds.syntheticAvailable) {
-        missingFields.push({step: 3, id: `D${i + 1}.3`, name: 'Is your simulator publicly available and, if so, where?'});
+        missingFields.push({step: 3, id: `D${i + 1}.2`, name: 'Is your simulator publicly available and, if so, where?'});
       }
-      if (ds.fieldExpanded['D.4'] && !ds.availability) {
-        missingFields.push({step: 3, id: `D${i + 1}.4`, name: 'Where can your data be found?'});
+      if (ds.fieldExpanded['D.3'] && !ds.availability) {
+        missingFields.push({step: 3, id: `D${i + 1}.3`, name: 'Where can your data be found?'});
       }
-      if (ds.fieldExpanded['D.6'] && !ds.bias) {
-        missingFields.push({step: 3, id: `D${i + 1}.6`, name: 'Which biases is your data subject to?'});
+      if (ds.fieldExpanded['D.5'] && !ds.bias) {
+        missingFields.push({step: 3, id: `D${i + 1}.5`, name: 'Which biases is your data subject to?'});
       }
-      if (ds.fieldExpanded['D.7'] && !ds.biasAddressed) {
-        missingFields.push({step: 3, id: `D${i + 1}.7`, name: 'How did you address your data biases?'});
+      if (ds.fieldExpanded['D.6'] && !ds.biasAddressed) {
+        missingFields.push({step: 3, id: `D${i + 1}.6`, name: 'How did you address your data biases?'});
       }
       if (!ds.samples) {
-        missingFields.push({step: 3, id: `D${i + 1}.8a`, name: 'How many samples do you have?'});
+        missingFields.push({step: 3, id: `D${i + 1}.7a`, name: 'How many samples do you have?'});
       }
       if (!ds.features) {
-        missingFields.push({step: 3, id: `D${i + 1}.8b`, name: 'How many features do you have?'});
+        missingFields.push({step: 3, id: `D${i + 1}.7b`, name: 'How many features do you have?'});
       }
-      if (ds.fieldExpanded['D.9'] && !ds.normalized) {
-        missingFields.push({step: 3, id: `D${i + 1}.9`, name: 'How did you normalize your data?'});
+      if (ds.fieldExpanded['D.8'] && !ds.normalized) {
+        missingFields.push({step: 3, id: `D${i + 1}.8`, name: 'How did you normalize your data?'});
       }
-      if (ds.fieldExpanded['D.10'] && !ds.preprocessing) {
-        missingFields.push({step: 3, id: `D${i + 1}.10`, name: 'How did you preprocess your data?'});
+      if (ds.fieldExpanded['D.9'] && !ds.preprocessing) {
+        missingFields.push({step: 3, id: `D${i + 1}.9`, name: 'How did you preprocess your data?'});
       }
     }
 
