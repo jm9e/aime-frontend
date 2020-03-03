@@ -24,7 +24,7 @@ export class DatabaseComponent implements OnInit {
   public expanded: { [key: string]: any } = {};
   public currentPage = 0;
   public pages: number[] = [];
-  private ITEMS_PER_PAGE = 3;
+  private ITEMS_PER_PAGE = 10;
 
   constructor(private http: HttpClient) {
     this.query.pipe(
