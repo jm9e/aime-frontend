@@ -74,6 +74,7 @@ export class DatabaseComponent implements OnInit {
 
   public setPage(i) {
     this.search(i * this.ITEMS_PER_PAGE);
+    this.currentPage = i;
   }
 
 }
