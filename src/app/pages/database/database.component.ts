@@ -69,6 +69,7 @@ export class DatabaseComponent implements OnInit {
         this.lastQuery = resp.query;
         this.currentPage = 0;
         this.pages = Array(Math.ceil(this.resultsCount / this.ITEMS_PER_PAGE)).fill(0).map((x, i) => i);
+        this.expanded = {};
       });
   }
 
