@@ -53,9 +53,9 @@ export class DatabaseComponent implements OnInit {
     return fields;
   }
 
-  public search(offset = 0) {
+  public search(page = 0) {
     this.http.get<any>(
-      `/api/search?q=${escape(this.query.getValue())}&f=${this.getFields()}&o=${offset}&l=${this.ITEMS_PER_PAGE}`)
+      `/api/search?q=${escape(this.query.getValue())}&f=${this.getFields()}&o=${page * this.ITEMS_PER_PAGE}&l=${this.ITEMS_PER_PAGE}`)
       .subscribe((resp) => {
         this.resultsCount = resp.count;
         this.results = resp.results.map((result) => {
@@ -66,16 +66,15 @@ export class DatabaseComponent implements OnInit {
           });
           return result;
         });
+        this.currentPage = page;
         this.lastQuery = resp.query;
-        this.currentPage = 0;
         this.pages = Array(Math.ceil(this.resultsCount / this.ITEMS_PER_PAGE)).fill(0).map((x, i) => i);
         this.expanded = {};
       });
   }
 
   public setPage(i) {
-    this.search(i * this.ITEMS_PER_PAGE);
-    this.currentPage = i;
+    this.search(i);
   }
 
 }
