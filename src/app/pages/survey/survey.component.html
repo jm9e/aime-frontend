@@ -137,13 +137,36 @@
           </div>
           <div class="field-body">
             <div class="field">
-              <app-qu-field title="Your name and affiliation." [description]="true">
+              <app-qu-field title="Leave your name and affiliation." [description]="true">
                 <span qu-field>
                   <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Please fill in your name and affiliation so that we can get back to you in case we have questions.
-                  In case you want to appear on the AIMe paper, we will the information provided here as well.
+                  In case you want to appear on the AIMe paper, we will use the information provided here as well.
+                </span>
+              </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">A.2</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <app-qu-field title="Request co-authorship on the AIMe paper." [description]="true">
+                <span qu-field>
+                  <label class="checkbox">
+                    <input type="checkbox" name="public">
+                    Request co-authorship
+                  </label>
+                </span>
+                <span qu-description>
+                  In case we put your suggestions up for voting (which we will do unless we think the suggestions are
+                  inappropriate or miss the point of the AIMe standard), tell us if you want to appear on the AIMe paper
+                  as a co-author.
                 </span>
               </app-qu-field>
             </div>
