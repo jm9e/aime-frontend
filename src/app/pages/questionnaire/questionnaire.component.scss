@@ -4,14 +4,6 @@
   cursor: pointer;
 }
 
-.steps.is-aime {
-  .step-item.is-selected {
-    .step-marker {
-      background-color: lightgray;
-    }
-  }
-}
-
 code, pre {
   color: $aime;
 }

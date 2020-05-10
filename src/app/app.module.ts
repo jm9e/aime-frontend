@@ -12,6 +12,7 @@ import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
 import { QuFieldComponent } from './components/qu-field/qu-field.component';
 import { CiteReportComponent } from './components/cite-report/cite-report.component';
+import { SurveyComponent } from './pages/survey/survey.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CiteReportComponent } from './components/cite-report/cite-report.compon
     AboutComponent,
     QuFieldComponent,
     CiteReportComponent,
+    SurveyComponent,
   ],
   imports: [
     HttpClientModule,

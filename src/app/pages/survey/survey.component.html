@@ -1,0 +1,166 @@
+<section class="section">
+  <div class="container">
+    <h2 class="title is-4">Help shaping the AIMe standard</h2>
+    <p class="mb-3">
+      Everyone who is interested in contributing to the AIMe standard is invited to do so.
+    </p>
+    <p class="mb-3">
+      Until June 15, everyone who is interested in the AIMe standard can suggest additional questions and provide
+      general feedback on the standard.
+    </p>
+    <p class="mb-3">
+      After that, we will put all suggestions that support the idea of AIMe up to public vote.
+      If your suggestion makes it to the poll, we offer you a co-authorship on the
+      <a href="#" target="_blank">AIMe paper</a>.
+    </p>
+    <p class="mb-3">
+      Finally, we will incorporate all suggestions that got voted in into version 1.0 of the AIMe standard.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="mt-3 steps is-aime">
+      <div class="step-item is-active is-hidden-mobile is-selected">
+        <div class="step-marker"><i class="fad fa-comments"></i></div>
+        <div class="step-details">
+          <p class="step-title">
+            Collecting questions and feedback
+          </p>
+          <p>
+            until June 15
+          </p>
+        </div>
+      </div>
+      <div class="step-item is-active is-hidden-mobile">
+        <div class="step-marker"><i class="fad fa-ballot-check"></i></div>
+        <div class="step-details">
+          <p class="step-title">
+            Public vote on your suggestions
+          </p>
+          <p>
+            June 15 - July 15
+          </p>
+        </div>
+      </div>
+      <div class="step-item is-active is-hidden-mobile">
+        <div class="step-marker"><i class="fad fa-file-alt"></i></div>
+        <div class="step-details">
+          <p class="step-title">
+            First AIMe version
+          </p>
+          <p>
+            July 31
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="step-content card">
+      <header class="card-header">
+        <div class="card-header-title">
+          <h2 class="title is-4">
+            Contribute
+          </h2>
+        </div>
+      </header>
+      <div class="card-content">
+        <p class="mb-3">
+          Before suggesting a question and providing feedback, make sure that you have had a look at the
+          <a routerLink="/questionnaire">first draft of the questionnaire</a> and the
+          <a href="#">draft of the AIMe paper</a>.
+        </p>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Q.1</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <app-qu-field title="What is the question you want to suggest?" [description]="true">
+                <span qu-field>
+                  <textarea class="input" name="suggested-question" placeholder="Suggested question" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                </span>
+                <span qu-description>
+                  Fill in the question you want to suggest as it should appear in the AIMe standard later.
+                </span>
+              </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Q.2</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <app-qu-field title="Why do you think this question is important?" [description]="true">
+                <span qu-field>
+                  <textarea class="input" name="reason" placeholder="Reason" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                </span>
+                <span qu-description>
+                  Tell us why you think this question is important, e.g., what aspect it covers, why it increases the
+                  quality of the report, etc.
+                </span>
+              </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">F.1</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <app-qu-field title="Do you have general feedback or suggestions for AIMe?" [description]="true">
+                <span qu-field>
+                  <textarea class="input" name="reason" placeholder="General feedback or suggestion" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                </span>
+                <span qu-description>
+                  Tell us what you like or dislike about AIMe and what you would like to suggest additionally to a question.
+                </span>
+              </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">A.1</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <app-qu-field title="Your name and affiliation." [description]="true">
+                <span qu-field>
+                  <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                </span>
+                <span qu-description>
+                  Please fill in your name and affiliation so that we can get back to you in case we have questions.
+                  In case you want to appear on the AIMe paper, we will the information provided here as well.
+                </span>
+              </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button data-nav="next" class="button is-info">
+              <span class="icon">
+                <i class="fa fa-paper-plane"></i>
+              </span>
+              <span>Submit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
