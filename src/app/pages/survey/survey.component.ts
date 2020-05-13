@@ -14,10 +14,13 @@ export class SurveyComponent implements OnInit {
   public contactDetails = '';
   public requestAuthorship = true;
 
+  public message = '';
+
   constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
+    this.message = '';
   }
 
   public async submitSurvey() {
@@ -32,7 +35,9 @@ export class SurveyComponent implements OnInit {
     this.questionReason = '';
     this.generalFeedback = '';
     this.contactDetails = '';
-    await this.http.post(``, reqObj);
+    await this.http.post(`/api/survey`, reqObj).toPromise();
+
+    this.message = 'Thank you for your contribution!';
   }
 
 }

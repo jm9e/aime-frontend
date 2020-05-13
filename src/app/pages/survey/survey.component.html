@@ -70,6 +70,10 @@
         </div>
       </header>
       <div class="card-content">
+        <div class="notification is-primary mb-3" *ngIf="message">
+          {{message}}
+        </div>
+
         <p class="mb-3">
           Before suggesting a question and providing feedback, make sure that you have had a look at the
           <a routerLink="/questionnaire">first draft of the questionnaire</a> and the
