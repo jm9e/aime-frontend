@@ -102,7 +102,7 @@
             <div class="field">
               <app-qu-field title="Why do you think this question is important?" [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="reason" placeholder="Reason" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                  <textarea class="input" name="reason" placeholder="Reason" [(ngModel)]="questionReason" style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Tell us why you think this question is important, e.g., what aspect it covers, why it increases the
@@ -121,7 +121,7 @@
             <div class="field">
               <app-qu-field title="Do you have general feedback or suggestions for AIMe?" [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="reason" placeholder="General feedback or suggestion" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                  <textarea class="input" name="reason" placeholder="General feedback or suggestion" [(ngModel)]="generalFeedback" style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Tell us what you like or dislike about AIMe and what you would like to suggest additionally to a question.
@@ -139,7 +139,7 @@
             <div class="field">
               <app-qu-field title="Leave your name and affiliation." [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                  <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="contactDetails" style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Please fill in your name and affiliation so that we can get back to you in case we have questions.
@@ -159,7 +159,7 @@
               <app-qu-field title="Request co-authorship on the AIMe paper." [description]="true">
                 <span qu-field>
                   <label class="checkbox">
-                    <input type="checkbox" name="public">
+                    <input type="checkbox" name="public" [(ngModel)]="requestAuthorship">
                     Request co-authorship
                   </label>
                 </span>
@@ -173,7 +173,9 @@
 
         <div class="field">
           <div class="control">
-            <button data-nav="next" class="button is-info">
+            <button data-nav="next" class="button is-info"
+                    (click)="submitSurvey()"
+                    [disabled]="((!suggestedQuestion || !questionReason) && !generalFeedback) || !contactDetails">
               <span class="icon">
                 <i class="fa fa-paper-plane"></i>
               </span>
