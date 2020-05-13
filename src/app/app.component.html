@@ -23,14 +23,14 @@
           </span>
         </a>
 
-<!--        <a routerLink="/survey" class="navbar-item" [routerLinkActive]="['is-active']">-->
-<!--          <span class="icon">-->
-<!--            <i class="fad fa-signature"></i>-->
-<!--          </span>-->
-<!--          <span>-->
-<!--            Contribute-->
-<!--          </span>-->
-<!--        </a>-->
+        <a routerLink="/survey" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-comment-lines"></i>
+          </span>
+          <span>
+            Contribute
+          </span>
+        </a>
 
         <a routerLink="/questionnaire" class="navbar-item" [routerLinkActive]="['is-active']">
           <span class="icon">
@@ -63,9 +63,7 @@
     </div>
   </nav>
 
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+  <router-outlet></router-outlet>
 </div>
 
 <footer class="footer">
