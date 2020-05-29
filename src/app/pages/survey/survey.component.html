@@ -70,7 +70,7 @@
         </div>
       </header>
       <div class="card-content">
-        <div class="notification is-primary mb-3" *ngIf="message">
+        <div class="notification is-{{messageType}} mb-3" *ngIf="message">
           {{message}}
         </div>
 
@@ -141,6 +141,25 @@
           </div>
           <div class="field-body">
             <div class="field">
+              <app-qu-field title="Leave a valid email address." [description]="true">
+                <span qu-field>
+                  <input type="email" class="input" name="email" placeholder="Email address" [(ngModel)]="emailAddress">
+                </span>
+                <span qu-description>
+                  Please fill in a valid email address.
+                  We will use this email address to send a confirmation of your participation.
+                </span>
+              </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">A.2</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
               <app-qu-field title="Leave your name and affiliation exactly as it should appear in the publication (if co-authorship is requested)." [description]="true">
                 <span qu-field>
                   <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="contactDetails" style="height: 100px"></textarea>
@@ -156,7 +175,7 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">A.2</label>
+            <label class="label">A.3</label>
           </div>
           <div class="field-body">
             <div class="field">
@@ -171,6 +190,17 @@
                   Tell us if you want to appear on the AIMe paper as a co-author.
                 </span>
               </app-qu-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label"></label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div id="g-recaptcha"></div>
             </div>
           </div>
         </div>

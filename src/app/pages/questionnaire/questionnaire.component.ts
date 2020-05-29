@@ -3,6 +3,7 @@ import {createDataset, createQuestionnaire, IDataset, IQuestionnaire} from '../.
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 interface MissingField {
   step: number;
@@ -69,7 +70,7 @@ export class QuestionnaireComponent implements OnInit {
       this.password = params.p;
 
       if (this.id) {
-        this.http.get<IQuestionnaire>(`/api/questionnaire?id=${this.id}`).subscribe((resp) => {
+        this.http.get<IQuestionnaire>(`${environment.url}api/questionnaire?id=${this.id}`).subscribe((resp) => {
           this.questionnaire = expandQuestionnaireFields(resp);
           this.revising = true;
         });
@@ -113,14 +114,14 @@ export class QuestionnaireComponent implements OnInit {
   public async submitQuestionnaire() {
     this.submitted = true;
     if (this.id && this.password) {
-      this.http.post<any>(`/api/questionnaire?id=${this.id}&p=${this.password}`, {
+      this.http.post<any>(`${environment.url}api/questionnaire?id=${this.id}&p=${this.password}`, {
         questionnaire: this.questionnaire,
       }).subscribe((r) => {
         this.id = r.id;
         this.password = r.password;
       });
     } else {
-      this.http.post<any>(`/api/questionnaire`, {
+      this.http.post<any>(`${environment.url}api/questionnaire`, {
         questionnaire: this.questionnaire,
         attachReport: this.attachReport,
         email: this.email,
@@ -135,7 +136,7 @@ export class QuestionnaireComponent implements OnInit {
     this.displayPDF = false;
     this.generatingPDF = true;
     this.http
-      .post(`/api/preview`, JSON.stringify(this.questionnaire), {responseType: 'blob'})
+      .post(`${environment.url}api/preview`, JSON.stringify(this.questionnaire), {responseType: 'blob'})
       .pipe(map((result: any) => {
         return result;
       }))
