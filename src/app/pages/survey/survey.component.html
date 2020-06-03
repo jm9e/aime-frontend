@@ -209,7 +209,7 @@
           <div class="control">
             <button data-nav="next" class="button is-info"
                     (click)="submitSurvey()"
-                    [disabled]="((!suggestedQuestion || !questionReason) && !generalFeedback) || !contactDetails">
+                    [disabled]="!(contactDetails && emailAddress && (generalFeedback || (suggestedQuestion && questionReason)))">
               <span class="icon">
                 <i class="fa fa-paper-plane"></i>
               </span>

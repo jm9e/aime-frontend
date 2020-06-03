@@ -45,14 +45,13 @@ export class SurveyComponent implements OnInit {
     this.emailAddress = '';
     this.contactDetails = '';
 
-    this.http.post(`${environment.url}api/survey`, reqObj).toPromise().catch((e: HttpErrorResponse) => {
-      if (e.status === 200) {
-        this.message = 'Thank you for your participation!';
-        this.messageType = 'primary';
-      } else {
-        this.message = e.error;
-        this.messageType = 'danger';
-      }
+    this.http.post(`${environment.url}api/survey`, reqObj).toPromise()
+      .catch((e: HttpErrorResponse) => {
+      this.message = e.error;
+      this.messageType = 'danger';
+    }).then(() => {
+      this.message = 'Thank you for your participation!';
+      this.messageType = 'primary';
     });
   }
 
