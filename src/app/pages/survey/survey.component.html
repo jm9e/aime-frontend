@@ -29,7 +29,7 @@
             Collecting questions and feedback
           </p>
           <p>
-            until July 31
+            until August 31
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@
             Public vote on your suggestions
           </p>
           <p>
-            July 31 - August 31
+            September 15 - September 30
           </p>
         </div>
       </div>
@@ -51,7 +51,7 @@
             First AIMe version
           </p>
           <p>
-            September 15
+            October 15
           </p>
         </div>
       </div>
@@ -88,7 +88,8 @@
             <div class="field">
               <app-qu-field title="What is the question you want to suggest?" [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="suggested-question" placeholder="Suggested question" [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
+                  <textarea class="input" name="suggested-question" placeholder="Suggested question"
+                            [(ngModel)]="suggestedQuestion" style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Fill in the question you want to suggest as it should appear in the AIMe standard later.
@@ -106,7 +107,8 @@
             <div class="field">
               <app-qu-field title="Why do you think this question is important?" [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="reason" placeholder="Reason" [(ngModel)]="questionReason" style="height: 100px"></textarea>
+                  <textarea class="input" name="reason" placeholder="Reason" [(ngModel)]="questionReason"
+                            style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Tell us why you think this question is important, e.g., what aspect it covers, why it increases the
@@ -125,7 +127,8 @@
             <div class="field">
               <app-qu-field title="Do you have general feedback or suggestions for AIMe?" [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="reason" placeholder="General feedback or suggestion" [(ngModel)]="generalFeedback" style="height: 100px"></textarea>
+                  <textarea class="input" name="reason" placeholder="General feedback or suggestion"
+                            [(ngModel)]="generalFeedback" style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Tell us what you like or dislike about AIMe and what you would like to suggest additionally to a question.
@@ -160,9 +163,12 @@
           </div>
           <div class="field-body">
             <div class="field">
-              <app-qu-field title="Leave your name and affiliation exactly as it should appear in the publication (if co-authorship is requested)." [description]="true">
+              <app-qu-field
+                title="Leave your name and affiliation exactly as it should appear in the publication (if co-authorship is requested)."
+                [description]="true">
                 <span qu-field>
-                  <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="contactDetails" style="height: 100px"></textarea>
+                  <textarea class="input" name="reason" placeholder="Contact details" [(ngModel)]="contactDetails"
+                            style="height: 100px"></textarea>
                 </span>
                 <span qu-description>
                   Please fill in your name and affiliation so that we can get back to you in case we have questions.
