@@ -1,6 +1,34 @@
 <section class="section">
   <div class="container">
+    <div class="step-content card is-active scores">
+      <header class="card-header">
+        <div class="card-header-title">
+          <h2 class="title is-4">
+            Your AIMe report
+          </h2>
+        </div>
+        <a class="card-header-icon" (click)="showScores = !showScores">
+              <span class="icon">
+                <i class="fas fa-angle-down" *ngIf="showScores"></i>
+                <i class="fas fa-angle-left" *ngIf="!showScores"></i>
+              </span>
+        </a>
+      </header>
+      <div class="card-content" *ngIf="showScores">
+        <div class="progress--circle progress--25">
+          <div class="progress__number">2.5</div>
+          <div class="score-title">Reproducibility</div>
+        </div>
+
+        <div class="progress--circle progress--50">
+          <div class="progress__number">5</div>
+          <div class="score-title">Validation</div>
+        </div>
+      </div>
+    </div>
+
     <div class="steps is-aime" *ngIf="!submitted">
+
       <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 1}" (click)="goToStep(1)">
         <div class="step-marker"><i class="fad fa-at"></i></div>
         <div class="step-details">
@@ -59,6 +87,7 @@
           </div>
         </div>
       </div>
+
       <div class="steps-content">
         <div class="step-content card" [ngClass]="{'is-active': step === 1}">
           <header class="card-header">
@@ -936,7 +965,7 @@
         </div>
       </div>
 
-      <div class="steps-actions">
+      <div class="steps-actions is-active">
         <div class="steps-action">
           <button data-nav="previous" class="button is-normal" (click)="goToStep(step - 1)" *ngIf="step > 1">
             <span class="icon">

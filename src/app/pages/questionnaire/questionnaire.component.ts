@@ -60,6 +60,7 @@ export class QuestionnaireComponent implements OnInit {
   public attachReport = true;
   public revising = false;
   public missingFields: MissingField[] = [];
+  public showScores = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -90,6 +91,7 @@ export class QuestionnaireComponent implements OnInit {
     this.step = Number(step);
 
     if (this.step === 6) {
+      this.showScores = true;
       this.missingFields = this.checkFields();
       if (this.missingFields.length === 0) {
         await this.generatePreview();
