@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IQuestion, ISection} from '../../interfaces';
+import {IQuestion, ISection, createDefaults} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
@@ -300,6 +300,20 @@ export class QuestionnaireComponent implements OnInit {
       //   });
       // }
     });
+
+    this.createDefaults();
+  }
+
+  public createDefaults() {
+    for (const e of this.steps) {
+      for (const q of e.section.questions) {
+        if (q.id) {
+          this.answers[e.section.short + '.' + q.id] = createDefaults(q);
+        } else {
+          this.answers[e.section.short] = createDefaults(q);
+        }
+      }
+    }
   }
 
   // public updateEmail() {

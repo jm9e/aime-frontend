@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IQuestion} from '../../interfaces';
+import {createDefaults, IQuestion} from '../../interfaces';
 
 @Component({
 	selector: 'app-qu-field',
@@ -25,10 +25,6 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if (typeof this.value === 'undefined') {
-			this.value = this.question.default;
-			this.valueChange.emit(this.value);
-		}
 	}
 
 	public getResults(): string[] {
@@ -76,13 +72,11 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	public addEntry() {
-		this.value.push(JSON.parse(JSON.stringify(this.question.sub.default)));
-		this.valueChange.emit(this.value);
+		this.value.push(createDefaults(this.question.sub));
 	}
 
 	public deleteEntry(i: number) {
 		this.value.splice(i, 1);
-		this.valueChange.emit(this.value);
 	}
 
 }

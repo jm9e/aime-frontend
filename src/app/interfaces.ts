@@ -10,7 +10,7 @@ export interface ISection {
 export interface IQuestion {
   id: string;
   type: QuestionType;
-  default: any;
+  default?: any;
   optional?: boolean;
   title: string;
   question: string;
@@ -21,6 +21,23 @@ export interface IQuestion {
     sub: IQuestion;
   }[];
   config?: any;
+}
+
+export function createDefaults(q: IQuestion): any {
+  if (q.type === 'list') {
+    return [];
+  }
+  if (q.type === 'complex') {
+    const d = {};
+    for (const e of q.subs) {
+      d[e.sub.id] = createDefaults(e.sub);
+    }
+    return d;
+  }
+  if (typeof q.default === 'undefined') {
+    return undefined;
+  }
+  return JSON.parse(JSON.stringify(q.default));
 }
 
 export interface IVersion {
