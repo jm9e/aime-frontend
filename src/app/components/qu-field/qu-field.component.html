@@ -120,7 +120,7 @@
   </ng-container>
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label" *ngIf="!hideId">{{fullId}}</label>
+      <label class="label has-text-grey-light" *ngIf="!hideId">{{fullId}}.{{(value.length + 1).toString(10)}}</label>
     </div>
     <div class="field-body">
       <div class="field">

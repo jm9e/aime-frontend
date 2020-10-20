@@ -82,7 +82,6 @@ export class QuestionnaireComponent implements OnInit {
             type: 'list',
             title: 'Contact',
             sub: {
-              id: '1',
               type: 'complex',
               title: 'Contact',
               subs: [
@@ -124,10 +123,10 @@ export class QuestionnaireComponent implements OnInit {
             title: 'Funding',
             question: 'Funding details relevant for the AI.',
             sub: {
+              type: 'text',
               default: '',
               title: 'Funding',
               question: 'Funding details relevant for the AI.',
-              type: 'text',
             },
           },
           {
@@ -210,33 +209,30 @@ export class QuestionnaireComponent implements OnInit {
         ]
       },
       {
-        id: 'D', type: 'complex', title: 'Data', question: '', subs: [
-          {
-            type: 'list',
-            title: 'Dataset',
-            sub: {
-              type: 'complex',
-              title: 'Title',
-              question: 'Title of the AI',
-              subs: [
-                {
-                  id: '1',
-                  type: 'text',
-                  default: '',
-                  title: 'A',
-                  question: 'More detailed information',
-                },
-                {
-                  id: '2',
-                  type: 'text',
-                  default: '',
-                  title: 'B',
-                  question: 'More detailed information',
-                },
-              ]
+        id: 'D',
+        type: 'list',
+        title: 'Dataset',
+        sub: {
+          type: 'complex',
+          title: 'Title',
+          question: 'Title of the AI',
+          subs: [
+            {
+              id: '1',
+              type: 'text',
+              default: '',
+              title: 'A',
+              question: 'More detailed information',
             },
-          }
-        ]
+            {
+              id: '2',
+              type: 'text',
+              default: '',
+              title: 'B',
+              question: 'More detailed information',
+            },
+          ]
+        },
       },
       {
         id: 'M',
