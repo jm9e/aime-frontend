@@ -28,9 +28,9 @@
     </div>
     <div class="steps is-aime" *ngIf="!submitted">
       <div *ngFor="let s of steps" class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === s.step}" (click)="goToStep(s.step)">
-        <div class="step-marker"><i class="fad {{s.section.icon}}"></i></div>
+        <div class="step-marker"><i class="fad {{s.icon}}"></i></div>
         <div class="step-details">
-          <p class="step-title">{{s.section.title}}</p>
+          <p class="step-title">{{s.title}}</p>
         </div>
       </div>
       <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 6}" (click)="goToStep(6)">
@@ -47,7 +47,7 @@
           <div class="control is-expanded">
             <div class="select is-fullwidth">
               <select name="clinical" [ngModel]="step" (ngModelChange)="goToStep($event)">
-                <option [value]="s.step" *ngFor="let s of steps">{{s.section.title}}</option>
+                <option [value]="s.step" *ngFor="let s of steps">{{s.title}}</option>
                 <option [value]="6">Review & Submit</option>
               </select>
             </div>
@@ -68,7 +68,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [idPrefix]="s.section.short" [id]="q.id" [question]="q" *ngFor="let q of s.section.questions" [(value)]="answers[q.id ? s.section.short + '.' + q.id : s.section.short]">
+            <app-qu-field [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]">
             </app-qu-field>
           </div>
         </div>

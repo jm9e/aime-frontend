@@ -1,26 +1,19 @@
 export type QuestionType = 'string' | 'boolean' | 'text' | 'tags' | 'select' | 'complex' | 'list';
 
-export interface ISection {
-  short: string;
-  title: string;
-  icon: string;
-  questions: IQuestion[];
-}
-
 export interface IQuestion {
-  id: string;
+  id?: string;
+
   type: QuestionType;
-  default?: any;
   optional?: boolean;
-  title: string;
-  question: string;
-  help?: string;
-  sub?: IQuestion; // For multi questions
-  subs?: { // For complex questions
-    condition?: (value: any) => boolean;
-    sub: IQuestion;
-  }[];
+  default?: any;
+  condition?: (value: any) => boolean;
+  sub?: IQuestion;
+  subs?: IQuestion[];
   config?: any;
+
+  title?: string;
+  question?: string;
+  help?: string;
 }
 
 export function createDefaults(q: IQuestion): any {
@@ -30,7 +23,7 @@ export function createDefaults(q: IQuestion): any {
   if (q.type === 'complex') {
     const d = {};
     for (const e of q.subs) {
-      d[e.sub.id] = createDefaults(e.sub);
+      d[e.id] = createDefaults(e);
     }
     return d;
   }

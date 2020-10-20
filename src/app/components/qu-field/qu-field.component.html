@@ -1,19 +1,18 @@
 <div class="field is-horizontal" *ngIf="question.type !== 'list' && question.type !== 'complex'">
   <div class="field-label is-normal">
-    <label class="label" *ngIf="!hideId && id">{{idPrefix}}.{{id}}</label>
-    <label class="label" *ngIf="!hideId && !id">{{idPrefix}}</label>
+    <label class="label" *ngIf="!hideId">{{fullId}}</label>
   </div>
   <div class="field-body">
     <div class="field">
       <div class="control" *ngIf="question.type === 'string'">
-        <input class="input" [name]="idPrefix+id" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+        <input class="input" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
       </div>
       <div class="control" *ngIf="question.type === 'text'">
-        <textarea class="input" [name]="idPrefix+id" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)"></textarea>
+        <textarea class="input" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)"></textarea>
       </div>
       <div class="control" *ngIf="question.type === 'boolean'">
-        <label [for]="idPrefix+id">
-          <input type="checkbox" class="checkbox" [name]="idPrefix+id" [id]="idPrefix+id" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+        <label [for]="fullId">
+          <input type="checkbox" class="checkbox" [name]="fullId" [id]="fullId" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
           {{question.title}}
         </label>
       </div>
@@ -38,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="dropdown-menu" [id]="idPrefix+id" role="menu">
+          <div class="dropdown-menu" [id]="fullId" role="menu">
             <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
               <div class="dropdown-content" *ngIf="tags.length > 0">
                 <a class="dropdown-item" *ngFor="let t of tags" (click)="setOption(t)">{{t}}</a>
@@ -67,7 +66,7 @@
               </div>
             </div>
           </div>
-          <div class="dropdown-menu" [id]="idPrefix+id" role="menu">
+          <div class="dropdown-menu" [id]="fullId" role="menu">
             <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
               <div class="dropdown-content" *ngIf="tags.length > 0">
                 <a class="dropdown-item" *ngFor="let t of tags" (click)="addTag(t)">{{t}}</a>
@@ -102,11 +101,10 @@
   </div>
 </div>
 <ng-container class="field is-horizontal" *ngIf="question.type === 'list'">
-  <ng-container *ngFor="let v of value; let i = index">
+  <ng-container *ngFor="let v of value; let i=index; trackBy:trackByFn">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label" *ngIf="!hideId && id">{{idPrefix}}.{{id}}.{{(i + 1).toString(10)}}</label>
-        <label class="label" *ngIf="!hideId && !id">{{idPrefix}}.{{(i + 1).toString(10)}}</label>
+        <label class="label" *ngIf="!hideId">{{fullId}}.{{(i + 1).toString(10)}}</label>
       </div>
       <div class="field-body">
         <div class="field">
@@ -117,13 +115,12 @@
         </div>
       </div>
     </div>
-    <app-qu-field [idPrefix]="id ? idPrefix + '.' + id : idPrefix" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [(value)]="value[i]">
+    <app-qu-field [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [(value)]="value[i]">
     </app-qu-field>
   </ng-container>
   <div class="field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label" *ngIf="!hideId && id">{{idPrefix}}.{{id}}</label>
-      <label class="label" *ngIf="!hideId && !id">{{idPrefix}}</label>
+      <label class="label" *ngIf="!hideId">{{fullId}}</label>
     </div>
     <div class="field-body">
       <div class="field">
@@ -137,7 +134,7 @@
 </ng-container>
 <ng-container class="field is-horizontal" *ngIf="question.type === 'complex'">
   <ng-container *ngFor="let s of question.subs">
-    <app-qu-field [idPrefix]="id ? idPrefix + '.' + id : idPrefix" [id]="s.sub.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s.sub" [(value)]="value[s.sub.id]">
+    <app-qu-field [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]">
     </app-qu-field>
   </ng-container>
 </ng-container>

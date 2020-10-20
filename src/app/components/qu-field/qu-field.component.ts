@@ -16,6 +16,8 @@ export class QuFieldComponent implements OnInit {
 	@Input() hideId = false;
 	@Output() valueChange = new EventEmitter();
 
+	public fullId = '';
+
 	public searchQ = '';
 	public tagResults = [];
 
@@ -25,6 +27,11 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		if (this.idPrefix && this.id) {
+			this.fullId = this.idPrefix + '.' + this.id;
+		} else {
+			this.fullId = this.idPrefix + this.id;
+		}
 	}
 
 	public getResults(): string[] {
@@ -77,6 +84,10 @@ export class QuFieldComponent implements OnInit {
 
 	public deleteEntry(i: number) {
 		this.value.splice(i, 1);
+	}
+
+	public trackByFn(index: any, item: any) {
+		return index;
 	}
 
 }

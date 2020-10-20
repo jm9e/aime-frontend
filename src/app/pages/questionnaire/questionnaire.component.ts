@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IQuestion, ISection, createDefaults} from '../../interfaces';
+import {IQuestion, createDefaults} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
@@ -33,257 +33,225 @@ export class QuestionnaireComponent implements OnInit {
 
   public missingFields = [];
 
-  public steps: { step: number, section: ISection }[] = [
-    {
-      step: 1, section: {
-        short: 'MD', title: 'Metadata', icon: 'fa-at', questions: [
+  public steps: { step: number, short: string; title: string; icon: string; }[] = [
+    {step: 1, short: 'MD', title: 'Metadata', icon: 'fa-at'},
+    {step: 2, short: 'P', title: 'Purpose', icon: 'fa-bullseye-arrow'},
+    {step: 3, short: 'D', title: 'Data', icon: 'fa-database'},
+    {step: 4, short: 'M', title: 'Method', icon: 'fa-function'},
+    {step: 5, short: 'R', title: 'Reproducibility', icon: 'fa-redo'},
+  ];
+
+  public questions: IQuestion = {
+    type: 'complex',
+    subs: [
+      {
+        id: 'MD',
+        type: 'complex',
+        title: 'Metadata',
+        subs: [
           {
             id: '1',
+            type: 'string',
+            default: '',
             title: 'Title',
             help: 'TestTestTest',
             question: 'Title of the AI.',
-            type: 'string',
-            default: ''
           },
           {
             id: '2',
-            title: 'Short Title',
-            help: '',
-            question: 'Short title of the AI.',
             type: 'text',
             default: '',
+            title: 'Short Title',
+            question: 'Short title of the AI.',
           },
           {
             id: '3',
-            title: 'Keywords',
-            help: '',
-            question: 'Keywords relevant for the AI.',
             type: 'tags',
-            default: [],
+            title: 'Keywords',
+            question: 'Keywords relevant for the AI.',
             config: {
               allowCustom: true,
-              options: ['tag1', 'tag2'],
+              options: [
+                'tag1',
+                'tag2',
+              ],
             },
           },
           {
             id: '4',
-            title: 'Contact',
-            help: '',
-            question: '',
             type: 'list',
-            default: [],
-            sub:
-              {
-                id: '1',
-                title: 'Contact',
-                help: '',
-                question: '',
-                type: 'complex',
-                default: {},
-                subs: [
-                  {
-                    sub: {
-                      id: '1',
-                      title: 'Name',
-                      help: '',
-                      question: 'Name of the author.',
-                      type: 'string',
-                      default: ''
-                    }
-                  },
-                  {
-                    sub: {
-                      id: '2',
-                      title: 'Institution',
-                      help: '',
-                      question: 'Name of the institution.',
-                      type: 'string',
-                      default: ''
-                    }
-                  },
-                  {
-                    sub: {
-                      id: '3',
-                      title: 'Email',
-                      help: '',
-                      question: 'Email address of the author.',
-                      type: 'string',
-                      default: ''
-                    }
-                  },
-                  {
-                    sub: {
-                      id: '4',
-                      title: 'ORCID iD',
-                      help: '',
-                      question: 'ORCID iD of the author.',
-                      type: 'string',
-                      default: '',
-                      optional: true
-                    }
-                  },
-                ]
-              },
+            title: 'Contact',
+            sub: {
+              id: '1',
+              type: 'complex',
+              title: 'Contact',
+              subs: [
+                {
+                  id: '1',
+                  type: 'string',
+                  title: 'Name',
+                  question: 'Name of the author.',
+                  default: ''
+                },
+                {
+                  id: '2',
+                  type: 'string',
+                  title: 'Institution',
+                  question: 'Name of the institution.',
+                  default: ''
+                },
+                {
+                  id: '3',
+                  type: 'string',
+                  title: 'Email',
+                  question: 'Email address of the author.',
+                  default: ''
+                },
+                {
+                  id: '4',
+                  type: 'string',
+                  default: '',
+                  optional: true,
+                  title: 'ORCID iD',
+                  question: 'ORCID iD of the author.',
+                },
+              ],
+            },
           },
           {
             id: '5',
-            title: 'Funding',
-            help: '',
-            question: 'Funding details relevant for the AI.',
             type: 'list',
-            default: [],
+            title: 'Funding',
+            question: 'Funding details relevant for the AI.',
             sub: {
-              id: '',
+              default: '',
               title: 'Funding',
-              help: '',
               question: 'Funding details relevant for the AI.',
               type: 'text',
-              default: '',
-            }
+            },
           },
           {
             id: '6',
-            title: 'Appear in search',
-            help: '',
-            question: 'Specify whether the AI should appear in the search.',
             type: 'boolean',
             default: false,
+            title: 'Appear in search',
+            question: 'Specify whether the AI should appear in the search.',
           },
         ]
-      }
-    },
-    {
-      step: 2, section: {
-        short: 'P', title: 'Purpose', icon: 'fa-bullseye-arrow', questions: [
+      },
+      {
+        id: 'P', type: 'complex', title: 'Purpose', question: '', subs: [
           {
             id: '1',
-            title: 'Purpose',
-            help: '',
-            question: 'What is your AI designed to learn or predict?',
             type: 'text',
-            default: ''
+            default: '',
+            title: 'Purpose',
+            question: 'What is your AI designed to learn or predict?',
           },
           {
             id: '2',
-            title: 'Surrogate marker',
-            help: '',
-            question: 'Does your AI predict a surrogate marker?',
             type: 'complex',
-            default: {},
+            title: 'Surrogate marker',
+            question: 'Does your AI predict a surrogate marker?',
             subs: [
               {
-                sub: {
-                  id: '1',
-                  title: 'Purpose',
-                  help: '',
-                  question: 'Does your AI predict a surrogate marker?',
-                  type: 'boolean',
-                  default: false,
-                }
+                id: '1',
+                type: 'boolean',
+                default: false,
+                title: 'Purpose',
+                question: 'Does your AI predict a surrogate marker?',
               },
               {
+                id: '2',
+                type: 'text',
+                default: '',
                 condition: (val: any) => val['1'] === true,
-                sub: {
-                  id: '2',
-                  title: 'Purpose',
-                  help: '',
-                  question: 'More detailed information',
-                  type: 'text',
-                  default: ''
-                }
+                title: 'Purpose',
+                question: 'More detailed information',
               },
             ]
           },
           {
             id: '3',
-            title: 'AI category',
-            help: '',
-            question: 'To which category does your AI problem belong?',
             type: 'complex',
-            default: {},
+            title: 'AI category',
+            question: 'To which category does your AI problem belong?',
             subs: [
               {
-                sub: {
-                  id: '1',
-                  title: 'Category',
-                  help: '',
-                  question: 'To which category does your AI problem belong?',
-                  type: 'select',
-                  default: undefined,
-                  config: {
-                    allowCustom: false,
-                    options: [
-                      'Classification',
-                      'Continuous estimation',
-                      'Clustering',
-                      'Dimensionality reduction',
-                      'Anomaly detection',
-                      'Ranking / Recommendation',
-                      'Data generation',
-                      'Other'
-                    ],
-                  },
-                }
+                id: '1',
+                type: 'select',
+                default: undefined,
+                title: 'Category',
+                question: 'To which category does your AI problem belong?',
+                config: {
+                  allowCustom: false,
+                  options: [
+                    'Classification',
+                    'Continuous estimation',
+                    'Clustering',
+                    'Dimensionality reduction',
+                    'Anomaly detection',
+                    'Ranking / Recommendation',
+                    'Data generation',
+                    'Other'
+                  ],
+                },
               },
               {
+                id: '2',
+                type: 'text',
+                default: '',
                 condition: (val: any) => val['1'] === 'Other',
-                sub: {
-                  id: '2',
-                  title: 'Category',
-                  help: '',
-                  question: 'More detailed information',
-                  type: 'text',
-                  default: ''
-                }
+                title: 'Category',
+                question: 'More detailed information',
               },
             ]
           },
         ]
-      }
-    },
-    {
-      step: 3, section: {
-        short: 'D', title: 'Data', icon: 'fa-database', questions: [
+      },
+      {
+        id: 'D', type: 'complex', title: 'Data', question: '', subs: [
           {
-            id: '', title: 'Dataset', help: '', question: '', type: 'list', default: [], sub: {
-              id: '', title: 'Title', help: '', question: 'Title of the AI', type: 'complex', default: {}, subs: [
+            type: 'list',
+            title: 'Dataset',
+            sub: {
+              type: 'complex',
+              title: 'Title',
+              question: 'Title of the AI',
+              subs: [
                 {
-                  sub: {
-                    id: '1',
-                    title: 'A',
-                    help: '',
-                    question: 'More detailed information',
-                    type: 'text',
-                    default: ''
-                  }
+                  id: '1',
+                  type: 'text',
+                  default: '',
+                  title: 'A',
+                  question: 'More detailed information',
                 },
                 {
-                  sub: {
-                    id: '2',
-                    title: 'B',
-                    help: '',
-                    question: 'More detailed information',
-                    type: 'text',
-                    default: ''
-                  }
+                  id: '2',
+                  type: 'text',
+                  default: '',
+                  title: 'B',
+                  question: 'More detailed information',
                 },
               ]
             },
           }
         ]
-      }
-    },
-    {
-      step: 4, section: {
-        short: 'M', title: 'Method', icon: 'fa-function', questions: []
-      }
-    },
-    {
-      step: 5, section: {
-        short: 'R', title: 'Reproducibility', icon: 'fa-redo', questions: []
-      }
-    },
-  ];
+      },
+      {
+        id: 'M',
+        type: 'complex',
+        title: 'Method',
+        subs: [],
+      },
+      {
+        id: 'R',
+        type: 'complex',
+        title: 'Reproducibility',
+        subs: [],
+      },
+    ]
+  };
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -304,16 +272,16 @@ export class QuestionnaireComponent implements OnInit {
     this.createDefaults();
   }
 
-  public createDefaults() {
-    for (const e of this.steps) {
-      for (const q of e.section.questions) {
-        if (q.id) {
-          this.answers[e.section.short + '.' + q.id] = createDefaults(q);
-        } else {
-          this.answers[e.section.short] = createDefaults(q);
-        }
+  public getSection(s: string): IQuestion {
+    for (const q of this.questions.subs) {
+      if (q.id === s) {
+        return q;
       }
     }
+  }
+
+  public createDefaults() {
+    this.answers = createDefaults(this.questions);
   }
 
   // public updateEmail() {
