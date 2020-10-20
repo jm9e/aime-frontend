@@ -1,23 +1,143 @@
-<div class="control">
-  <ng-content select="[qu-field]"></ng-content>
+<div class="field is-horizontal" *ngIf="question.type !== 'list' && question.type !== 'complex'">
+  <div class="field-label is-normal">
+    <label class="label" *ngIf="!hideId && id">{{idPrefix}}.{{id}}</label>
+    <label class="label" *ngIf="!hideId && !id">{{idPrefix}}</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control" *ngIf="question.type === 'string'">
+        <input class="input" name="qvalue" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+      </div>
+      <div class="control" *ngIf="question.type === 'text'">
+        <textarea class="input" name="qvalue" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)"></textarea>
+      </div>
+      <div class="control" *ngIf="question.type === 'boolean'">
+        <label [for]="id">
+          <input type="checkbox" class="checkbox" name="qvalue" [id]="id" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+          {{question.title}}
+        </label>
+      </div>
+      <div class="control" *ngIf="question.type === 'select'">
+        <div class="tags are-medium">
+          <span class="tag is-aime" *ngIf="value">
+            {{value}}
+            <button class="delete is-small" (click)="setOption(question.default)"></button>
+          </span>
+          <span class="tag is-muted" *ngIf="!value">Unspecified</span>
+        </div>
+        <div class="dropdown" [class.is-active]="searchQ !== ''">
+          <div class="dropdown-trigger">
+            <div class="field has-addons">
+              <p class="control is-expanded has-icons-right">
+                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..."/>
+              </p>
+              <div class="control" *ngIf="question.config.allowCustom">
+                <button class="button is-info" [disabled]="!searchQ" (click)="setOption(searchQ)">
+                  Set
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-menu" [id]="id" role="menu">
+            <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
+              <div class="dropdown-content" *ngIf="tags.length > 0">
+                <a class="dropdown-item" *ngFor="let t of tags" (click)="setOption(t)">{{t}}</a>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="control" *ngIf="question.type === 'tags'">
+        <div class="tags are-medium">
+          <span *ngFor="let t of value" class="tag is-aime">
+            {{t}}
+            <button class="delete is-small" (click)="deleteTag(t)"></button>
+          </span>
+        </div>
+        <div class="dropdown" [class.is-active]="searchQ !== ''">
+          <div class="dropdown-trigger">
+            <div class="field has-addons">
+              <p class="control is-expanded has-icons-right">
+                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..."/>
+              </p>
+              <div class="control" *ngIf="question.config.allowCustom">
+                <button class="button is-info" [disabled]="!searchQ" (click)="addTag(searchQ)">
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-menu" [id]="id" role="menu">
+            <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
+              <div class="dropdown-content" *ngIf="tags.length > 0">
+                <a class="dropdown-item" *ngFor="let t of tags" (click)="addTag(t)">{{t}}</a>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <p class="help has-text-left" [ngClass]="{'expanded': expanded}">
+        <span>
+          {{question.question}}
+        </span>
+        <a *ngIf="question.help" (click)="expanded = !expanded" class="is-pulled-right">
+          <span class="tag is-small is-light is-outlined">
+            <span class="icon">
+              <i class="fa fa-chevron-right" *ngIf="!expanded"></i>
+              <i class="fa fa-chevron-down" *ngIf="expanded"></i>
+            </span>
+            <span>More info</span>
+          </span>
+        </a>
+      </p>
+      <div *ngIf="question.help && expanded" class="notification more-info">
+        <span class="icon">
+          <i class="fa fa-info-circle"></i>
+        </span>
+        <span>
+          {{question.help}}
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
-<p class="help has-text-left" [ngClass]="{'expanded': expanded}">
-  <span>
-    {{title}}
-  </span>
-  <a *ngIf="description" (click)="expanded = !expanded" class="is-pulled-right">
-    <span class="tag is-small is-light is-outlined">
-      <span class="icon">
-        <i class="fa fa-chevron-right" *ngIf="!expanded"></i>
-        <i class="fa fa-chevron-down" *ngIf="expanded"></i>
-      </span>
-      <span>More info</span>
-    </span>
-  </a>
-</p>
-<div *ngIf="description && expanded" class="notification more-info">
-  <span class="icon">
-    <i class="fa fa-info-circle"></i>
-  </span>
-  <ng-content select="[qu-description]"></ng-content>
-</div>
+<ng-container class="field is-horizontal" *ngIf="question.type === 'list'">
+  <ng-container *ngFor="let v of value; let i = index">
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label" *ngIf="!hideId && id">{{idPrefix}}.{{id}}.{{(i + 1).toString(10)}}</label>
+        <label class="label" *ngIf="!hideId && !id">{{idPrefix}}.{{(i + 1).toString(10)}}</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <span class="is-size-5">{{question.title}}</span>
+          <button class="button is-danger is-outlined is-small is-pulled-right">
+            <span class="icon"><i class="fa fa-trash"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-qu-field [idPrefix]="id ? idPrefix + '.' + id : idPrefix" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [value]="value[i]" (valueChange)="value[i] = $event; valueChange.emit(value)">
+    </app-qu-field>
+  </ng-container>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label" *ngIf="!hideId && id">{{idPrefix}}.{{id}}</label>
+      <label class="label" *ngIf="!hideId && !id">{{idPrefix}}</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <button (click)="value.push(question.sub.default)" class="button is-success is-small">
+          <span class="icon"><i class="fa fa-plus"></i></span>
+          <span>{{question.title}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container class="field is-horizontal" *ngIf="question.type === 'complex'">
+  <ng-container *ngFor="let s of question.subs">
+    <app-qu-field [idPrefix]="id ? idPrefix + '.' + id : idPrefix" [id]="s.sub.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s.sub" [value]="value[s.sub.id]" (valueChange)="value[s.sub.id] = $event; valueChange.emit(value)">
+    </app-qu-field>
+  </ng-container>
+</ng-container>
