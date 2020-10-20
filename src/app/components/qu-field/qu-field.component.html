@@ -111,7 +111,7 @@
       <div class="field-body">
         <div class="field">
           <span class="is-size-5">{{question.title}}</span>
-          <button class="button is-danger is-outlined is-small is-pulled-right">
+          <button class="button is-danger is-outlined is-small is-pulled-right" (click)="deleteEntry(i)">
             <span class="icon"><i class="fa fa-trash"></i></span>
           </button>
         </div>
@@ -127,7 +127,7 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <button (click)="value.push(question.sub.default)" class="button is-success is-small">
+        <button (click)="addEntry()" class="button is-success is-small">
           <span class="icon"><i class="fa fa-plus"></i></span>
           <span>{{question.title}}</span>
         </button>

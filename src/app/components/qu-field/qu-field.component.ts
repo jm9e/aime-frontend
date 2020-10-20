@@ -75,4 +75,14 @@ export class QuFieldComponent implements OnInit {
 		this.searchQ = '';
 	}
 
+	public addEntry() {
+		this.value.push(JSON.parse(JSON.stringify(this.question.sub.default)));
+		this.valueChange.emit(this.value);
+	}
+
+	public deleteEntry(i: number) {
+		this.value.splice(i, 1);
+		this.valueChange.emit(this.value);
+	}
+
 }
