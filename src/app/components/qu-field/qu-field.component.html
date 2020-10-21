@@ -5,14 +5,14 @@
   <div class="field-body">
     <div class="field">
       <div class="control" *ngIf="question.type === 'string'">
-        <input class="input" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+        <input class="input" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" (blur)="validate()">
       </div>
       <div class="control" *ngIf="question.type === 'text'">
-        <textarea class="input" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)"></textarea>
+        <textarea class="input" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" (blur)="validate()"></textarea>
       </div>
       <div class="control" *ngIf="question.type === 'boolean'">
         <label [for]="fullId">
-          <input type="checkbox" class="checkbox" [name]="fullId" [id]="fullId" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+          <input type="checkbox" class="checkbox" [name]="fullId" [id]="fullId" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" (blur)="validate()">
           {{question.title}}
         </label>
       </div>
@@ -28,7 +28,7 @@
           <div class="dropdown-trigger">
             <div class="field has-addons">
               <p class="control is-expanded has-icons-right">
-                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..."/>
+                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (blur)="validate()"/>
               </p>
               <div class="control" *ngIf="question.config.allowCustom">
                 <button class="button is-info" [disabled]="!searchQ" (click)="setOption(searchQ)">
@@ -57,7 +57,7 @@
           <div class="dropdown-trigger">
             <div class="field has-addons">
               <p class="control is-expanded has-icons-right">
-                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..."/>
+                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (blur)="validate()"/>
               </p>
               <div class="control" *ngIf="question.config.allowCustom">
                 <button class="button is-info" [disabled]="!searchQ" (click)="addTag(searchQ)">
@@ -97,6 +97,9 @@
           {{question.help}}
         </span>
       </div>
+			<p *ngIf="validMessage" class="help" [class.is-success]="valid === true" [class.is-danger]="valid === false">
+				{{validMessage}}
+			</p>
     </div>
   </div>
 </div>
