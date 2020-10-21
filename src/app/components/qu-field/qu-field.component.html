@@ -5,7 +5,7 @@
   <div class="field-body">
     <div class="field">
       <div class="control" *ngIf="question.type === 'string'">
-        <input class="input" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" (blur)="validate()">
+        <input class="input" [type]="question.config?.inputType" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" (blur)="validate()">
       </div>
       <div class="control" *ngIf="question.type === 'text'">
         <textarea class="input" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" (blur)="validate()"></textarea>
@@ -75,10 +75,30 @@
           </div>
         </div>
       </div>
+			<div class="control" *ngIf="question.type === 'checkboxes'">
+				<div *ngFor="let o of question.config.options">
+					<label [for]="fullId+o">
+						<input type="checkbox" class="checkbox" [name]="fullId+o" [id]="fullId+o" [ngModel]="value.includes(o)" (ngModelChange)="$event ? addTag(o) : deleteTag(o)" (blur)="validate()">
+						{{o}}
+					</label>
+				</div>
+			</div>
+			<div class="control" *ngIf="question.type === 'radio'">
+				<label class="radio" *ngFor="let v of question.config.options">
+					<input type="radio" [name]="fullId" (change)="valueChange.emit(v)" [checked]="value === v">
+					{{v}}
+				</label>
+			</div>
       <p class="help has-text-left" [ngClass]="{'expanded': expanded}">
+        <span *ngIf="question.optional" class="tag is-light">
+          Optional
+        </span>
         <span>
           {{question.question}}
         </span>
+				<span *ngIf="validMessage" [class.has-text-success]="valid === true" [class.has-text-danger]="valid === false">
+					{{validMessage}}
+				</span>
         <a *ngIf="question.help" (click)="expanded = !expanded" class="is-pulled-right">
           <span class="tag is-small is-light is-outlined">
             <span class="icon">
@@ -97,9 +117,6 @@
           {{question.help}}
         </span>
       </div>
-			<p *ngIf="validMessage" class="help" [class.is-success]="valid === true" [class.is-danger]="valid === false">
-				{{validMessage}}
-			</p>
     </div>
   </div>
 </div>

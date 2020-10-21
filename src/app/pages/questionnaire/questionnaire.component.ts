@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IQuestion, createDefaults } from '../../interfaces';
+import { IQuestion, createDefaults, score, validateRec, ScoreType } from '../../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -31,7 +31,10 @@ export class QuestionnaireComponent implements OnInit {
 
 	public answers: { [key: string]: any } = {};
 
-	public missingFields = [];
+	public validationErrors = [];
+
+	public validationScore = 0;
+	public reproducibilityScore = 0;
 
 	public steps: { step: number, short: string; title: string; icon: string; }[] = [
 		{step: 1, short: 'MD', title: 'Metadata', icon: 'fa-at'},
@@ -56,13 +59,21 @@ export class QuestionnaireComponent implements OnInit {
 						title: 'Title',
 						help: 'TestTestTest',
 						question: 'Title of the AI.',
+						config: {
+							minLength: 8,
+							maxLength: 128,
+						},
 					},
 					{
 						id: '2',
-						type: 'text',
+						type: 'string',
 						default: '',
 						title: 'Short Title',
 						question: 'Short title of the AI.',
+						config: {
+							minLength: 2,
+							maxLength: 32,
+						},
 					},
 					{
 						id: '3',
@@ -76,6 +87,8 @@ export class QuestionnaireComponent implements OnInit {
 								'tag1',
 								'tag2',
 							],
+							minLength: 2,
+							maxLength: 10,
 						},
 					},
 					{
@@ -105,7 +118,10 @@ export class QuestionnaireComponent implements OnInit {
 									type: 'string',
 									title: 'Email',
 									question: 'Email address of the author.',
-									default: ''
+									default: '',
+									config: {
+										inputType: 'email',
+									},
 								},
 								{
 									id: '4',
@@ -151,14 +167,12 @@ export class QuestionnaireComponent implements OnInit {
 					{
 						id: '2',
 						type: 'complex',
-						title: 'Surrogate marker',
-						question: 'Does your AI predict a surrogate marker?',
 						subs: [
 							{
 								id: '1',
 								type: 'boolean',
 								default: false,
-								title: 'Purpose',
+								title: 'Predicts surrogate marker',
 								question: 'Does your AI predict a surrogate marker?',
 							},
 							{
@@ -166,8 +180,8 @@ export class QuestionnaireComponent implements OnInit {
 								type: 'text',
 								default: '',
 								condition: (val: any) => val['1'] === true,
-								title: 'Purpose',
-								question: 'More detailed information',
+								title: 'Information about surrogate marker',
+								question: 'More detailed information related to surrogate marker.',
 							},
 						]
 					},
@@ -180,7 +194,6 @@ export class QuestionnaireComponent implements OnInit {
 							{
 								id: '1',
 								type: 'select',
-								default: undefined,
 								title: 'Category',
 								question: 'To which category does your AI problem belong?',
 								config: {
@@ -222,15 +235,34 @@ export class QuestionnaireComponent implements OnInit {
 							id: '1',
 							type: 'text',
 							default: '',
-							title: 'A',
-							question: 'More detailed information',
+							title: 'Information about the data',
+							question: 'What is the type of the data and how was it generated or obtained?',
 						},
 						{
 							id: '2',
-							type: 'text',
-							default: '',
-							title: 'B',
-							question: 'More detailed information',
+							type: 'complex',
+							subs: [
+								{
+									id: '1',
+									type: 'radio',
+									default: 'Real',
+									question: 'Is the data real or simulated?',
+									config: {
+										options: [
+											'Real',
+											'Simulated',
+										],
+									},
+								},
+								{
+									id: '2',
+									condition: (val: any) => val['1'] === 'Simulated',
+									type: 'text',
+									default: '',
+									title: 'Information about simulated data',
+									question: 'How was the data simulated?',
+								},
+							],
 						},
 					]
 				},
@@ -239,13 +271,123 @@ export class QuestionnaireComponent implements OnInit {
 				id: 'M',
 				type: 'complex',
 				title: 'Method',
-				subs: [],
+				subs: [
+					{
+						id: '1',
+						type: 'text',
+						default: '',
+						title: 'AI or mathematical methods',
+						question: 'Which AI or mathematical methods did you use and how did you select them?',
+					},
+					{
+						id: '2',
+						type: 'radio',
+						default: 'Default',
+						title: 'Hyper-parameters',
+						question: 'How did you select your method’s hyper-parameters?',
+						config: {
+							options: [
+								'Default',
+								'Hyper-parameter tuning',
+								'Doesn\'t apply',
+							],
+						},
+						score: (val: any, t: ScoreType) => {
+							if (t === 'validation' && (val === 'Hyper-parameter tuning' || val === 'Doesn\'t apply')) {
+								return 1;
+							}
+							if (t === 'validation' && val === 'Default') {
+								return 0;
+							}
+							return 0;
+						}
+					},
+					{
+						id: '3',
+						type: 'complex',
+						subs: [
+							{
+								id: '1',
+								type: 'checkboxes',
+								default: [],
+								title: 'Test metrics',
+								question: 'Which test metrics do you report?',
+								config: {
+									options: [
+										'Accuracy',
+										'Precision',
+										'Recall',
+										'Confusion matrix',
+										'F1-score',
+										'Loss',
+										'AUC (area under curve)',
+										'MAE/MSE (mean absolute/square error)',
+										'Gini coefficient',
+										'Runtime',
+										'Sensitivity analysis',
+										'Other',
+									],
+								},
+							},
+							{
+								id: '2',
+								condition: (val: any) => val['1'].includes('Other'),
+								type: 'text',
+								default: '',
+								title: 'Additional test metrics',
+								question: 'Which additional metrics do you report?',
+							},
+						]
+					},
+				],
 			},
 			{
 				id: 'R',
 				type: 'complex',
 				title: 'Reproducibility',
-				subs: [],
+				subs: [
+					{
+						id: '1',
+						type: 'complex',
+						subs: [
+							{
+								id: '1',
+								type: 'radio',
+								default: 'No',
+								question: 'Do you provide all means (including dependencies) to easily re-run your AI?',
+								config: {
+									options: [
+										'No',
+										'Yes',
+									]
+								}
+							},
+							{
+								id: '2',
+								condition: (val: any) => val['1'] === 'Yes',
+								type: 'checkboxes',
+								default: [],
+								question: 'Which means for re-running your AI do you provide?',
+								config: {
+									options: [
+										'Dockerfile',
+										'Build system files',
+										'Detailed README',
+										'Other',
+									]
+								}
+							},
+							{
+								id: '3',
+								condition: (val: any) => val['1'] === 'Yes' && val['2'].includes('Other'),
+								type: 'text',
+								default: '',
+								title: 'Elaboration on means to re-run AI',
+								question: 'Elaborate on additional means you provide.',
+							}
+						]
+					}
+				],
 			},
 		]
 	};
@@ -294,19 +436,11 @@ export class QuestionnaireComponent implements OnInit {
 
 		if (this.step === 6) {
 			this.showScores = true;
-			// this.missingFields = this.checkFields();
-			// if (this.missingFields.length === 0) {
-			//   await this.generatePreview();
-			// }
+			this.updateFields();
+			if (this.validationErrors.length === 0) {
+				await this.generatePreview();
+			}
 		}
-	}
-
-	public addDataset() {
-		// this.questionnaire.datasets.push(createDataset());
-	}
-
-	public removeDataset(i) {
-		// this.questionnaire.datasets.splice(i, 1);
 	}
 
 	public async submitQuestionnaire() {
@@ -346,11 +480,31 @@ export class QuestionnaireComponent implements OnInit {
 		//   });
 	}
 
+	public goToField(id: string) {
+		const ids = id.split('.');
+		for (const s of this.steps) {
+			if (s.short === ids[0]) {
+				this.step = s.step;
+			}
+		}
+	}
+
 	public checkFields(): any[] {
 		return [];
 		// const missingFields: MissingField[] = [];
 		//
 		// return missingFields;
+	}
+
+	public calcScores() {
+		this.validationScore = score(this.questions, this.answers, 'validation');
+		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility');
+	}
+
+	public updateFields() {
+		this.validationErrors = validateRec('', this.questions, this.answers);
+		this.validationScore = score(this.questions, this.answers, 'validation');
+		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility');
 	}
 
 }

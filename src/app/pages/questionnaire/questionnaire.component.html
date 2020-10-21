@@ -15,13 +15,13 @@
         </a>
       </header>
       <div class="card-content" *ngIf="showScores">
-        <div class="progress--circle progress--25">
-          <div class="progress__number">2.5</div>
+        <div class="progress--circle progress--{{this.reproducibilityScore}}">
+          <div class="progress__number">{{this.reproducibilityScore / 10}}</div>
           <div class="score-title">Reproducibility</div>
         </div>
 
-        <div class="progress--circle progress--50">
-          <div class="progress__number">5</div>
+        <div class="progress--circle progress--{{this.validationScore}}">
+          <div class="progress__number">{{this.validationScore / 10}}</div>
           <div class="score-title">Validation</div>
         </div>
       </div>
@@ -80,16 +80,18 @@
               </h2>
             </div>
           </header>
-          <div class="card-content" *ngIf="missingFields.length > 0">
+          <div class="card-content" *ngIf="validationErrors.length > 0">
             <p>
               The preview report cannot be generated because some of the answers are incorrect or missing:
             </p>
             <br>
             <ul class="incorrect">
-              <li *ngFor="let field of missingFields" (click)="goToStep(field.step)"><strong>{{field.id}}</strong> - {{field.name}}</li>
+              <li *ngFor="let field of validationErrors" (click)="goToField(field.id)">
+								<strong>{{field.id}}</strong> - {{field.msg}}
+							</li>
             </ul>
           </div>
-          <div class="card-content" *ngIf="missingFields.length === 0">
+          <div class="card-content" *ngIf="validationErrors.length === 0">
             <p>
               Below, you can find a preview report.
               Review all answers carefully.
@@ -163,7 +165,7 @@
               <i class="fa fa-arrow-right"></i>
             </span>
           </button>
-          <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6" [disabled]="(!email && !revising) || missingFields.length > 0">
+          <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6" [disabled]="(!email && !revising) || validationErrors.length > 0">
             <span class="icon">
               <i class="fa fa-paper-plane"></i>
             </span>

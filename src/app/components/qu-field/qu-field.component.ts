@@ -51,6 +51,10 @@ export class QuFieldComponent implements OnInit {
 			this.value = [];
 		}
 
+		if (this.value.includes(t)) {
+			return;
+		}
+
 		this.value.push(t);
 		this.valueChange.emit(this.value);
 		this.searchQ = '';
