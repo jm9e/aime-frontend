@@ -68,7 +68,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores()">
+            <app-qu-field [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>

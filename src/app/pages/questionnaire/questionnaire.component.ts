@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { IQuestion, createDefaults, score, validateRec, ScoreType, maxScore } from '../../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -34,6 +34,8 @@ export class QuestionnaireComponent implements OnInit {
 
 	public validationScore = 0;
 	public reproducibilityScore = 0;
+
+	public validationTrigger = new EventEmitter<void>();
 
 	public steps: { step: number, short: string; title: string; icon: string; }[] = [
 		{step: 1, short: 'MD', title: 'Metadata', icon: 'fa-at'},
@@ -127,6 +129,7 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	public validate() {
+		this.validationTrigger.next();
 		this.validationErrors = validateRec('', this.questions, this.answers);
 	}
 

@@ -14,6 +14,7 @@ export class QuFieldComponent implements OnInit {
 	@Input() replace: any;
 	@Input() idPrefix: string;
 	@Input() hideId = false;
+	@Input() validationTrigger: EventEmitter<void>;
 	@Output() valueChange = new EventEmitter();
 
 	public valid?: boolean;
@@ -34,6 +35,10 @@ export class QuFieldComponent implements OnInit {
 		} else {
 			this.fullId = this.idPrefix + this.id;
 		}
+
+		this.validationTrigger.subscribe(() => {
+			this.validate();
+		});
 	}
 
 	public getResults(): [string, string][] {

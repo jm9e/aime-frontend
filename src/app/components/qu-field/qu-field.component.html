@@ -135,7 +135,7 @@
         </div>
       </div>
     </div>
-    <app-qu-field [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [value]="value[i]" (valueChange)="valueChange.emit(value)">
+    <app-qu-field [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [value]="value[i]" (valueChange)="valueChange.emit(value)" [validationTrigger]="validationTrigger">
     </app-qu-field>
   </ng-container>
   <div class="field is-horizontal">
@@ -154,7 +154,7 @@
 </ng-container>
 <ng-container class="field is-horizontal" *ngIf="question.type === 'complex'">
   <ng-container *ngFor="let s of question.subs">
-    <app-qu-field [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="valueChange.emit(value)">
+    <app-qu-field [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="valueChange.emit(value)" [validationTrigger]="validationTrigger">
     </app-qu-field>
   </ng-container>
 </ng-container>
