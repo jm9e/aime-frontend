@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { questionnaire } from '../../../questionnaire';
 
 @Component({
 	selector: 'app-questionnaire',
@@ -20,8 +21,6 @@ export class QuestionnaireComponent implements OnInit {
 	public step = 1;
 
 	public submitted = false;
-	public generatingPDF = false;
-	public displayPDF = false;
 	public email = '';
 	public emailChanged = false;
 	public attachReport = true;
@@ -44,352 +43,7 @@ export class QuestionnaireComponent implements OnInit {
 		{step: 5, short: 'R', title: 'Reproducibility', icon: 'fa-redo'},
 	];
 
-	public questions: IQuestion = {
-		type: 'complex',
-		subs: [
-			{
-				id: 'MD',
-				type: 'complex',
-				title: 'Metadata',
-				subs: [
-					{
-						id: '1',
-						type: 'string',
-						default: '',
-						title: 'Title',
-						help: 'TestTestTest',
-						question: 'Title of the AI.',
-						config: {
-							minLength: 8,
-							maxLength: 128,
-						},
-					},
-					{
-						id: '2',
-						type: 'string',
-						default: '',
-						title: 'Short Title',
-						question: 'Short title of the AI.',
-						config: {
-							minLength: 2,
-							maxLength: 32,
-						},
-					},
-					{
-						id: '3',
-						type: 'tags',
-						default: [],
-						title: 'Keywords',
-						question: 'Keywords relevant for the AI.',
-						config: {
-							allowCustom: true,
-							options: [
-								{key: 'tag1', value: 'Tag 1'},
-								{key: 'tag2', value: 'Tag 2'},
-							],
-							minLength: 2,
-							maxLength: 10,
-						},
-					},
-					{
-						id: '4',
-						type: 'list',
-						title: 'Contact',
-						sub: {
-							type: 'complex',
-							title: 'Contact',
-							subs: [
-								{
-									id: '1',
-									type: 'string',
-									title: 'Name',
-									question: 'Name of the author.',
-									default: ''
-								},
-								{
-									id: '2',
-									type: 'string',
-									title: 'Institution',
-									question: 'Name of the institution.',
-									default: ''
-								},
-								{
-									id: '3',
-									type: 'string',
-									title: 'Email',
-									question: 'Email address of the author.',
-									default: '',
-									config: {
-										inputType: 'email',
-									},
-								},
-								{
-									id: '4',
-									type: 'string',
-									default: '',
-									optional: true,
-									title: 'ORCID iD',
-									question: 'ORCID iD of the author.',
-								},
-							],
-						},
-					},
-					{
-						id: '5',
-						type: 'list',
-						title: 'Funding',
-						question: 'Funding details relevant for the AI.',
-						sub: {
-							type: 'text',
-							default: '',
-							title: 'Funding',
-							question: 'Funding details relevant for the AI.',
-						},
-					},
-					{
-						id: '6',
-						type: 'boolean',
-						default: false,
-						title: 'Appear in search',
-						question: 'Specify whether the AI should appear in the search.',
-					},
-				]
-			},
-			{
-				id: 'P', type: 'complex', title: 'Purpose', question: '', subs: [
-					{
-						id: '1',
-						type: 'text',
-						default: '',
-						title: 'Purpose',
-						question: 'What is your AI designed to learn or predict?',
-					},
-					{
-						id: '2',
-						type: 'complex',
-						subs: [
-							{
-								id: '1',
-								type: 'boolean',
-								default: false,
-								title: 'Predicts surrogate marker',
-								question: 'Does your AI predict a surrogate marker?',
-							},
-							{
-								id: '2',
-								type: 'text',
-								default: '',
-								condition: (val: any) => val['1'] === true,
-								title: 'Information about surrogate marker',
-								question: 'More detailed information about the surrogate marker.',
-							},
-						]
-					},
-					{
-						id: '3',
-						type: 'complex',
-						title: 'AI category',
-						question: 'To which category does your AI problem belong?',
-						subs: [
-							{
-								id: '1',
-								type: 'select',
-								title: 'Category',
-								question: 'To which category does your AI problem belong?',
-								config: {
-									allowCustom: false,
-									options: [
-										{key: 'cf', value: 'Classification'},
-										{key: 'ce', value: 'Continuous estimation'},
-										{key: 'cl', value: 'Clustering'},
-										{key: 'dr', value: 'Dimensionality reduction'},
-										{key: 'ad', value: 'Anomaly detection'},
-										{key: 'rr', value: 'Ranking / Recommendation'},
-										{key: 'dg', value: 'Data generation'},
-										{key: 'other', value: 'Other'},
-									],
-								},
-							},
-							{
-								id: '2',
-								type: 'text',
-								default: '',
-								condition: (val: any) => val['1'] === 'other',
-								title: 'Category',
-								question: 'More detailed information',
-							},
-						]
-					},
-				]
-			},
-			{
-				id: 'D',
-				type: 'list',
-				title: 'Dataset',
-				sub: {
-					type: 'complex',
-					title: 'Title',
-					question: 'Title of the AI',
-					subs: [
-						{
-							id: '1',
-							type: 'text',
-							default: '',
-							title: 'Information about the data',
-							question: 'What is the type of the data and how was it generated or obtained?',
-						},
-						{
-							id: '2',
-							type: 'complex',
-							subs: [
-								{
-									id: '1',
-									type: 'radio',
-									default: 'Real',
-									question: 'Is the data real or simulated?',
-									config: {
-										options: [
-											{key: 'r', value: 'Real'},
-											{key: 's', value: 'Simulated'},
-										],
-									},
-								},
-								{
-									id: '2',
-									condition: (val: any) => val['1'] === 'Simulated',
-									type: 'text',
-									default: '',
-									title: 'Information about simulated data',
-									question: 'How was the data simulated?',
-								},
-							],
-						},
-					]
-				},
-			},
-			{
-				id: 'M',
-				type: 'complex',
-				title: 'Method',
-				subs: [
-					{
-						id: '1',
-						type: 'text',
-						default: '',
-						title: 'AI or mathematical methods',
-						question: 'Which AI or mathematical methods did you use and how did you select them?',
-					},
-					{
-						id: '2',
-						type: 'radio',
-						default: 'default',
-						title: 'Hyper-parameters',
-						question: 'How did you select your method’s hyper-parameters?',
-						config: {
-							options: [
-								{key: 'default', value: 'Default'},
-								{key: 'hpt', value: 'Hyper-parameter tuning'},
-								{key: 'na', value: 'Doesn\'t apply'},
-							],
-						},
-						scores: {
-							validation: (val: any) => {
-								if (val === 'Hyper-parameter tuning' || val === 'Doesn\'t apply') {
-									return 1;
-								}
-								return 0;
-							}
-						}
-					},
-					{
-						id: '3',
-						type: 'complex',
-						subs: [
-							{
-								id: '1',
-								type: 'checkboxes',
-								default: [],
-								title: 'Test metrics',
-								question: 'Which test metrics do you report?',
-								config: {
-									options: [
-										{key: 'acc', value: 'Accuracy'},
-										{key: 'pc', value: 'Precision'},
-										{key: 'rc', value: 'Recall'},
-										{key: 'cm', value: 'Confusion matrix'},
-										{key: 'f1', value: 'F1-score'},
-										{key: 'l', value: 'Loss'},
-										{key: 'auc', value: 'AUC (area under curve)'},
-										{key: 'me', value: 'MAE/MSE (mean absolute/square error)'},
-										{key: 'gini', value: 'Gini coefficient'},
-										{key: 'rt', value: 'Runtime'},
-										{key: 'sa', value: 'Sensitivity analysis'},
-										{key: 'other', value: 'Other'},
-									],
-								},
-							},
-							{
-								id: '2',
-								condition: (val: any) => val['1'].find((o) => o.value === 'other'),
-								type: 'text',
-								default: '',
-								title: 'Additional test metrics',
-								question: 'Which additional metrics do you report?',
-							},
-						]
-					},
-				],
-			},
-			{
-				id: 'R',
-				type: 'complex',
-				title: 'Reproducibility',
-				subs: [
-					{
-						id: '1',
-						type: 'complex',
-						subs: [
-							{
-								id: '1',
-								type: 'radio',
-								default: 'no',
-								question: 'Do you provide all means (including dependencies) to easily re-run your AI?',
-								config: {
-									options: [
-										{key: 'no', value: 'No'},
-										{key: 'yes', value: 'Yes'},
-									],
-								}
-							},
-							{
-								id: '2',
-								condition: (val: any) => val['1'].value === 'yes',
-								type: 'checkboxes',
-								default: [],
-								question: 'Which means for re-running your AI do you provide?',
-								config: {
-									options: [
-										{key: 'docker', value: 'Dockerfile'},
-										{key: 'build', value: 'Build system files'},
-										{key: 'readme', value: 'Detailed README'},
-										{key: 'other', value: 'Other'},
-									]
-								}
-							},
-							{
-								id: '3',
-								condition: (val: any) => val['1'].value === 'yes' && val['2'].find((o) => o.value === 'other'),
-								type: 'text',
-								default: '',
-								title: 'Elaboration on means to re-run AI',
-								question: 'Elaborate on additional means you provide.',
-							}
-						]
-					}
-				],
-			},
-		]
-	};
+	public questions = questionnaire;
 
 	constructor(private http: HttpClient, private route: ActivatedRoute) {
 	}
@@ -437,7 +91,7 @@ export class QuestionnaireComponent implements OnInit {
 			this.showScores = true;
 			this.updateFields();
 			if (this.validationErrors.length === 0) {
-				await this.generatePreview();
+				// TODO
 			}
 		}
 	}
@@ -463,22 +117,6 @@ export class QuestionnaireComponent implements OnInit {
 		// }
 	}
 
-	public async generatePreview() {
-		// this.displayPDF = false;
-		// this.generatingPDF = true;
-		// this.http
-		//   .post(`${environment.url}api/preview`, JSON.stringify(this.questionnaire), {responseType: 'blob'})
-		//   .pipe(map((result: any) => {
-		//     return result;
-		//   }))
-		//   .subscribe((res) => {
-		//     this.generatingPDF = false;
-		//     this.pdfViewer.pdfSrc = res;
-		//     this.pdfViewer.refresh();
-		//     this.displayPDF = true;
-		//   });
-	}
-
 	public goToField(id: string) {
 		const ids = id.split('.');
 		for (const s of this.steps) {
@@ -486,13 +124,6 @@ export class QuestionnaireComponent implements OnInit {
 				this.step = s.step;
 			}
 		}
-	}
-
-	public checkFields(): any[] {
-		return [];
-		// const missingFields: MissingField[] = [];
-		//
-		// return missingFields;
 	}
 
 	public validate() {
@@ -504,6 +135,9 @@ export class QuestionnaireComponent implements OnInit {
 			maxScore(this.questions, this.answers, 'validation');
 		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility') /
 			maxScore(this.questions, this.answers, 'reproducibility');
+
+		this.validationScore = Math.floor(this.validationScore * 20) * 5;
+		this.reproducibilityScore = Math.floor(this.reproducibilityScore * 20) * 5;
 	}
 
 	public updateFields() {

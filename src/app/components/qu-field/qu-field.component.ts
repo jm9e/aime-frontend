@@ -40,7 +40,9 @@ export class QuFieldComponent implements OnInit {
 		const results: [string, string][] = [];
 		for (const e of this.question.config.options) {
 			if (e.value.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
-				results.push(e);
+				if (!this.hasValue(e.key, false)) {
+					results.push(e);
+				}
 			}
 		}
 		return results;
@@ -51,7 +53,6 @@ export class QuFieldComponent implements OnInit {
 			this.value = [];
 		}
 
-		console.log(value, custom);
 		if (this.hasValue(value, custom)) {
 			return;
 		}
@@ -69,14 +70,15 @@ export class QuFieldComponent implements OnInit {
 	public setOption(value: string | undefined, custom: boolean) {
 		if (typeof value === 'undefined') {
 			this.value = undefined;
+		} else {
+			this.value = {
+				custom,
+				value,
+			};
+			this.searchQ = '';
 		}
 
-		this.value = {
-			custom,
-			value,
-		};
 		this.valueChange.emit(this.value);
-		this.searchQ = '';
 
 		this.validate();
 	}
@@ -97,12 +99,20 @@ export class QuFieldComponent implements OnInit {
 			return false;
 		}
 
-		if (custom) {
-			const entry = this.value.find((e) => (e.custom && e.value === value) || (!e.custom && this.getValue(e.value, false) === value));
-			return typeof entry !== 'undefined';
-		} else {
-			const entry = this.value.find((e) => (e.custom && this.getValue(value, false) === e.value) || (!e.custom && e.value === value));
-			return typeof entry !== 'undefined';
+		if (this.question.type === 'tags' || this.question.type === 'checkboxes') {
+			if (custom) {
+				const entry = this.value.find((e) => (e.custom && e.value === value) || (!e.custom && this.getValue(e.value, false) === value));
+				return typeof entry !== 'undefined';
+			} else {
+				const entry = this.value.find((e) => (e.custom && this.getValue(value, false) === e.value) || (!e.custom && e.value === value));
+				return typeof entry !== 'undefined';
+			}
+		} else if (this.question.type === 'select' || this.question.type === 'radio') {
+			if (custom) {
+				return (this.value.custom && this.value.value === value) || (!this.value.custom && this.getValue(this.value.value, false) === value);
+			} else {
+				return (this.value.custom && this.getValue(value, false) === this.value.value) || (!this.value.custom && this.value.value === value);
+			}
 		}
 	}
 
@@ -129,11 +139,13 @@ export class QuFieldComponent implements OnInit {
 	public addEntry() {
 		this.value.push(createDefaults(this.question.sub));
 		this.validate();
+		this.valueChange.emit(this.value);
 	}
 
 	public deleteEntry(i: number) {
 		this.value.splice(i, 1);
 		this.validate();
+		this.valueChange.emit(this.value);
 	}
 
 	public trackByFn(index: any, item: any) {

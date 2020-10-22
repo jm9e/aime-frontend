@@ -24,7 +24,7 @@ export interface IQuestion {
 
 export function createDefaults(q: IQuestion): any {
 	if (q.type === 'list') {
-		return [];
+		return [createDefaults(q.sub)];
 	}
 	if (q.type === 'complex') {
 		const d = {};
@@ -150,12 +150,18 @@ export function score(q: IQuestion, a: any, t: ScoreType): number {
 		switch (t) {
 			case 'validation':
 				if (typeof q.scores !== 'undefined' && typeof q.scores.validation === 'function') {
-					sc += q.scores.validation(a);
+					const as = q.scores.validation(a);
+					if (typeof as !== 'undefined') {
+						sc += as;
+					}
 				}
 				break;
 			case 'reproducibility':
 				if (typeof q.scores !== 'undefined' && typeof q.scores.reproducibility === 'function') {
-					sc += q.scores.reproducibility(a);
+					const as = q.scores.reproducibility(a);
+					if (typeof as !== 'undefined') {
+						sc += as;
+					}
 				}
 				break;
 		}
@@ -179,12 +185,16 @@ export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
 		switch (t) {
 			case 'validation':
 				if (typeof q.scores !== 'undefined' && typeof q.scores.validation === 'function') {
-					sc += 1;
+					if (typeof q.scores.validation(a) !== 'undefined') {
+						sc += 1.0;
+					}
 				}
 				break;
 			case 'reproducibility':
 				if (typeof q.scores !== 'undefined' && typeof q.scores.reproducibility === 'function') {
-					sc += 1;
+					if (typeof q.scores.reproducibility(a) !== 'undefined') {
+						sc += 1.0;
+					}
 				}
 				break;
 		}
