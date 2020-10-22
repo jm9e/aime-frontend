@@ -110,20 +110,6 @@
               your report and create a new revision.
             </p>
             <br>
-            <div class="viewer-wrapper" [ngClass]="{'loading': generatingPDF}">
-              <div class="notification is-success" *ngIf="generatingPDF">
-                <span class="icon has-text-white">
-                  <i class="fa fa-spinner fa-spin"></i>
-                </span>
-                Generating preview report...
-              </div>
-              <div class="viewer">
-                <h3 class="title is-5" [ngClass]="{'invisible': !displayPDF}">
-                  Preview report
-                </h3>
-                <ng2-pdfjs-viewer #pdfViewer [ngClass]="{'invisible': !displayPDF}"></ng2-pdfjs-viewer>
-              </div>
-            </div>
             <br>
             <div *ngIf="!revising">
               <br>

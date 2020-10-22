@@ -13,8 +13,6 @@ import { questionnaire } from '../../../questionnaire';
 })
 export class QuestionnaireComponent implements OnInit {
 
-	@ViewChild('pdfViewer', {static: false}) pdfViewer;
-
 	public id = '';
 	public password = '';
 
