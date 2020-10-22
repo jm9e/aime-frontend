@@ -19,8 +19,8 @@
       <div class="control" *ngIf="question.type === 'select'">
         <div class="tags are-medium">
           <span class="tag is-aime" *ngIf="value">
-            {{value}}
-            <button class="delete is-small" (click)="setOption(question.default)"></button>
+            {{getValue(value.value, value.custom)}}
+            <button class="delete is-small" (click)="setOption(question.default, false)"></button>
           </span>
           <span class="tag is-muted" *ngIf="!value">Unspecified</span>
         </div>
@@ -31,7 +31,7 @@
                 <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (blur)="validate()"/>
               </p>
               <div class="control" *ngIf="question.config.allowCustom">
-                <button class="button is-info" [disabled]="!searchQ" (click)="setOption(searchQ)">
+                <button class="button is-info" [disabled]="!searchQ" (click)="setOption(searchQ, true)">
                   Set
                 </button>
               </div>
@@ -40,7 +40,7 @@
           <div class="dropdown-menu" [id]="fullId" role="menu">
             <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
               <div class="dropdown-content" *ngIf="tags.length > 0">
-                <a class="dropdown-item" *ngFor="let t of tags" (click)="setOption(t)">{{t}}</a>
+                <a class="dropdown-item" *ngFor="let t of tags" (click)="setOption(t.key, false)">{{t.value}}</a>
               </div>
             </ng-template>
           </div>
@@ -49,8 +49,8 @@
       <div class="control" *ngIf="question.type === 'tags'">
         <div class="tags are-medium">
           <span *ngFor="let t of value" class="tag is-aime">
-            {{t}}
-            <button class="delete is-small" (click)="deleteTag(t)"></button>
+						{{getValue(t.value, t.custom)}}
+            <button class="delete is-small" (click)="deleteTag(t.value, t.custom)"></button>
           </span>
         </div>
         <div class="dropdown" [class.is-active]="searchQ !== ''">
@@ -60,7 +60,7 @@
                 <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (blur)="validate()"/>
               </p>
               <div class="control" *ngIf="question.config.allowCustom">
-                <button class="button is-info" [disabled]="!searchQ" (click)="addTag(searchQ)">
+                <button class="button is-info" [disabled]="!searchQ" (click)="addTag(searchQ, true)">
                   Add
                 </button>
               </div>
@@ -69,7 +69,7 @@
           <div class="dropdown-menu" [id]="fullId" role="menu">
             <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
               <div class="dropdown-content" *ngIf="tags.length > 0">
-                <a class="dropdown-item" *ngFor="let t of tags" (click)="addTag(t)">{{t}}</a>
+                <a class="dropdown-item" *ngFor="let t of tags" (click)="addTag(t.key, false)">{{t.value}}</a>
               </div>
             </ng-template>
           </div>
@@ -77,16 +77,16 @@
       </div>
 			<div class="control" *ngIf="question.type === 'checkboxes'">
 				<div *ngFor="let o of question.config.options">
-					<label [for]="fullId+o">
-						<input type="checkbox" class="checkbox" [name]="fullId+o" [id]="fullId+o" [ngModel]="value.includes(o)" (ngModelChange)="$event ? addTag(o) : deleteTag(o)" (blur)="validate()">
-						{{o}}
+					<label [for]="fullId+o.key">
+						<input type="checkbox" class="checkbox" [name]="fullId+o.key" [id]="fullId+o.key" [ngModel]="hasValue(o.key, false)" (ngModelChange)="$event ? addTag(o.key, false) : deleteTag(o.key, false)" (blur)="validate()">
+						{{o.value}}
 					</label>
 				</div>
 			</div>
 			<div class="control" *ngIf="question.type === 'radio'">
-				<label class="radio" *ngFor="let v of question.config.options">
-					<input type="radio" [name]="fullId" (change)="valueChange.emit(v)" [checked]="value === v">
-					{{v}}
+				<label class="radio" [for]="fullId+v.key" *ngFor="let v of question.config.options">
+					<input type="radio" [name]="fullId+v.key" [id]="fullId+v.key" (change)="setOption(v.key, false)" [checked]="!value.custom && value.value === v.key">
+					{{v.value}}
 				</label>
 			</div>
       <p class="help has-text-left" [ngClass]="{'expanded': expanded}">
@@ -135,7 +135,7 @@
         </div>
       </div>
     </div>
-    <app-qu-field [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [(value)]="value[i]">
+    <app-qu-field [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.sub" [value]="value[i]" (valueChange)="valueChange.emit(value)">
     </app-qu-field>
   </ng-container>
   <div class="field is-horizontal">
@@ -154,7 +154,7 @@
 </ng-container>
 <ng-container class="field is-horizontal" *ngIf="question.type === 'complex'">
   <ng-container *ngFor="let s of question.subs">
-    <app-qu-field [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]">
+    <app-qu-field [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="valueChange.emit(value)">
     </app-qu-field>
   </ng-container>
 </ng-container>

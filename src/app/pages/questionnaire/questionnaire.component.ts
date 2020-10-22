@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IQuestion, createDefaults, score, validateRec, ScoreType } from '../../interfaces';
+import { IQuestion, createDefaults, score, validateRec, ScoreType, maxScore } from '../../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -84,8 +84,8 @@ export class QuestionnaireComponent implements OnInit {
 						config: {
 							allowCustom: true,
 							options: [
-								'tag1',
-								'tag2',
+								{key: 'tag1', value: 'Tag 1'},
+								{key: 'tag2', value: 'Tag 2'},
 							],
 							minLength: 2,
 							maxLength: 10,
@@ -181,7 +181,7 @@ export class QuestionnaireComponent implements OnInit {
 								default: '',
 								condition: (val: any) => val['1'] === true,
 								title: 'Information about surrogate marker',
-								question: 'More detailed information related to surrogate marker.',
+								question: 'More detailed information about the surrogate marker.',
 							},
 						]
 					},
@@ -199,14 +199,14 @@ export class QuestionnaireComponent implements OnInit {
 								config: {
 									allowCustom: false,
 									options: [
-										'Classification',
-										'Continuous estimation',
-										'Clustering',
-										'Dimensionality reduction',
-										'Anomaly detection',
-										'Ranking / Recommendation',
-										'Data generation',
-										'Other'
+										{key: 'cf', value: 'Classification'},
+										{key: 'ce', value: 'Continuous estimation'},
+										{key: 'cl', value: 'Clustering'},
+										{key: 'dr', value: 'Dimensionality reduction'},
+										{key: 'ad', value: 'Anomaly detection'},
+										{key: 'rr', value: 'Ranking / Recommendation'},
+										{key: 'dg', value: 'Data generation'},
+										{key: 'other', value: 'Other'},
 									],
 								},
 							},
@@ -214,7 +214,7 @@ export class QuestionnaireComponent implements OnInit {
 								id: '2',
 								type: 'text',
 								default: '',
-								condition: (val: any) => val['1'] === 'Other',
+								condition: (val: any) => val['1'] === 'other',
 								title: 'Category',
 								question: 'More detailed information',
 							},
@@ -249,8 +249,8 @@ export class QuestionnaireComponent implements OnInit {
 									question: 'Is the data real or simulated?',
 									config: {
 										options: [
-											'Real',
-											'Simulated',
+											{key: 'r', value: 'Real'},
+											{key: 's', value: 'Simulated'},
 										],
 									},
 								},
@@ -282,24 +282,23 @@ export class QuestionnaireComponent implements OnInit {
 					{
 						id: '2',
 						type: 'radio',
-						default: 'Default',
+						default: 'default',
 						title: 'Hyper-parameters',
 						question: 'How did you select your method’s hyper-parameters?',
 						config: {
 							options: [
-								'Default',
-								'Hyper-parameter tuning',
-								'Doesn\'t apply',
+								{key: 'default', value: 'Default'},
+								{key: 'hpt', value: 'Hyper-parameter tuning'},
+								{key: 'na', value: 'Doesn\'t apply'},
 							],
 						},
-						score: (val: any, t: ScoreType) => {
-							if (t === 'validation' && (val === 'Hyper-parameter tuning' || val === 'Doesn\'t apply')) {
-								return 1;
-							}
-							if (t === 'validation' && val === 'Default') {
+						scores: {
+							validation: (val: any) => {
+								if (val === 'Hyper-parameter tuning' || val === 'Doesn\'t apply') {
+									return 1;
+								}
 								return 0;
 							}
-							return 0;
 						}
 					},
 					{
@@ -314,24 +313,24 @@ export class QuestionnaireComponent implements OnInit {
 								question: 'Which test metrics do you report?',
 								config: {
 									options: [
-										'Accuracy',
-										'Precision',
-										'Recall',
-										'Confusion matrix',
-										'F1-score',
-										'Loss',
-										'AUC (area under curve)',
-										'MAE/MSE (mean absolute/square error)',
-										'Gini coefficient',
-										'Runtime',
-										'Sensitivity analysis',
-										'Other',
+										{key: 'acc', value: 'Accuracy'},
+										{key: 'pc', value: 'Precision'},
+										{key: 'rc', value: 'Recall'},
+										{key: 'cm', value: 'Confusion matrix'},
+										{key: 'f1', value: 'F1-score'},
+										{key: 'l', value: 'Loss'},
+										{key: 'auc', value: 'AUC (area under curve)'},
+										{key: 'me', value: 'MAE/MSE (mean absolute/square error)'},
+										{key: 'gini', value: 'Gini coefficient'},
+										{key: 'rt', value: 'Runtime'},
+										{key: 'sa', value: 'Sensitivity analysis'},
+										{key: 'other', value: 'Other'},
 									],
 								},
 							},
 							{
 								id: '2',
-								condition: (val: any) => val['1'].includes('Other'),
+								condition: (val: any) => val['1'].find((o) => o.value === 'other'),
 								type: 'text',
 								default: '',
 								title: 'Additional test metrics',
@@ -353,33 +352,33 @@ export class QuestionnaireComponent implements OnInit {
 							{
 								id: '1',
 								type: 'radio',
-								default: 'No',
+								default: 'no',
 								question: 'Do you provide all means (including dependencies) to easily re-run your AI?',
 								config: {
 									options: [
-										'No',
-										'Yes',
-									]
+										{key: 'no', value: 'No'},
+										{key: 'yes', value: 'Yes'},
+									],
 								}
 							},
 							{
 								id: '2',
-								condition: (val: any) => val['1'] === 'Yes',
+								condition: (val: any) => val['1'].value === 'yes',
 								type: 'checkboxes',
 								default: [],
 								question: 'Which means for re-running your AI do you provide?',
 								config: {
 									options: [
-										'Dockerfile',
-										'Build system files',
-										'Detailed README',
-										'Other',
+										{key: 'docker', value: 'Dockerfile'},
+										{key: 'build', value: 'Build system files'},
+										{key: 'readme', value: 'Detailed README'},
+										{key: 'other', value: 'Other'},
 									]
 								}
 							},
 							{
 								id: '3',
-								condition: (val: any) => val['1'] === 'Yes' && val['2'].includes('Other'),
+								condition: (val: any) => val['1'].value === 'yes' && val['2'].find((o) => o.value === 'other'),
 								type: 'text',
 								default: '',
 								title: 'Elaboration on means to re-run AI',
@@ -496,15 +495,20 @@ export class QuestionnaireComponent implements OnInit {
 		// return missingFields;
 	}
 
+	public validate() {
+		this.validationErrors = validateRec('', this.questions, this.answers);
+	}
+
 	public calcScores() {
-		this.validationScore = score(this.questions, this.answers, 'validation');
-		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility');
+		this.validationScore = score(this.questions, this.answers, 'validation') /
+			maxScore(this.questions, this.answers, 'validation');
+		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility') /
+			maxScore(this.questions, this.answers, 'reproducibility');
 	}
 
 	public updateFields() {
-		this.validationErrors = validateRec('', this.questions, this.answers);
-		this.validationScore = score(this.questions, this.answers, 'validation');
-		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility');
+		this.validate();
+		this.calcScores();
 	}
 
 }

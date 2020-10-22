@@ -36,41 +36,77 @@ export class QuFieldComponent implements OnInit {
 		}
 	}
 
-	public getResults(): string[] {
-		const results: string[] = [];
-		for (const t of this.question.config.options) {
-			if (t.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
-				results.push(t);
+	public getResults(): [string, string][] {
+		const results: [string, string][] = [];
+		for (const e of this.question.config.options) {
+			if (e.value.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
+				results.push(e);
 			}
 		}
 		return results;
 	}
 
-	public addTag(t: string) {
+	public addTag(value: string, custom: boolean) {
 		if (!this.value) {
 			this.value = [];
 		}
 
-		if (this.value.includes(t)) {
+		console.log(value, custom);
+		if (this.hasValue(value, custom)) {
 			return;
 		}
 
-		this.value.push(t);
+		this.value.push({
+			custom,
+			value,
+		});
 		this.valueChange.emit(this.value);
 		this.searchQ = '';
 
 		this.validate();
 	}
 
-	public setOption(t: string) {
-		this.value = t;
+	public setOption(value: string | undefined, custom: boolean) {
+		if (typeof value === 'undefined') {
+			this.value = undefined;
+		}
+
+		this.value = {
+			custom,
+			value,
+		};
 		this.valueChange.emit(this.value);
 		this.searchQ = '';
 
 		this.validate();
 	}
 
-	public deleteTag(t: string) {
+	public getValue(value: string, custom: boolean): string | undefined {
+		if (custom) {
+			return value;
+		}
+		const entry = this.question.config.options.find((e) => e.key === value);
+		if (typeof entry === 'undefined') {
+			return undefined;
+		}
+		return entry.value;
+	}
+
+	public hasValue(value: string, custom: boolean): boolean {
+		if (typeof this.value === 'undefined') {
+			return false;
+		}
+
+		if (custom) {
+			const entry = this.value.find((e) => (e.custom && e.value === value) || (!e.custom && this.getValue(e.value, false) === value));
+			return typeof entry !== 'undefined';
+		} else {
+			const entry = this.value.find((e) => (e.custom && this.getValue(value, false) === e.value) || (!e.custom && e.value === value));
+			return typeof entry !== 'undefined';
+		}
+	}
+
+	public deleteTag(value: string, custom: boolean) {
 		if (!this.value) {
 			this.value = [];
 		}
@@ -78,7 +114,7 @@ export class QuFieldComponent implements OnInit {
 		const newTags = [];
 
 		for (const ot of this.value) {
-			if (t !== ot) {
+			if (ot.custom !== custom || ot.value !== value) {
 				newTags.push(ot);
 			}
 		}
@@ -108,7 +144,6 @@ export class QuFieldComponent implements OnInit {
 		const {valid, msg} = validate(this.question, this.value);
 		this.valid = valid;
 		this.validMessage = msg;
-		console.log(valid, msg);
 	}
 
 }

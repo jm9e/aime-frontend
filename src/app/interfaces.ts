@@ -16,7 +16,10 @@ export interface IQuestion {
 	help?: string;
 
 	condition?: (value: any) => boolean;
-	score?: (value: any, type: ScoreType) => number;
+	scores?: {
+		validation?: (value: any) => number;
+		reproducibility?: (value: any) => number;
+	};
 }
 
 export function createDefaults(q: IQuestion): any {
@@ -32,6 +35,12 @@ export function createDefaults(q: IQuestion): any {
 	}
 	if (typeof q.default === 'undefined') {
 		return undefined;
+	}
+	if (q.type === 'tags' || q.type === 'checkboxes') {
+		return q.default.map((e) => ({value: e, custom: false}));
+	}
+	if (q.type === 'select' || q.type === 'radio') {
+		return {value: q.default, custom: false};
 	}
 	return JSON.parse(JSON.stringify(q.default));
 }
@@ -129,7 +138,7 @@ export function score(q: IQuestion, a: any, t: ScoreType): number {
 	let sc = 0;
 	if (q.type === 'list') {
 		for (const ae of a) {
-			sc += score(q.sub, ae, t);
+			sc += score(q.sub, ae, t) / a.length;
 		}
 	} else if (q.type === 'complex') {
 		for (const s of q.subs) {
@@ -138,8 +147,46 @@ export function score(q: IQuestion, a: any, t: ScoreType): number {
 			}
 		}
 	} else {
-		if (typeof q.score === 'function') {
-			sc += q.score(a, t);
+		switch (t) {
+			case 'validation':
+				if (typeof q.scores !== 'undefined' && typeof q.scores.validation === 'function') {
+					sc += q.scores.validation(a);
+				}
+				break;
+			case 'reproducibility':
+				if (typeof q.scores !== 'undefined' && typeof q.scores.reproducibility === 'function') {
+					sc += q.scores.reproducibility(a);
+				}
+				break;
+		}
+	}
+	return sc;
+}
+
+export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
+	let sc = 0;
+	if (q.type === 'list') {
+		for (const ae of a) {
+			sc += maxScore(q.sub, ae, t) / a.length;
+		}
+	} else if (q.type === 'complex') {
+		for (const s of q.subs) {
+			if (typeof s.condition === 'undefined' || s.condition(a)) {
+				sc += maxScore(s, a[s.id], t);
+			}
+		}
+	} else {
+		switch (t) {
+			case 'validation':
+				if (typeof q.scores !== 'undefined' && typeof q.scores.validation === 'function') {
+					sc += 1;
+				}
+				break;
+			case 'reproducibility':
+				if (typeof q.scores !== 'undefined' && typeof q.scores.reproducibility === 'function') {
+					sc += 1;
+				}
+				break;
 		}
 	}
 	return sc;
