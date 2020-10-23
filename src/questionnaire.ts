@@ -2,12 +2,12 @@ import { IQuestion } from './app/interfaces';
 
 export const questionnaire: IQuestion = {
 	type: 'complex',
-	subs: [
+	children: [
 		{
 			id: 'MD',
 			type: 'complex',
 			title: 'Metadata',
-			subs: [
+			children: [
 				{
 					id: '1',
 					type: 'string',
@@ -54,10 +54,10 @@ export const questionnaire: IQuestion = {
 					id: '4',
 					type: 'list',
 					title: 'Contact',
-					sub: {
+					child: {
 						type: 'complex',
 						title: 'Contact',
-						subs: [
+						children: [
 							{
 								id: '1',
 								type: 'string',
@@ -98,7 +98,7 @@ export const questionnaire: IQuestion = {
 					type: 'list',
 					title: 'Funding',
 					question: 'Funding details relevant for the AI.',
-					sub: {
+					child: {
 						type: 'text',
 						default: '',
 						title: 'Funding',
@@ -115,7 +115,7 @@ export const questionnaire: IQuestion = {
 			]
 		},
 		{
-			id: 'P', type: 'complex', title: 'Purpose', question: '', subs: [
+			id: 'P', type: 'complex', title: 'Purpose', question: '', children: [
 				{
 					id: '1',
 					type: 'text',
@@ -126,7 +126,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '2',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'boolean',
@@ -149,7 +149,7 @@ export const questionnaire: IQuestion = {
 					type: 'complex',
 					title: 'AI category',
 					question: 'To which category does your AI problem belong?',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'select',
@@ -185,11 +185,11 @@ export const questionnaire: IQuestion = {
 			id: 'D',
 			type: 'list',
 			title: 'Dataset',
-			sub: {
+			child: {
 				type: 'complex',
 				title: 'Title',
 				question: 'Title of the AI',
-				subs: [
+				children: [
 					{
 						id: '1',
 						type: 'text',
@@ -200,7 +200,7 @@ export const questionnaire: IQuestion = {
 					{
 						id: '2',
 						type: 'complex',
-						subs: [
+						children: [
 							{
 								id: '1',
 								type: 'radio',
@@ -226,7 +226,7 @@ export const questionnaire: IQuestion = {
 					{
 						id: '3',
 						type: 'complex',
-						subs: [
+						children: [
 							{
 								id: '1',
 								type: 'radio',
@@ -277,7 +277,7 @@ export const questionnaire: IQuestion = {
 					{
 						id: '5',
 						type: 'complex',
-						subs: [
+						children: [
 							{
 								id: '1',
 								type: 'radio',
@@ -306,7 +306,7 @@ export const questionnaire: IQuestion = {
 					{
 						id: '6',
 						type: 'complex',
-						subs: [
+						children: [
 							{
 								id: '1',
 								type: 'string',
@@ -326,7 +326,7 @@ export const questionnaire: IQuestion = {
 					{
 						id: '7',
 						type: 'complex',
-						subs: [
+						children: [
 							{
 								id: '1',
 								type: 'checkboxes',
@@ -364,7 +364,7 @@ export const questionnaire: IQuestion = {
 			id: 'M',
 			type: 'complex',
 			title: 'Method',
-			subs: [
+			children: [
 				{
 					id: '1',
 					type: 'text',
@@ -392,7 +392,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '3',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'checkboxes',
@@ -432,7 +432,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '4',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'checkboxes',
@@ -466,7 +466,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '5',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'radio',
@@ -496,7 +496,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '6',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'radio',
@@ -525,7 +525,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '7',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'radio',
@@ -554,7 +554,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '8',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'radio',
@@ -586,11 +586,11 @@ export const questionnaire: IQuestion = {
 			id: 'R',
 			type: 'complex',
 			title: 'Reproducibility',
-			subs: [
+			children: [
 				{
 					id: '1',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'radio',
@@ -634,7 +634,7 @@ export const questionnaire: IQuestion = {
 				{
 					id: '2',
 					type: 'complex',
-					subs: [
+					children: [
 						{
 							id: '1',
 							type: 'radio',

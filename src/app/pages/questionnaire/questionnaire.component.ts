@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
-import { IQuestion, createDefaults, score, validateRec, ScoreType, maxScore } from '../../interfaces';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
-import { questionnaire } from '../../../questionnaire';
+import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
+import {IQuestion, createDefaults, score, validateRec, ScoreType, maxScore} from '../../interfaces';
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {map} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
+import {questionnaire} from '../../../questionnaire';
+import YAML from 'yaml';
 
 @Component({
 	selector: 'app-questionnaire',
@@ -16,9 +17,10 @@ export class QuestionnaireComponent implements OnInit {
 	public id = '';
 	public password = '';
 
+	public showPreview = false;
 	public showSpec = false;
 
-	public jsonSpec = JSON.stringify(questionnaire);
+	public yamlSpec = '';
 
 	public step = 1;
 
@@ -47,9 +49,15 @@ export class QuestionnaireComponent implements OnInit {
 		{step: 5, short: 'R', title: 'Reproducibility', icon: 'fa-redo'},
 	];
 
-	public questions = questionnaire;
+	public questions: IQuestion = {type: 'complex', children: []};
 
 	constructor(private http: HttpClient, private route: ActivatedRoute) {
+		this.http.get('/assets/questionnaire.yaml', {
+			responseType: 'text',
+		}).subscribe(data => {
+			this.yamlSpec = data;
+			this.reloadQuestionnaire();
+		})
 	}
 
 	public ngOnInit() {
@@ -64,16 +72,43 @@ export class QuestionnaireComponent implements OnInit {
 			//   });
 			// }
 		});
+	}
 
+	public reloadQuestionnaire() {
+		const parseFunctions = (q) => {
+			if (typeof q.condition === 'string') {
+				q.condition = new Function('val', 'return ' + q.condition);
+			}
+			if (typeof q.scores !== 'undefined') {
+				if (typeof q.scores.validation === 'string') {
+					q.scores.validation = new Function('val', 'return ' + q.scores.validation);
+				}
+				if (typeof q.scores.reproducibility === 'string') {
+					q.scores.reproducibility = new Function('val', 'return ' + q.scores.reproducibility);
+				}
+			}
+			if (q.type === 'list') {
+				parseFunctions(q.child);
+			} else if (q.type === 'complex') {
+				for (const s of q.children) {
+					parseFunctions(s);
+				}
+			}
+		}
+
+		const jsonSpec = YAML.parse(this.yamlSpec, {});
+		parseFunctions(jsonSpec);
+		this.questions = jsonSpec;
 		this.createDefaults();
 	}
 
 	public getSection(s: string): IQuestion {
-		for (const q of this.questions.subs) {
+		for (const q of this.questions.children) {
 			if (q.id === s) {
 				return q;
 			}
 		}
+		return {type: 'complex'};
 	}
 
 	public createDefaults() {
@@ -101,7 +136,7 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	public async submitQuestionnaire() {
-		// this.submitted = true;
+		// this.childmitted = true;
 		// if (this.id && this.password) {
 		//   this.http.post<any>(`${environment.url}api/questionnaire?id=${this.id}&p=${this.password}`, {
 		//     questionnaire: this.questionnaire,

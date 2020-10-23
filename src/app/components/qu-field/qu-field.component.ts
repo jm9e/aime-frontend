@@ -142,7 +142,7 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	public addEntry() {
-		this.value.push(createDefaults(this.question.sub));
+		this.value.push(createDefaults(this.question.child));
 		this.validate();
 		this.valueChange.emit(this.value);
 	}

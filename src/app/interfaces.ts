@@ -7,8 +7,8 @@ export interface IQuestion {
 	type: QuestionType;
 	optional?: boolean;
 	default?: any;
-	sub?: IQuestion;
-	subs?: IQuestion[];
+	child?: IQuestion;
+	children?: IQuestion[];
 	config?: any;
 
 	title?: string;
@@ -24,11 +24,11 @@ export interface IQuestion {
 
 export function createDefaults(q: IQuestion): any {
 	if (q.type === 'list') {
-		return [createDefaults(q.sub)];
+		return [createDefaults(q.child)];
 	}
 	if (q.type === 'complex') {
 		const d = {};
-		for (const e of q.subs) {
+		for (const e of q.children) {
 			d[e.id] = createDefaults(e);
 		}
 		return d;
@@ -105,7 +105,7 @@ export function validateRec(prefix: string, q: IQuestion, a: any): { id: string,
 			prefix += q.id;
 		}
 		for (let i = 0; i < a.length; i++) {
-			msgs.push(...validateRec(prefix + '.' + (i + 1), q.sub, a[i]));
+			msgs.push(...validateRec(prefix + '.' + (i + 1), q.child, a[i]));
 		}
 	} else if (q.type === 'complex') {
 		if (q.id) {
@@ -114,7 +114,7 @@ export function validateRec(prefix: string, q: IQuestion, a: any): { id: string,
 			}
 			prefix += q.id;
 		}
-		for (const s of q.subs) {
+		for (const s of q.children) {
 			if (typeof s.condition === 'undefined' || s.condition(a)) {
 				msgs.push(...validateRec(prefix, s, a[s.id]));
 			}
@@ -138,10 +138,10 @@ export function score(q: IQuestion, a: any, t: ScoreType): number {
 	let sc = 0;
 	if (q.type === 'list') {
 		for (const ae of a) {
-			sc += score(q.sub, ae, t) / a.length;
+			sc += score(q.child, ae, t) / a.length;
 		}
 	} else if (q.type === 'complex') {
-		for (const s of q.subs) {
+		for (const s of q.children) {
 			if (typeof s.condition === 'undefined' || s.condition(a)) {
 				sc += score(s, a[s.id], t);
 			}
@@ -173,10 +173,10 @@ export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
 	let sc = 0;
 	if (q.type === 'list') {
 		for (const ae of a) {
-			sc += maxScore(q.sub, ae, t) / a.length;
+			sc += maxScore(q.child, ae, t) / a.length;
 		}
 	} else if (q.type === 'complex') {
-		for (const s of q.subs) {
+		for (const s of q.children) {
 			if (typeof s.condition === 'undefined' || s.condition(a)) {
 				sc += maxScore(s, a[s.id], t);
 			}

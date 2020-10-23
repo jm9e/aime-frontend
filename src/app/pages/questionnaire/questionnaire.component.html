@@ -1,6 +1,6 @@
 <section class="section">
   <div class="container">
-		<div class="step-content card is-active scores">
+		<div class="card is-active spec">
 			<header class="card-header">
 				<div class="card-header-title">
 					<h2 class="title is-4">
@@ -15,16 +15,17 @@
 				</a>
 			</header>
 			<div class="card-content" *ngIf="showSpec">
-				<textarea [(ngModel)]="jsonSpec">
-
-				</textarea>
+				<div style="height: 500px">
+					<ngx-monaco-editor style="height: 100%" [options]="{language: 'yaml'}" [(ngModel)]="yamlSpec"></ngx-monaco-editor>
+				</div>
+				<button (click)="reloadQuestionnaire()" class="button is-success">Reload</button>
 			</div>
 		</div>
-    <div class="step-content card is-active scores">
+    <div class="card is-active scores">
       <header class="card-header">
         <div class="card-header-title">
           <h2 class="title is-4">
-            Your AIMe report
+            Report scores
           </h2>
         </div>
         <a class="card-header-icon" (click)="showScores = !showScores">
@@ -256,9 +257,24 @@
         </div>
       </article>
     </div>
+		<div class="card is-active">
+			<header class="card-header">
+				<div class="card-header-title">
+					<h2 class="title is-4">
+						JSON preview
+					</h2>
+				</div>
+				<a class="card-header-icon" (click)="showPreview = !showPreview">
+              <span class="icon">
+                <i class="fas fa-angle-down" *ngIf="showPreview"></i>
+                <i class="fas fa-angle-left" *ngIf="!showPreview"></i>
+              </span>
+				</a>
+			</header>
+			<div class="card-content" *ngIf="showPreview">
+				<pre>{{answers | json}}</pre>
+			</div>
+		</div>
   </div>
 </section>
 
-<pre>
-  {{answers | json}}
-</pre>
