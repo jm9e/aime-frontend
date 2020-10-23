@@ -52,7 +52,7 @@ export class QuestionnaireComponent implements OnInit {
 	public questions: IQuestion = {type: 'complex', children: []};
 
 	constructor(private http: HttpClient, private route: ActivatedRoute) {
-		this.http.get('/assets/questionnaire.yaml', {
+		this.http.get('assets/questionnaire.yaml', {
 			responseType: 'text',
 		}).subscribe(data => {
 			this.yamlSpec = data;
