@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   url: 'http://localhost:9000/',
-  urlDisplay: 'https://aime-standard.org/',
-  domainDisplay: 'aime-standard.org',
+  urlDisplay: 'https://aime-registry.org/',
+  domainDisplay: 'aime-registry.org',
 };
 
 /*

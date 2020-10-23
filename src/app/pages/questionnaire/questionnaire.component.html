@@ -1,5 +1,25 @@
 <section class="section">
   <div class="container">
+		<div class="step-content card is-active scores">
+			<header class="card-header">
+				<div class="card-header-title">
+					<h2 class="title is-4">
+						AIMe specification
+					</h2>
+				</div>
+				<a class="card-header-icon" (click)="showSpec = !showSpec">
+              <span class="icon">
+                <i class="fas fa-angle-down" *ngIf="showSpec"></i>
+                <i class="fas fa-angle-left" *ngIf="!showSpec"></i>
+              </span>
+				</a>
+			</header>
+			<div class="card-content" *ngIf="showSpec">
+				<textarea [(ngModel)]="jsonSpec">
+
+				</textarea>
+			</div>
+		</div>
     <div class="step-content card is-active scores">
       <header class="card-header">
         <div class="card-header-title">
@@ -202,7 +222,7 @@
           </p>
           <br>
           <p>
-            Thank you for using the AIMe standard.
+            Thank you for using the AIMe registry.
           </p>
         </div>
         <div class="message-body" *ngIf="revising">
@@ -226,12 +246,12 @@
           <pre>@misc{{'{aimeReport' + id}},
   title={{'{AIMe Report' + id + '}'}},
   author={{'{' + 'abc' + '}'}},
-  howpublished={{'{\\url{https://aime-standard.org/report/' + id + '.pdf}' + '}'}},
+  howpublished={{'{\\url{https://aime-registry.org/report/' + id + '.pdf}' + '}'}},
   year={{'{2020}'}},
 {{'}'}}</pre>
           <br>
           <p>
-            Thank you for using the AIMe standard.
+            Thank you for using the AIMe registry.
           </p>
         </div>
       </article>

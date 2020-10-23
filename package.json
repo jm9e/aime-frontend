@@ -21,11 +21,9 @@
     "@angular/router": "~10.1.6",
     "bulma": "^0.9.1",
     "bulma-steps": "^2.2.1",
-    "esprima": "^4.0.1",
-    "js-yaml": "^3.14.0",
-    "ng2-pdfjs-viewer": "^5.0.7",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
+    "yaml": "^1.10.0",
     "zone.js": "~0.11.2"
   },
   "devDependencies": {

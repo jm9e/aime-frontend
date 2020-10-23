@@ -16,6 +16,10 @@ export class QuestionnaireComponent implements OnInit {
 	public id = '';
 	public password = '';
 
+	public showSpec = false;
+
+	public jsonSpec = JSON.stringify(questionnaire);
+
 	public step = 1;
 
 	public submitted = false;

@@ -7,7 +7,6 @@ import { IndexComponent } from './pages/index/index.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvPipe } from './pipes/env.pipe';
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
 import { QuFieldComponent } from './components/qu-field/qu-field.component';
@@ -31,7 +30,6 @@ import { SurveyComponent } from './pages/survey/survey.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    PdfJsViewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
