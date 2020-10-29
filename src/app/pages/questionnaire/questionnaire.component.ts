@@ -147,7 +147,7 @@ export class QuestionnaireComponent implements OnInit {
 
 	public validate() {
 		this.validationTrigger.next();
-		// this.validationErrors = validateRec('', this.questions, this.answers);
+		this.validationErrors = validateRec('', this.questions, this.answers);
 	}
 
 	public calcScores() {
