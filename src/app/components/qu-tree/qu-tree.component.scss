@@ -1,7 +1,7 @@
 @import 'variables';
 
 $line-color: $aime;
-$line-width: 2px;
+$line-width: 1px;
 
 $item-height: 25px;
 
@@ -29,12 +29,8 @@ $dist-y: 12px - $line-width / 2;
 	}
 
 	.item {
-		padding-left: 10px;
+		padding-left: $line-width + 10px;
 		min-height: $item-height;
-
-		&.has-sub {
-			padding-left: $line-width + 10px;
-		}
 	}
 
 }
