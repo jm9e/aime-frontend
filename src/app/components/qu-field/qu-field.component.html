@@ -1,14 +1,22 @@
-<div class="field is-horizontal" *ngIf="question.type !== 'list' && question.type !== 'complex'">
+<div class="field is-horizontal" *ngIf="question.type !== 'list' && question.type !== 'complex' && (!readonly || !question.optional || value)">
   <div class="field-label is-normal">
     <label class="label" *ngIf="!hideId">{{fullId}}</label>
   </div>
-  <div class="field-body">
+  <div class="field-body" *ngIf="!readonly">
     <div class="field">
+			<p class="help has-text-left">
+				<span>
+          {{question.question}}
+        </span>
+				<span *ngIf="question.optional" class="tag is-light">
+          Optional
+        </span>
+			</p>
       <div class="control" *ngIf="question.type === 'string'">
-        <input class="input" [type]="question.config?.inputType" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [(ngModel)]="value" (ngModelChange)="validate(); valueChange.emit($event);">
+        <input class="input" [type]="question.config?.inputType" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [(ngModel)]="value" (ngModelChange)="validate(); valueChange.emit($event);" (blur)="validate()">
       </div>
       <div class="control" *ngIf="question.type === 'text'">
-        <textarea class="input" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [(ngModel)]="value" (ngModelChange)="validate(); valueChange.emit($event);"></textarea>
+        <textarea class="input" [class.is-success]="valid === true" [class.is-danger]="valid === false" [name]="fullId" [placeholder]="question.title" [(ngModel)]="value" (ngModelChange)="validate(); valueChange.emit($event);" (blur)="validate()"></textarea>
       </div>
       <div class="control" *ngIf="question.type === 'boolean'">
         <label [for]="fullId">
@@ -90,12 +98,6 @@
 				</label>
 			</div>
       <p class="help has-text-left" [ngClass]="{'expanded': expanded}">
-        <span *ngIf="question.optional" class="tag is-light">
-          Optional
-        </span>
-        <span>
-          {{question.question}}
-        </span>
 				<span *ngIf="validMessage" [class.has-text-success]="valid === true" [class.has-text-danger]="valid === false">
 					{{validMessage}}
 				</span>
@@ -119,6 +121,67 @@
       </div>
     </div>
   </div>
+	<div class="field-body" *ngIf="readonly">
+		<div class="field">
+			<p class="help has-text-left">
+				<span>
+          {{question.question}}
+        </span>
+				<span *ngIf="question.optional" class="tag is-light">
+          Optional
+        </span>
+			</p>
+			<div class="control" *ngIf="question.type === 'string'">
+				<span class="tag is-aime is-medium">{{value}}</span>
+			</div>
+			<div class="control" *ngIf="question.type === 'text'">
+				<span class="tag is-aime is-medium">{{value}}</span>
+			</div>
+			<div class="control" *ngIf="question.type === 'boolean'">
+				<label [for]="fullId">
+					<input [disabled]="true" type="checkbox" class="checkbox" [name]="fullId" [id]="fullId" [ngModel]="value" (ngModelChange)="value = $event; validate(); valueChange.emit($event)">
+					{{question.title}}
+				</label>
+			</div>
+			<div class="control" *ngIf="question.type === 'select' || question.type === 'radio'">
+				<div class="tags are-medium">
+          <span class="tag is-aime" *ngIf="value">
+            {{getValue(value.value, value.custom)}}
+          </span>
+					<span class="tag is-muted" *ngIf="!value">Unspecified</span>
+				</div>
+			</div>
+			<div class="control" *ngIf="question.type === 'tags' || question.type === 'checkboxes'">
+				<div class="tags are-medium">
+          <span *ngFor="let t of value" class="tag is-aime">
+						{{getValue(t.value, t.custom)}}
+          </span>
+				</div>
+			</div>
+			<p class="help has-text-left" [ngClass]="{'expanded': expanded}">
+				<span *ngIf="validMessage" [class.has-text-success]="valid === true" [class.has-text-danger]="valid === false">
+					{{validMessage}}
+				</span>
+				<a *ngIf="question.help" (click)="expanded = !expanded" class="is-pulled-right">
+          <span class="tag is-small is-light is-outlined">
+            <span class="icon">
+              <i class="fa fa-chevron-right" *ngIf="!expanded"></i>
+              <i class="fa fa-chevron-down" *ngIf="expanded"></i>
+            </span>
+            <span>Help</span>
+          </span>
+				</a>
+			</p>
+			<div *ngIf="question.help && expanded" class="notification more-info">
+        <span class="icon">
+          <i class="fa fa-info-circle"></i>
+        </span>
+				<span>
+          {{question.help}}
+        </span>
+			</div>
+		</div>
+	</div>
 </div>
 <ng-container class="field is-horizontal" *ngIf="question.type === 'list'">
   <ng-container *ngFor="let v of value; let i=index; trackBy:trackByFn">
@@ -129,16 +192,16 @@
       <div class="field-body">
         <div class="field">
           <span class="is-size-5">{{question.title}}</span>
-          <button class="button is-danger is-outlined is-small is-pulled-right" (click)="deleteEntry(i)">
+          <button *ngIf="!readonly" class="button is-danger is-outlined is-small is-pulled-right" (click)="deleteEntry(i)">
             <span class="icon"><i class="fa fa-trash"></i></span>
           </button>
         </div>
       </div>
     </div>
-    <app-qu-field [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.child" [value]="value[i]" (valueChange)="value[i] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
+    <app-qu-field [readonly]="readonly" [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.child" [value]="value[i]" (valueChange)="value[i] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
     </app-qu-field>
   </ng-container>
-  <div class="field is-horizontal">
+  <div class="field is-horizontal" *ngIf="!readonly">
     <div class="field-label is-normal">
       <label class="label has-text-grey-light" *ngIf="!hideId">{{fullId}}.{{(value.length + 1).toString(10)}}</label>
     </div>
@@ -153,8 +216,21 @@
   </div>
 </ng-container>
 <ng-container class="field is-horizontal" *ngIf="question.type === 'complex'">
+	<div class="field is-horizontal" *ngIf="!hideId && question.title">
+		<div class="field-label is-normal">
+			<label class="label" *ngIf="!hideId">{{fullId}}</label>
+		</div>
+		<div class="field-body">
+			<div class="field">
+				<span class="is-size-5">{{question.title}}</span>
+				<button *ngIf="!readonly" class="button is-danger is-outlined is-small is-pulled-right" (click)="deleteEntry(i)">
+					<span class="icon"><i class="fa fa-trash"></i></span>
+				</button>
+			</div>
+		</div>
+	</div>
   <ng-container *ngFor="let s of question.children">
-    <app-qu-field [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="value[s.id] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
+    <app-qu-field [readonly]="readonly" [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="value[s.id] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
     </app-qu-field>
   </ng-container>
 </ng-container>

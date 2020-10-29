@@ -13,6 +13,8 @@ import {QuFieldComponent} from './components/qu-field/qu-field.component';
 import {CiteReportComponent} from './components/cite-report/cite-report.component';
 import {SurveyComponent} from './pages/survey/survey.component';
 import {MonacoEditorModule, NgxMonacoEditorConfig} from 'ngx-monaco-editor';
+import { QuTreeComponent } from './components/qu-tree/qu-tree.component';
+import { SpecificationComponent } from './pages/specification/specification.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
 	baseUrl: 'assets',
@@ -30,6 +32,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
 		QuFieldComponent,
 		CiteReportComponent,
 		SurveyComponent,
+		QuTreeComponent,
+		SpecificationComponent,
 	],
 	imports: [
 		HttpClientModule,

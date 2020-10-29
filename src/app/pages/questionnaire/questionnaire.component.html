@@ -21,32 +21,6 @@
 				<button (click)="reloadQuestionnaire()" class="button is-success">Reload</button>
 			</div>
 		</div>
-    <div class="card is-active scores">
-      <header class="card-header">
-        <div class="card-header-title">
-          <h2 class="title is-4">
-            Report scores
-          </h2>
-        </div>
-        <a class="card-header-icon" (click)="showScores = !showScores">
-              <span class="icon">
-                <i class="fas fa-angle-down" *ngIf="showScores"></i>
-                <i class="fas fa-angle-left" *ngIf="!showScores"></i>
-              </span>
-        </a>
-      </header>
-      <div class="card-content" *ngIf="showScores">
-        <div class="progress--circle progress--{{this.reproducibilityScore}}">
-          <div class="progress__number">{{this.reproducibilityScore / 10}}</div>
-          <div class="score-title">Reproducibility</div>
-        </div>
-
-        <div class="progress--circle progress--{{this.validationScore}}">
-          <div class="progress__number">{{this.validationScore / 10}}</div>
-          <div class="score-title">Validation</div>
-        </div>
-      </div>
-    </div>
     <div class="steps is-aime" *ngIf="!submitted">
       <div *ngFor="let s of steps" class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === s.step}" (click)="goToStep(s.step)">
         <div class="step-marker"><i class="fad {{s.icon}}"></i></div>
@@ -89,7 +63,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores()" [validationTrigger]="validationTrigger">
+            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>
@@ -122,6 +96,41 @@
               If you want to correct something, either use the <span class="tag">Previous</span> button below,
               or click on the according step above.
             </p>
+
+						<div class="report">
+							<div class="field is-horizontal">
+								<div class="field-label is-normal">
+								</div>
+								<div class="field-body">
+									<div class="field">
+										<h3 class="title is-3">AIMe report (preview)</h3>
+									</div>
+								</div>
+							</div>
+
+							<app-qu-field [readonly]="true" [idPrefix]="''" [id]="''" [question]="questions" [value]="answers"></app-qu-field>
+
+							<div class="field is-horizontal">
+								<div class="field-label is-normal">
+									<label class="label">Scores</label>
+								</div>
+								<div class="field-body">
+									<div class="field">
+										<div class="scores">
+											<div class="progress--circle progress--{{this.reproducibilityScore}}">
+												<div class="progress__number">{{this.reproducibilityScore / 10}}</div>
+												<div class="score-title">Reproducibility</div>
+											</div>
+											<div class="progress--circle progress--{{this.validationScore}}">
+												<div class="progress__number">{{this.validationScore / 10}}</div>
+												<div class="score-title">Validation</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
             <p *ngIf="!revising">
               If you are done, click the <span class="tag is-info">Submit</span> button below to generate a
               finalized and referenceable report.
@@ -130,8 +139,6 @@
               If you are done, click the <span class="tag is-info">Create Revision</span> button below to update
               your report and create a new revision.
             </p>
-            <br>
-            <br>
             <div *ngIf="!revising">
               <br>
               <div class="field">
@@ -185,7 +192,7 @@
     </div>
 
     <div class="container" *ngIf="submitted">
-      <div class="notification is-info" *ngIf="!password || !id">
+			<div class="notification is-info" *ngIf="!password || !id">
         <span class="icon has-text-white">
           <i class="fa fa-spinner fa-spin"></i>
         </span>

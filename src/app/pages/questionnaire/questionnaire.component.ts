@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
-import {IQuestion, createDefaults, score, validateRec, ScoreType, maxScore} from '../../interfaces';
+import {IQuestion, createDefaults, score, validateRec, ScoreType, maxScore, parseQuestions} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {map} from 'rxjs/operators';
@@ -57,7 +57,7 @@ export class QuestionnaireComponent implements OnInit {
 		}).subscribe(data => {
 			this.yamlSpec = data;
 			this.reloadQuestionnaire();
-		})
+		});
 	}
 
 	public ngOnInit() {
@@ -75,30 +75,8 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	public reloadQuestionnaire() {
-		const parseFunctions = (q) => {
-			if (typeof q.condition === 'string') {
-				q.condition = new Function('val', 'return ' + q.condition);
-			}
-			if (typeof q.scores !== 'undefined') {
-				if (typeof q.scores.validation === 'string') {
-					q.scores.validation = new Function('val', 'return ' + q.scores.validation);
-				}
-				if (typeof q.scores.reproducibility === 'string') {
-					q.scores.reproducibility = new Function('val', 'return ' + q.scores.reproducibility);
-				}
-			}
-			if (q.type === 'list') {
-				parseFunctions(q.child);
-			} else if (q.type === 'complex') {
-				for (const s of q.children) {
-					parseFunctions(s);
-				}
-			}
-		}
-
 		const jsonSpec = YAML.parse(this.yamlSpec, {});
-		parseFunctions(jsonSpec);
-		this.questions = jsonSpec;
+		this.questions = parseQuestions(jsonSpec);
 		this.createDefaults();
 	}
 
@@ -133,6 +111,8 @@ export class QuestionnaireComponent implements OnInit {
 				// TODO
 			}
 		}
+
+		window.scroll(0, 0);
 	}
 
 	public async submitQuestionnaire() {
@@ -167,7 +147,7 @@ export class QuestionnaireComponent implements OnInit {
 
 	public validate() {
 		this.validationTrigger.next();
-		this.validationErrors = validateRec('', this.questions, this.answers);
+		// this.validationErrors = validateRec('', this.questions, this.answers);
 	}
 
 	public calcScores() {

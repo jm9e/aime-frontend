@@ -1,0 +1,56 @@
+<section class="section">
+	<div class="container">
+		<h1 class="title is-3">AIMe specification</h1>
+		<div class="field">
+			<div class="control">
+				<div class="select">
+					<select>
+						<option>Version 1.0</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<header class="card-header">
+				<div class="card-header-title">
+					<h2 class="title is-4">
+						Tree
+					</h2>
+				</div>
+				<a class="card-header-icon" (click)="showTree = !showTree">
+					<span class="icon">
+						<i class="fas fa-angle-down" *ngIf="showTree"></i>
+						<i class="fas fa-angle-left" *ngIf="!showTree"></i>
+					</span>
+				</a>
+			</header>
+			<div class="card-content" *ngIf="showTree">
+				<div class="tree">
+					<app-qu-tree [idPrefix]="''" [id]="''" [question]="questions" [hideNode]="true"></app-qu-tree>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<header class="card-header">
+				<div class="card-header-title">
+					<h2 class="title is-4">
+						YAML
+					</h2>
+				</div>
+				<a class="card-header-icon" (click)="showSpec = !showSpec">
+					<span class="icon">
+						<i class="fas fa-angle-down" *ngIf="showSpec"></i>
+						<i class="fas fa-angle-left" *ngIf="!showSpec"></i>
+					</span>
+				</a>
+			</header>
+			<div class="card-content" *ngIf="showSpec">
+				<div style="height: 500px">
+					<ngx-monaco-editor style="height: 100%" [options]="{language: 'yaml', readOnly: true}" [(ngModel)]="yamlSpec"></ngx-monaco-editor>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

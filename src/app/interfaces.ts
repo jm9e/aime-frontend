@@ -1,3 +1,5 @@
+import YAML from "yaml";
+
 export type QuestionType = 'string' | 'text' | 'email' | 'boolean' | 'tags' | 'checkboxes' | 'radio' | 'select' | 'complex' | 'list';
 export type ScoreType = 'validation' | 'reproducibility';
 
@@ -212,4 +214,29 @@ export interface IReport {
 	date: Date;
 	versions: IVersion[];
 	questionnaire: { [key: string]: any };
+}
+
+export function parseQuestions(jsonSpec: any): IQuestion {
+	const parseFunctions = (q) => {
+		if (typeof q.condition === 'string') {
+			q.condition = new Function('val', 'return ' + q.condition);
+		}
+		if (typeof q.scores !== 'undefined') {
+			if (typeof q.scores.validation === 'string') {
+				q.scores.validation = new Function('val', 'return ' + q.scores.validation);
+			}
+			if (typeof q.scores.reproducibility === 'string') {
+				q.scores.reproducibility = new Function('val', 'return ' + q.scores.reproducibility);
+			}
+		}
+		if (q.type === 'list') {
+			parseFunctions(q.child);
+		} else if (q.type === 'complex') {
+			for (const s of q.children) {
+				parseFunctions(s);
+			}
+		}
+	}
+	parseFunctions(jsonSpec);
+	return jsonSpec;
 }

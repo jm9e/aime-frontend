@@ -1,0 +1,37 @@
+<div [class.node]="!hideNode">
+	<div class="inner">
+		<div class="hl"></div>
+		<div *ngIf="question.type !== 'list' && question.type !== 'complex'">
+			<div class="item">
+				<span class="has-text-weight-bold">{{fullId}}</span>
+				<span>&nbsp;-&nbsp;</span>
+				<span>{{question.question}}</span>
+				<span *ngIf="question.optional">
+					(optional)
+				</span>
+			</div>
+		</div>
+		<ng-container *ngIf="question.type === 'list'">
+			<div class="item has-sub" *ngIf="!hideNode">
+				<span class="has-text-weight-bold">{{fullId}}</span>
+				<span>&nbsp;-&nbsp;</span>
+				<span>{{question.title}}</span>
+			</div>
+			<app-qu-tree [idPrefix]="fullId" [id]="'<X>'" [question]="question.child">
+			</app-qu-tree>
+		</ng-container>
+		<ng-container *ngIf="question.type === 'complex'">
+			<div *ngIf="question.title">
+				<div class="item has-sub">
+					<span class="has-text-weight-bold">{{fullId}}</span>
+					<span>&nbsp;-&nbsp;</span>
+					<span>{{question.title}}</span>
+				</div>
+			</div>
+			<ng-container *ngFor="let s of question.children">
+				<app-qu-tree [idPrefix]="fullId" [id]="s.id" [question]="s" [hideNode]="s.type === 'list'">
+				</app-qu-tree>
+			</ng-container>
+		</ng-container>
+	</div>
+</div>

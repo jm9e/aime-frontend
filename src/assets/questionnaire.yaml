@@ -97,6 +97,7 @@ children:
         question: What is your AI designed to learn or predict?
       - id: '2'
         type: complex
+        title: Surrogate marker
         children:
           - id: '1'
             type: boolean
@@ -111,12 +112,10 @@ children:
             question: More detailed information about the surrogate marker.
       - id: '3'
         type: complex
-        title: AI category
-        question: To which category does your AI problem belong?
+        title: Category
         children:
           - id: '1'
             type: select
-            title: Category
             question: To which category does your AI problem belong?
             config:
               allowCustom: false
@@ -148,7 +147,7 @@ children:
     title: Dataset
     child:
       type: complex
-      title: Title
+      title: Dataset
       question: Title of the AI
       children:
         - id: '1'
@@ -158,6 +157,7 @@ children:
           question: What is the type of the data and how was it generated or obtained?
         - id: '2'
           type: complex
+          title: Origin
           children:
             - id: '1'
               type: radio
@@ -177,6 +177,7 @@ children:
               question: How was the data simulated?
         - id: '3'
           type: complex
+          title: Availability
           children:
             - id: '1'
               type: radio
@@ -217,6 +218,7 @@ children:
                 value: 'No'
         - id: '5'
           type: complex
+          title: Biases
           children:
             - id: '1'
               type: radio
@@ -238,6 +240,7 @@ children:
               question: How did you check for biases and what was your conclusion?
         - id: '6'
           type: complex
+          title: Samples and features
           children:
             - id: '1'
               type: string
@@ -251,6 +254,7 @@ children:
               question: How many features does the dataset have?
         - id: '7'
           type: complex
+          title: Pre-processing
           children:
             - id: '1'
               type: checkboxes
@@ -309,11 +313,11 @@ children:
           validation: "({default: 0.0, hpt: 1.0}[val.value])"
       - id: '3'
         type: complex
+        title: Test metrics
         children:
           - id: '1'
             type: checkboxes
             default: [ ]
-            title: Test metrics
             question: Which test metrics do you report?
             config:
               options:
@@ -351,6 +355,7 @@ children:
             question: Which additional metrics do you report?
       - id: '4'
         type: complex
+        title: Overfitting
         children:
           - id: '1'
             type: checkboxes
@@ -382,6 +387,7 @@ children:
             question: Elaborate on how you prevented overfitting.
       - id: '5'
         type: complex
+        title: Trigger situations
         children:
           - id: '1'
             type: radio
@@ -403,6 +409,7 @@ children:
             question: Elaborate on whether there are trigger situations.
       - id: '6'
         type: complex
+        title: Randomized steps
         children:
           - id: '1'
             type: radio
@@ -424,6 +431,7 @@ children:
             question: Elaborate on how randomized steps affect the stability.
       - id: '7'
         type: complex
+        title: Baseline model
         children:
           - id: '1'
             type: radio
@@ -445,6 +453,7 @@ children:
             question: Elaborate on how you compared against a baseline model.
       - id: '8'
         type: complex
+        title: State-of-the-art approaches
         children:
           - id: '1'
             type: radio
@@ -470,6 +479,7 @@ children:
     children:
       - id: '1'
         type: complex
+        title: Re-running
         children:
           - id: '1'
             type: radio
@@ -506,6 +516,7 @@ children:
             question: Elaborate on additional means you provide.
       - id: '2'
         type: complex
+        title: Source code
         children:
           - id: '1'
             type: radio

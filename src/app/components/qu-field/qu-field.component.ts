@@ -8,10 +8,10 @@ import { createDefaults, validate, IQuestion } from '../../interfaces';
 })
 export class QuFieldComponent implements OnInit {
 
+	@Input() readonly: boolean;
 	@Input() id: string;
 	@Input() question: IQuestion;
 	@Input() value: any;
-	@Input() replace: any;
 	@Input() idPrefix: string;
 	@Input() hideId = false;
 	@Input() validationTrigger: EventEmitter<void>;
@@ -36,7 +36,7 @@ export class QuFieldComponent implements OnInit {
 			this.fullId = this.idPrefix + this.id;
 		}
 
-		this.validationTrigger.subscribe(() => {
+		this.validationTrigger?.subscribe(() => {
 			this.validate();
 		});
 	}
