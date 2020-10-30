@@ -26,6 +26,8 @@ export class QuFieldComponent implements OnInit {
 
 	public expanded = false;
 
+	public showResults = false;
+
 	constructor() {
 	}
 
@@ -44,7 +46,7 @@ export class QuFieldComponent implements OnInit {
 	public getResults(): [string, string][] {
 		const results: [string, string][] = [];
 		for (const e of this.question.config.options) {
-			if (e.value.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
+			if (!this.searchQ || e.value.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
 				if (!this.hasValue(e.key, false)) {
 					results.push(e);
 				}
@@ -68,6 +70,7 @@ export class QuFieldComponent implements OnInit {
 		});
 		this.valueChange.emit(this.value);
 		this.searchQ = '';
+		this.showResults = false;
 
 		this.validate();
 	}
@@ -81,6 +84,7 @@ export class QuFieldComponent implements OnInit {
 				value,
 			};
 			this.searchQ = '';
+			this.showResults = false;
 		}
 
 		this.valueChange.emit(this.value);
@@ -161,6 +165,12 @@ export class QuFieldComponent implements OnInit {
 		const {valid, msg} = validate(this.question, this.value);
 		this.valid = valid;
 		this.validMessage = msg;
+	}
+
+	public blurResults() {
+		setTimeout(() => {
+			this.showResults = false;
+		}, 300);
 	}
 
 }

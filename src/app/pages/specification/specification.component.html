@@ -5,7 +5,7 @@
 			<div class="control">
 				<div class="select">
 					<select>
-						<option>Version 1.0</option>
+						<option>AIMe 2020.0</option>
 					</select>
 				</div>
 			</div>
@@ -28,6 +28,35 @@
 			<div class="card-content" *ngIf="showTree">
 				<div class="tree">
 					<app-qu-tree [idPrefix]="''" [id]="''" [question]="questions" [hideNode]="true"></app-qu-tree>
+				</div>
+				<p class="mb-1">
+					Legend
+				</p>
+				<div class="tags">
+					<span class="tag is-small is-light">
+						<span class="icon"><i class="far fa-dot-circle"></i></span>
+						<span>Radio selection</span>
+					</span>
+					<span class="tag is-small is-light">
+						<span class="icon"><i class="far fa-chevron-circle-down"></i></span>
+						<span>Dropdown selection</span>
+					</span>
+					<span  class="tag is-small is-light">
+						<span class="icon"><i class="far fa-check-double"></i></span>
+						<span>Checkboxes</span>
+					</span>
+					<span class="tag is-small is-light">
+						<span class="icon"><i class="far fa-tags"></i></span>
+						<span>Tags</span>
+					</span>
+					<span class="tag is-small is-light is-info">
+						<span class="icon"><i class="fa fa-star-half-alt"></i></span>
+						<span>Affects reproducibility score</span>
+					</span>
+					<span class="tag is-small is-light is-warning">
+						<span class="icon"><i class="fa fa-star-half-alt"></i></span>
+						<span>Affects validation score</span>
+					</span>
 				</div>
 			</div>
 		</div>

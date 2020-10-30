@@ -30,6 +30,11 @@ children:
           minLength: 20
           maxLength: 300
       - id: '4'
+        type: string
+        default: ''
+        title: Appear in search
+        question: Specify whether the AI should appear in the search.
+      - id: '5'
         type: tags
         default: [ ]
         title: Keywords
@@ -49,7 +54,7 @@ children:
               value: Cardiology
           minLength: 2
           maxLength: 10
-      - id: '5'
+      - id: '6'
         type: list
         title: Contact
         child:
@@ -79,20 +84,52 @@ children:
               optional: true
               title: ORCID iD
               question: ORCID iD of the author.
-      - id: '6'
+        config:
+          maxLength: 16
+      - id: '7'
         type: list
         title: Funding
         question: Funding details relevant for the AI.
+        optional: true
         child:
           type: text
           default: ''
           title: Funding
           question: Funding details relevant for the AI.
-      - id: '7'
+      - id: '8'
         type: boolean
         default: false
         title: Appear in search
         question: Specify whether the AI should appear in the search.
+      - id: '9'
+        type: list
+        title: Other report or checklist
+        optional: true
+        help:
+          Add additional checklists here that might be required by journals or which contain additional information
+          about the characteristics of your AI.
+        child:
+          type: complex
+          title: Other report or checklist
+          children:
+            - id: '1'
+              type: radio
+              question: Select the type of document.
+              default: checklist
+              config:
+                allowCustom: false
+                options:
+                  - key: 'rep'
+                    value: 'Report'
+                  - key: 'cl'
+                    value: 'Checklist'
+                  - key: 'other'
+                    value: 'Other'
+            - id: '2'
+              type: file
+              question: Upload a report or checklist.
+              config:
+                allowedTypes: [ 'pdf', 'docx', 'doc' ]
   - id: P
     type: complex
     title: Purpose
@@ -131,7 +168,7 @@ children:
                 - key: cf
                   value: Classification
                 - key: ce
-                  value: Continuous estimation
+                  value: Continuous estimation / Regression
                 - key: cl
                   value: Clustering
                 - key: dr
@@ -147,7 +184,7 @@ children:
           - id: '2'
             type: text
             default: ''
-            condition: "val['1'] === 'other'"
+            condition: "val['1']?.value === 'other'"
             title: Category
             question: More detailed information
   - id: D
@@ -178,7 +215,7 @@ children:
                   - key: s
                     value: Simulated
             - id: '2'
-              condition: "val['1'].value === 's'"
+              condition: "val['1']?.value === 's'"
               type: text
               default: ''
               title: Information about simulated data
@@ -202,13 +239,13 @@ children:
               scores:
                 reproducibility: "({a: 1.0, r: 0.5, na: 0.0}[val.value])"
             - id: '2'
-              condition: "val['1'].value === 'a'"
+              condition: "val['1']?.value === 'a'"
               type: string
               default: ''
               title: Data availability details
               question: Where can the data be found?
             - id: '3'
-              condition: "val['1'].value === 'r'"
+              condition: "val['1']?.value === 'r'"
               type: string
               default: ''
               title: Data request details
@@ -241,7 +278,7 @@ children:
               scores:
                 validation: "({yes: 1.0, no: 0.0}[val.value])"
             - id: '2'
-              condition: "val['1'].value === 'yes'"
+              condition: "val['1']?.value === 'yes'"
               type: text
               default: ''
               title: Details on biases
@@ -327,6 +364,7 @@ children:
             type: checkboxes
             default: [ ]
             question: Which test metrics do you report?
+            optional: true
             config:
               options:
                 - key: acc
@@ -344,7 +382,7 @@ children:
                 - key: auc
                   value: AUC (area under curve)
                 - key: me
-                  value: MAE/MSE (mean absolute/square error)
+                  value: MAE/MSE (mean absolute/squared error)
                 - key: gini
                   value: Gini coefficient
                 - key: rt
@@ -366,9 +404,24 @@ children:
         title: Overfitting
         children:
           - id: '1'
+            type: radio
+            default: no
+            question: Did you take measures to prevent overfitting?
+            config:
+              options:
+                - key: yes
+                  value: Yes
+                - key: no
+                  value: No
+                - key: na
+                  value: Doesn't apply
+            scores:
+              validation: "({yes: 1.0, no: 0.0}[val.value])"
+          - id: '2'
+            condition: "val['1'].value === 'yes'"
             type: checkboxes
             default: [ ]
-            question: How do you prevent overfitting?
+            question: Select how you prevented overfitting.
             config:
               options:
                 - key: cv
@@ -385,10 +438,8 @@ children:
                   value: Feature selection
                 - key: other
                   value: Other
-            scores:
-              validation: "val.length > 0 ? 1.0 : 0.0"
-          - id: '2'
-            condition: "val['1'].length > 0"
+          - id: '3'
+            condition: "val['1'].value === 'yes' && val['2'].find((o) => o.value === 'other')"
             type: text
             default: ''
             title: Overfitting details
@@ -410,7 +461,7 @@ children:
             scores:
               validation: "val.value === 'yes' ? 1.0 : 0.0"
           - id: '2'
-            condition: "val['1'].value === 'yes'"
+            condition: "val['1']?.value === 'yes'"
             type: text
             default: ''
             title: Trigger situations
@@ -429,10 +480,12 @@ children:
                   value: 'Yes'
                 - key: 'no'
                   value: 'No'
+                - key: 'na'
+                  value: "Doesn't apply"
             scores:
-              validation: "val.value === 'yes' ? 1.0 : 0.0"
+              reproducibility: "({yes: 1.0, no: 0.0}[val.value])"
           - id: '2'
-            condition: "val['1'].value === 'yes'"
+            condition: "val['1']?.value === 'yes'"
             type: text
             default: ''
             title: Randomized steps
@@ -454,7 +507,7 @@ children:
             scores:
               validation: "val.value === 'yes' ? 1.0 : 0.0"
           - id: '2'
-            condition: "val['1'].value === 'yes'"
+            condition: "val['1']?.value === 'yes'"
             type: text
             default: ''
             title: Baseline model comparison
@@ -476,7 +529,7 @@ children:
             scores:
               validation: "val.value === 'yes' ? 1.0 : 0.0"
           - id: '2'
-            condition: "val['1'].value === 'yes'"
+            condition: "val['1']?.value === 'yes'"
             type: text
             default: ''
             title: State-of-the-art comparison
@@ -495,14 +548,14 @@ children:
             question: Do you provide all means (including dependencies) to easily re-run your AI?
             config:
               options:
-                - key: 'no'
-                  value: 'No'
                 - key: 'yes'
                   value: 'Yes'
+                - key: 'no'
+                  value: 'No'
             scores:
               reproducibility: "val.value === 'yes' ? 1.0 : 0.0"
           - id: '2'
-            condition: "val['1'].value === 'yes'"
+            condition: "val['1']?.value === 'yes'"
             type: checkboxes
             default: [ ]
             question: Which means for re-running your AI do you provide?
@@ -512,12 +565,16 @@ children:
                   value: Dockerfile
                 - key: build
                   value: Build system files
+                - key: req
+                  value: Requirements file
+                - key: conda
+                  value: Conda environment
                 - key: readme
                   value: Detailed README
                 - key: other
                   value: Other
           - id: '3'
-            condition: "val['1'].value === 'yes' && val['2'].find((o) => o.value === 'other')"
+            condition: "val['1']?.value === 'yes' && val['2'].find((o) => o.value === 'other')"
             type: text
             default: ''
             title: Elaboration on means to re-run AI
@@ -527,9 +584,113 @@ children:
         title: Source code
         children:
           - id: '1'
+            type: complex
+            title: Main method
+            children:
+              - id: '1'
+                type: radio
+                default: 'no'
+                question: Is the source code of your AI publicly available?
+                config:
+                  options:
+                    - key: 'yes'
+                      value: 'Yes'
+                    - key: 'no'
+                      value: 'No'
+                scores:
+                  reproducibility: "({yes: 1.0, no: 0.0}[val.value])"
+              - id: '2'
+                condition: "val['1']?.value === 'yes'"
+                type: string
+                default: ''
+                title: 'URL or other information'
+                question: Specify where the source code can be found.
+              - id: '3'
+                condition: "val['1']?.value === 'yes'"
+                type: boolean
+                default: ''
+                title: SCM was used
+                question: Have you used a source code management tool (e.g., Git)?
+                scores:
+                  reproducibility: "val ? 1.0 : 0.0"
+              - id: '4'
+                condition: "val['1']?.value === 'yes'"
+                type: select
+                title: License
+                question: Under which license did you publish the code?
+                config:
+                  allowCustom: true
+                  options:
+                    - key: mit
+                      value: MIT License
+                    - key: apache_2
+                      value: Apache License 2.0
+                    - key: moz_2
+                      value: Mozilla Public License 2.0
+                    - key: gnu_v3
+                      value: GNU GPLv3
+                    - key: gnu_agpl_v3
+                      value: GNU AGPLv3
+                    - key: gnu_lgpl_v3
+                      value: GNU LGPLv3
+                    - key: boost_1
+                      value: Boost Software License 1.0
+          - id: '2'
+            type: complex
+            title: Data simulator
+            children:
+              - id: '1'
+                type: radio
+                default: 'no'
+                question: Is the source code of your data simulation publicly available?
+                config:
+                  options:
+                    - key: 'yes'
+                      value: 'Yes'
+                    - key: 'no'
+                      value: 'No'
+                    - key: na
+                      value: Doesn't apply
+                scores:
+                  reproducibility: "({yes: 1.0, no: 0.0}[val.value])"
+              - id: '2'
+                condition: "val['1']?.value === 'yes'"
+                type: string
+                default: ''
+                title: 'URL or other information'
+                question: Specify where the source code can be found.
+          - id: '3'
+            type: complex
+            title: Pre-processing pipeline
+            children:
+              - id: '1'
+                type: radio
+                default: 'no'
+                question: Is the source code of your pre-processing pipeline publicly available?
+                config:
+                  options:
+                    - key: 'yes'
+                      value: 'Yes'
+                    - key: 'no'
+                      value: 'No'
+                    - key: na
+                      value: Doesn't apply
+                scores:
+                  reproducibility: "({yes: 1.0, no: 0.0}[val.value])"
+              - id: '2'
+                condition: "val['1']?.value === 'yes'"
+                type: string
+                default: ''
+                title: 'URL or other information'
+                question: Specify where the source code can be found.
+      - id: '3'
+        type: complex
+        title: Pre-trained model
+        children:
+          - id: '1'
             type: radio
             default: 'no'
-            question: Is the source code of your AI publicly available?
+            question: Do you provide a pre-trained model?
             config:
               options:
                 - key: 'yes'
@@ -541,37 +702,57 @@ children:
             scores:
               reproducibility: "({yes: 1.0, no: 0.0}[val.value])"
           - id: '2'
-            condition: "val['1'].value === 'yes'"
+            condition: "val['1']?.value === 'yes'"
             type: string
             default: ''
-            question: Specify where the source code can be found.
-          - id: '3'
-            condition: "val['1'].value === 'yes'"
-            type: boolean
-            default: ''
-            title: SCM was used
-            question: Have you used a source code management tool (e.g., Git)?
-            scores:
-              reproducibility: "val ? 1.0 : 0.0"
-          - id: '4'
-            condition: "val['1'].value === 'yes'"
-            type: select
-            title: License
-            question: Which license did you publish the code under?
-            config:
-              allowCustom: true
-              options:
-                - key: mit
-                  value: MIT License
-                - key: apache_2
-                  value: Apache License 2.0
-                - key: moz_2
-                  value: Mozilla Public License 2.0
-                - key: gnu_v3
-                  value: GNU GPLv3
-                - key: gnu_agpl_v3
-                  value: GNU AGPLv3
-                - key: gnu_lgpl_v3
-                  value: GNU LGPLv3
-                - key: boost_1
-                  value: Boost Software License 1.0
+            title: 'URL or other information'
+            question: Specify where the pre-trained model can be found.
+      - id: '4'
+        type: complex
+        title: Execution environment
+        children:
+          - id: '1'
+            type: complex
+            title: Operating systems
+            children:
+              - id: '1'
+                type: checkboxes
+                default: [ ]
+                question: On with platforms can your AI be run as is?
+                optional: true
+                config:
+                  options:
+                    - key: 'win'
+                      value: 'Windows'
+                    - key: 'lin'
+                      value: 'Linux'
+                    - key: 'mac'
+                      value: 'Mac OS'
+                    - key: 'other'
+                      value: 'Other'
+              - id: '2'
+                condition: "val['1'].find((o) => o.value === 'other')"
+                type: string
+                default: ''
+                title: Other platforms
+                question: More detailed information about the supported platforms.
+          - id: '2'
+            type: 'complex'
+            title: Computing resources
+            children:
+              - id: '1'
+                type: 'radio'
+                question: 'Does your AI need computing resources that exceed those of a regular personal computer?'
+                default: 'no'
+                config:
+                  options:
+                    - key: 'yes'
+                      value: 'Yes'
+                    - key: 'no'
+                      value: 'No'
+              - id: '2'
+                condition: "val['1']?.value === 'yes'"
+                type: string
+                default: ''
+                title: 'Required computing resources'
+                question: Specify the computing resources required to run your AI.

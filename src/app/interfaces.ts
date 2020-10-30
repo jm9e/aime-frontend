@@ -1,6 +1,4 @@
-import YAML from "yaml";
-
-export type QuestionType = 'string' | 'text' | 'email' | 'boolean' | 'tags' | 'checkboxes' | 'radio' | 'select' | 'complex' | 'list';
+export type QuestionType = 'string' | 'text' | 'email' | 'boolean' | 'tags' | 'checkboxes' | 'radio' | 'select' | 'complex' | 'list' | 'file';
 export type ScoreType = 'validation' | 'reproducibility';
 
 export interface IQuestion {
@@ -26,6 +24,9 @@ export interface IQuestion {
 
 export function createDefaults(q: IQuestion): any {
 	if (q.type === 'list') {
+		if (q.optional) {
+			return [];
+		}
 		return [createDefaults(q.child)];
 	}
 	if (q.type === 'complex') {
@@ -89,6 +90,14 @@ export function validate(q: IQuestion, a: any): { valid: boolean, msg?: string }
 		return {valid: true};
 	}
 	if (q.type === 'list') {
+		if (q.config) {
+			if (a.length < q.config.minLength) {
+				return {valid: false, msg: `Need at least ${q.config.minLength} entries.`};
+			}
+			if (a.length > q.config.maxLength) {
+				return {valid: false, msg: `At most ${q.config.maxLength} entries allowed.`};
+			}
+		}
 		if (q.optional || a.length > 0) {
 			return {valid: true};
 		}
@@ -99,6 +108,16 @@ export function validate(q: IQuestion, a: any): { valid: boolean, msg?: string }
 
 export function validateRec(prefix: string, q: IQuestion, a: any): { id: string, msg: string }[] {
 	const msgs: { id: string, msg: string }[] = [];
+	const {valid, msg} = validate(q, a);
+	if (!valid) {
+		if (q.id) {
+			if (prefix) {
+				prefix += '.';
+			}
+			prefix += q.id;
+		}
+		msgs.push({id: prefix, msg});
+	}
 	if (q.type === 'list') {
 		if (q.id) {
 			if (prefix) {
@@ -120,17 +139,6 @@ export function validateRec(prefix: string, q: IQuestion, a: any): { id: string,
 			if (typeof s.condition === 'undefined' || s.condition(a)) {
 				msgs.push(...validateRec(prefix, s, a[s.id]));
 			}
-		}
-	} else {
-		const {valid, msg} = validate(q, a);
-		if (!valid) {
-			if (q.id) {
-				if (prefix) {
-					prefix += '.';
-				}
-				prefix += q.id;
-			}
-			msgs.push({id: prefix, msg});
 		}
 	}
 	return msgs;

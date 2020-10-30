@@ -6,8 +6,28 @@
 				<span class="has-text-weight-bold">{{fullId}}</span>
 				<span>&nbsp;-&nbsp;</span>
 				<span>{{question.question}}</span>
-				<span *ngIf="question.optional">
-					(optional)
+				<span class="badges tags">
+					<span *ngIf="question.type === 'radio'" class="tag is-small is-light" title="Radio selection">
+						<i class="far fa-dot-circle"></i>
+					</span>
+					<span *ngIf="question.type === 'select'" class="tag is-small is-light" title="Dropdown selection">
+						<i class="far fa-chevron-circle-down"></i>
+					</span>
+					<span *ngIf="question.type === 'checkboxes'" class="tag is-small is-light" title="Checkboxes">
+						<i class="far fa-check-double"></i>
+					</span>
+					<span *ngIf="question.type === 'tags'" class="tag is-small is-light" title="Tags">
+						<i class="far fa-tags"></i>
+					</span>
+					<span *ngIf="question.scores?.reproducibility" class="tag is-small is-light is-info" title="Affects reproducibility score">
+						<i class="fa fa-star-half-alt"></i>
+					</span>
+					<span *ngIf="question.scores?.validation" class="tag is-small is-light is-warning" title="Affects validation score">
+						<i class="fa fa-star-half-alt"></i>
+					</span>
+					<span *ngIf="question.optional" class="tag is-small is-light">
+						optional
+					</span>
 				</span>
 			</div>
 		</div>

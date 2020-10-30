@@ -75,7 +75,12 @@ textarea {
   width: 100%;
 }
 
+.card.questions {
+	overflow: visible;
+}
+
 .spec {
+
 	.card-content {
 		padding-bottom: 40px;
 	}
