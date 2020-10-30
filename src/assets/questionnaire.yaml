@@ -30,7 +30,7 @@ children:
           minLength: 20
           maxLength: 300
       - id: '4'
-        type: string
+        type: boolean
         default: ''
         title: Appear in search
         question: Specify whether the AI should appear in the search.
