@@ -7,6 +7,9 @@
 				<span>&nbsp;-&nbsp;</span>
 				<span>{{question.question}}</span>
 				<span class="badges tags">
+					<span *ngIf="question.condition" class="tag is-small is-light is-primary" title="Conditional">
+						<i class="far fa-code-branch fa-rotate-180 fa-flip-vertical"></i>
+					</span>
 					<span *ngIf="question.type === 'radio'" class="tag is-small is-light" title="Radio selection">
 						<i class="far fa-dot-circle"></i>
 					</span>
@@ -37,7 +40,7 @@
 				<span>&nbsp;-&nbsp;</span>
 				<span>{{question.title}}</span>
 			</div>
-			<app-qu-tree [idPrefix]="fullId" [id]="'<X>'" [question]="question.child">
+			<app-qu-tree [idPrefix]="fullId" [id]="'x'" [question]="question.child">
 			</app-qu-tree>
 		</ng-container>
 		<ng-container *ngIf="question.type === 'complex'">

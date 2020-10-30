@@ -199,7 +199,7 @@ children:
           type: text
           default: ''
           title: Information about the data
-          question: What is the type of the data and how was it generated or obtained?
+          question: What is the type of the data?
         - id: '2'
           type: complex
           title: Origin
@@ -220,6 +220,18 @@ children:
               default: ''
               title: Information about simulated data
               question: How was the data simulated?
+            - id: '3'
+              condition: "val['1']?.value === 'r'"
+              type: radio
+              default: 'no'
+              title: Information about simulated data
+              question: Did you have to ask for an ethics committee approval before collecting the data?
+              config:
+                options:
+                  - key: yes
+                    value: Yes
+                  - key: no
+                    value: No
         - id: '3'
           type: complex
           title: Availability
