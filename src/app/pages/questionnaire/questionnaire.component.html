@@ -63,7 +63,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores()" [validationTrigger]="validationTrigger">
+            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores(); save()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>
@@ -172,6 +172,14 @@
             <span>Previous</span>
           </button>
         </div>
+				<div class="steps-action buttons">
+					<button data-nav="previous" class="button is-normal is-danger is-outlined" (click)="reset()">
+            <span class="icon">
+              <i class="fa fa-brush"></i>
+            </span>
+						<span>Reset</span>
+					</button>
+				</div>
         <div class="steps-action">
           <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < 6">
             <span>Next</span>

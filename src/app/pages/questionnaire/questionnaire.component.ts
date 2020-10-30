@@ -77,7 +77,12 @@ export class QuestionnaireComponent implements OnInit {
 	public reloadQuestionnaire() {
 		const jsonSpec = YAML.parse(this.yamlSpec, {});
 		this.questions = parseQuestions(jsonSpec);
-		this.createDefaults();
+		const draft = localStorage.getItem('draft');
+		if (draft) {
+			this.answers = JSON.parse(draft);
+		} else {
+			this.createDefaults();
+		}
 	}
 
 	public getSection(s: string): IQuestion {
@@ -163,6 +168,15 @@ export class QuestionnaireComponent implements OnInit {
 	public updateFields() {
 		this.validate();
 		this.calcScores();
+	}
+
+	public save() {
+		localStorage.setItem('draft', JSON.stringify(this.answers));
+	}
+
+	public reset() {
+		localStorage.removeItem('draft');
+		this.reloadQuestionnaire();
 	}
 
 }
