@@ -496,6 +496,7 @@ children:
                 - key: 'na'
                   value: "Doesn't apply"
             scores:
+              validation: "({yes: 1.0, no: 0.0}[val.value])"
               reproducibility: "({yes: 1.0, no: 0.0}[val.value])"
           - id: '2'
             condition: "val['1']?.value === 'yes'"
