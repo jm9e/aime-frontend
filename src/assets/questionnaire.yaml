@@ -30,10 +30,11 @@ children:
           minLength: 20
           maxLength: 300
       - id: '4'
-        type: boolean
+        type: string
         default: ''
-        title: Appear in search
-        question: Specify whether the AI should appear in the search.
+        title: Paper URL
+        question: Stable ID or URL to a paper where the AI is described.
+        optional: true
       - id: '5'
         type: tags
         default: [ ]
