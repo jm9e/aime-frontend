@@ -4,7 +4,6 @@ import {HttpClient} from '@angular/common/http';
 import YAML from 'yaml';
 
 @Component({
-	selector: 'app-specification',
 	templateUrl: './specification.component.html',
 	styleUrls: ['./specification.component.scss']
 })

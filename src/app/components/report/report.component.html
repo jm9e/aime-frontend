@@ -1,0 +1,32 @@
+<article class="message report mt-5 mb-5">
+	<header class="message-header" *ngIf="!id">
+		AIMe report (preview)
+	</header>
+	<header class="message-header" *ngIf="id">
+		AIMe report {{id}}
+	</header>
+
+	<div class="message-body">
+		<app-qu-field [readonly]="true" [idPrefix]="''" [id]="''" [question]="questionsI" [value]="answersI"></app-qu-field>
+
+		<div class="field is-horizontal">
+			<div class="field-label is-normal">
+				<label class="label">Scores</label>
+			</div>
+			<div class="field-body">
+				<div class="field">
+					<div class="scores">
+						<div class="progress--circle progress--{{this.reproducibilityScore}}">
+							<div class="progress__number">{{this.reproducibilityScore / 10}}</div>
+							<div class="score-title">Reproducibility</div>
+						</div>
+						<div class="progress--circle progress--{{this.validationScore}}">
+							<div class="progress__number">{{this.validationScore / 10}}</div>
+							<div class="score-title">Validation</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>

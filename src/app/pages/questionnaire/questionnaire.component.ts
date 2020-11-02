@@ -8,7 +8,6 @@ import {questionnaire} from '../../../questionnaire';
 import YAML from 'yaml';
 
 @Component({
-	selector: 'app-questionnaire',
 	templateUrl: './questionnaire.component.html',
 	styleUrls: ['./questionnaire.component.scss'],
 })
@@ -30,14 +29,9 @@ export class QuestionnaireComponent implements OnInit {
 	public attachReport = true;
 	public revising = false;
 
-	public showScores = false;
-
 	public answers: { [key: string]: any } = {};
 
 	public validationErrors = [];
-
-	public validationScore = 0;
-	public reproducibilityScore = 0;
 
 	public validationTrigger = new EventEmitter<void>();
 
@@ -65,12 +59,12 @@ export class QuestionnaireComponent implements OnInit {
 			this.id = params.id;
 			this.password = params.p;
 
-			// if (this.id) {
-			//   this.http.get<IQuestionnaire>(`${environment.url}api/questionnaire?id=${this.id}`).subscribe((resp) => {
-			//     this.questionnaire = expandQuestionnaireFields(resp);
-			//     this.revising = true;
-			//   });
-			// }
+			if (this.id) {
+				// this.http.get<IQuestionnaire>(`${environment.url}api/questionnaire?id=${this.id}`).subscribe((resp) => {
+				//   this.questionnaire = expandQuestionnaireFields(resp);
+				//   this.revising = true;
+				// });
+			}
 		});
 	}
 
@@ -110,7 +104,6 @@ export class QuestionnaireComponent implements OnInit {
 		this.step = Number(step);
 
 		if (this.step === 6) {
-			this.showScores = true;
 			this.updateFields();
 			if (this.validationErrors.length === 0) {
 				// TODO
@@ -120,25 +113,25 @@ export class QuestionnaireComponent implements OnInit {
 		window.scroll(0, 0);
 	}
 
-	public async submitQuestionnaire() {
-		// this.childmitted = true;
-		// if (this.id && this.password) {
-		//   this.http.post<any>(`${environment.url}api/questionnaire?id=${this.id}&p=${this.password}`, {
-		//     questionnaire: this.questionnaire,
-		//   }).subscribe((r) => {
-		//     this.id = r.id;
-		//     this.password = r.password;
-		//   });
-		// } else {
-		//   this.http.post<any>(`${environment.url}api/questionnaire`, {
-		//     questionnaire: this.questionnaire,
-		//     attachReport: this.attachReport,
-		//     email: this.email,
-		//   }).subscribe((r) => {
-		//     this.id = r.id;
-		//     this.password = r.password;
-		//   });
-		// }
+	public async submitReport() {
+		this.submitted = true;
+		if (this.id && this.password) {
+			// this.http.post<any>(`${environment.url}api/questionnaire?id=${this.id}&p=${this.password}`, {
+			//   questionnaire: this.questionnaire,
+			// }).subscribe((r) => {
+			//   this.id = r.id;
+			//   this.password = r.password;
+			// });
+		} else {
+			this.http.post<any>(`${environment.url}report`, {
+				answers: this.answers,
+				attachReport: this.attachReport,
+				email: this.email,
+			}).subscribe((r) => {
+				this.id = r.id;
+				this.password = r.password;
+			});
+		}
 	}
 
 	public goToField(id: string) {
@@ -155,19 +148,9 @@ export class QuestionnaireComponent implements OnInit {
 		this.validationErrors = validateRec('', this.questions, this.answers);
 	}
 
-	public calcScores() {
-		this.validationScore = score(this.questions, this.answers, 'validation') /
-			maxScore(this.questions, this.answers, 'validation');
-		this.reproducibilityScore = score(this.questions, this.answers, 'reproducibility') /
-			maxScore(this.questions, this.answers, 'reproducibility');
-
-		this.validationScore = Math.floor(this.validationScore * 20) * 5;
-		this.reproducibilityScore = Math.floor(this.reproducibilityScore * 20) * 5;
-	}
-
 	public updateFields() {
+		this.answers = JSON.parse(JSON.stringify(this.answers));
 		this.validate();
-		this.calcScores();
 	}
 
 	public save() {

@@ -6,6 +6,7 @@ import {DatabaseComponent} from './pages/database/database.component';
 import {SurveyComponent} from './pages/survey/survey.component';
 import {AboutComponent} from './pages/about/about.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
+import {ReportComponent} from './pages/report/report.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
 	{
 		path: 'specification',
 		component: SpecificationComponent,
+	},
+	{
+		path: 'report/:id',
+		component: ReportComponent,
 	},
 	{
 		path: 'about',

@@ -1,0 +1,5 @@
+<section class="section">
+	<div class="container" *ngIf="id && answers && questions">
+		<app-report [questions]="questions" [answers]="answers" [id]="id"></app-report>
+	</div>
+</section>

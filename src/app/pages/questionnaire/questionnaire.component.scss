@@ -1,5 +1,4 @@
 @import 'variables';
-@import 'progress';
 
 .step-item {
   cursor: pointer;
@@ -86,15 +85,4 @@ textarea {
 	}
 
 	margin-bottom: 40px;
-}
-
-.scores {
-  .score-title {
-		text-align: center;
-    position: absolute;
-    bottom: -30px;
-    width: 100%;
-  }
-
-  margin-bottom: 40px;
 }

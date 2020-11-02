@@ -63,7 +63,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="calcScores(); save()" [validationTrigger]="validationTrigger">
+            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="save()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>
@@ -97,39 +97,7 @@
               or click on the according step above.
             </p>
 
-						<div class="report">
-							<div class="field is-horizontal">
-								<div class="field-label is-normal">
-								</div>
-								<div class="field-body">
-									<div class="field">
-										<h3 class="title is-3">AIMe report (preview)</h3>
-									</div>
-								</div>
-							</div>
-
-							<app-qu-field [readonly]="true" [idPrefix]="''" [id]="''" [question]="questions" [value]="answers"></app-qu-field>
-
-							<div class="field is-horizontal">
-								<div class="field-label is-normal">
-									<label class="label">Scores</label>
-								</div>
-								<div class="field-body">
-									<div class="field">
-										<div class="scores">
-											<div class="progress--circle progress--{{this.reproducibilityScore}}">
-												<div class="progress__number">{{this.reproducibilityScore / 10}}</div>
-												<div class="score-title">Reproducibility</div>
-											</div>
-											<div class="progress--circle progress--{{this.validationScore}}">
-												<div class="progress__number">{{this.validationScore / 10}}</div>
-												<div class="score-title">Validation</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<app-report [questions]="questions" [answers]="answers"></app-report>
 
             <p *ngIf="!revising">
               If you are done, click the <span class="tag is-info">Submit</span> button below to generate a
@@ -187,7 +155,7 @@
               <i class="fa fa-arrow-right"></i>
             </span>
           </button>
-          <button data-nav="next" class="button is-info" (click)="submitQuestionnaire()" *ngIf="step == 6" [disabled]="(!email && !revising) || validationErrors.length > 0">
+          <button data-nav="next" class="button is-info" (click)="submitReport()" *ngIf="step == 6" [disabled]="(!email && !revising) || validationErrors.length > 0">
             <span class="icon">
               <i class="fa fa-paper-plane"></i>
             </span>
@@ -215,17 +183,17 @@
         </header>
         <div class="message-body" *ngIf="!revising">
           <p>
-            Your report <code>{{'urlDisplay' | env}}report/{{id}}.pdf</code> has been generated.
+            Your report <code>aime.report/{{id}}</code> has been generated.
           </p>
           <br>
           <p>
             View your report here:<br>
-            <a target="_blank" href="{{'url' | env}}report/{{id}}.pdf">{{'urlDisplay' | env}}report/{{id}}.pdf</a>
+            <a target="_blank" href="https://aime.report/{{id}}">aime.report/{{id}}</a>
           </p>
           <br>
           <p>
             Edit your report here:<br>
-            <a target="_blank" href="{{'url' | env}}questionnaire?id={{id}}&p={{password}}">{{'urlDisplay' | env}}questionnaire?id={{id}}&p={{password}}</a>
+            <a target="_blank" href="https://aime-registry.org/questionnaire?id={{id}}&p={{password}}">aime-registry.org/questionnaire?id={{id}}&p={{password}}</a>
           </p>
           <br>
           <p>
@@ -243,12 +211,12 @@
         </div>
         <div class="message-body" *ngIf="revising">
           <p>
-            Your report <code>{{'urlDisplay' | env}}report/{{id}}.pdf</code> has been generated.
+            Your report <code>aime.report/{{id}}</code> has been generated.
           </p>
           <br>
           <p>
             View your report here:<br>
-            <a target="_blank" href="{{'url' | env}}report/{{id}}.pdf">{{'urlDisplay' | env}}report/{{id}}.pdf</a>
+            <a target="_blank" href="https://aime.report/{{id}}">aime.report/{{id}}</a>
           </p>
           <br>
           <p>
@@ -259,12 +227,7 @@
           <p>
             To cite your report, you can use the following BibTeX code:
           </p>
-          <pre>@misc{{'{aimeReport' + id}},
-  title={{'{AIMe Report' + id + '}'}},
-  author={{'{' + 'abc' + '}'}},
-  howpublished={{'{\\url{https://aime-registry.org/report/' + id + '.pdf}' + '}'}},
-  year={{'{2020}'}},
-{{'}'}}</pre>
+					<app-cite-report [id]="id"></app-cite-report>
           <br>
           <p>
             Thank you for using the AIMe registry.
