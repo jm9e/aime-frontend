@@ -122,6 +122,14 @@
 				<div *ngIf="uploading">
 					<span><i class="fa fa-spin fa-spinner"></i> Uploading {{value.name}}</span>
 				</div>
+				<div *ngIf="value && !uploading && value.name && !value.file">
+					<div>
+						<button class="button is-small is-danger is-outlined" (click)="removeFile()">
+							<span class="icon"><i class="fa fa-broom"></i></span>
+							<span>Clear to try again</span>
+						</button>
+					</div>
+				</div>
 				<div *ngIf="value && value.file && value.name">
 					<span>
 						<a [href]="fileUrl()" target="_blank">

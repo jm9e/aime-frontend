@@ -213,6 +213,12 @@ export class QuFieldComponent implements OnInit {
 
 				this.valueChange.emit(this.value);
 				this.validate();
+			}, () => {
+				this.value.file = undefined;
+				this.uploading = false;
+
+				this.valueChange.emit(this.value);
+				this.validate();
 			})
 		};
 		reader.readAsArrayBuffer(file);
