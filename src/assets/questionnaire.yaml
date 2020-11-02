@@ -116,7 +116,7 @@ children:
             - id: '1'
               type: radio
               question: Select the type of document.
-              default: checklist
+              default: other
               config:
                 allowCustom: false
                 options:

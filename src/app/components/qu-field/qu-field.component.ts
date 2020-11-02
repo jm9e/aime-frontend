@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { createDefaults, validate, IQuestion } from '../../interfaces';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {createDefaults, validate, IQuestion} from '../../interfaces';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from "../../../environments/environment";
 
 @Component({
 	selector: 'app-qu-field',
@@ -28,7 +30,12 @@ export class QuFieldComponent implements OnInit {
 
 	public showResults = false;
 
-	constructor() {
+	public uploading = false;
+
+	@ViewChild('fileInput')
+	public fileInputRef?: ElementRef<HTMLInputElement>;
+
+	constructor(private http: HttpClient) {
 	}
 
 	ngOnInit() {
@@ -147,14 +154,14 @@ export class QuFieldComponent implements OnInit {
 
 	public addEntry() {
 		this.value.push(createDefaults(this.question.child));
-		this.validate();
 		this.valueChange.emit(this.value);
+		this.validate();
 	}
 
 	public deleteEntry(i: number) {
 		this.value.splice(i, 1);
-		this.validate();
 		this.valueChange.emit(this.value);
+		this.validate();
 	}
 
 	public trackByFn(index: any, item: any) {
@@ -171,6 +178,56 @@ export class QuFieldComponent implements OnInit {
 		setTimeout(() => {
 			this.showResults = false;
 		}, 300);
+	}
+
+	public handleFileInput() {
+		if (typeof this.fileInputRef === 'undefined') {
+			return;
+		}
+
+		const files: FileList | null = this.fileInputRef.nativeElement.files;
+		if (files === null || files.length !== 1) {
+			return;
+		}
+
+		this.uploading = true;
+
+		const file = files.item(0);
+
+		this.value = {
+			name: file.name,
+			file: undefined,
+		};
+
+		const reader: FileReader = new FileReader();
+		reader.onload = async (): Promise<void> => {
+			if (!(reader.result instanceof ArrayBuffer)) {
+				return;
+			}
+
+			const fileBytes = reader.result;
+
+			this.http.post(`${environment.url}upload`, fileBytes).subscribe((data: any) => {
+				this.value.file = data.file;
+				this.uploading = false;
+
+				this.valueChange.emit(this.value);
+				this.validate();
+			})
+		};
+		reader.readAsArrayBuffer(file);
+	}
+
+	public fileUrl(): string {
+		return `${environment.url}documents/${this.value.file}`;
+	}
+
+	public removeFile() {
+		this.value = undefined;
+		this.uploading = false;
+
+		this.valueChange.emit(this.value);
+		this.validate();
 	}
 
 }

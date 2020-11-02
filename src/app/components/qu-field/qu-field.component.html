@@ -106,9 +106,9 @@
 				</label>
 			</div>
 			<div class="control" *ngIf="question.type === 'file'">
-				<div class="file">
+				<div class="file" *ngIf="!uploading && (!value || !value.name)">
 					<label class="file-label">
-						<input class="file-input" type="file" name="resume">
+						<input #fileInput class="file-input" type="file" name="resume" (change)="handleFileInput()" accept=".pdf">
 						<span class="file-cta">
 						<span class="file-icon">
 							<i class="fas fa-upload"></i>
@@ -118,6 +118,22 @@
 						</span>
 					</span>
 					</label>
+				</div>
+				<div *ngIf="uploading">
+					<span><i class="fa fa-spin fa-spinner"></i> Uploading {{value.name}}</span>
+				</div>
+				<div *ngIf="value && value.file && value.name">
+					<span>
+						<a [href]="fileUrl()" target="_blank">
+							<i class="fa fa-file"></i> {{value.name}}
+						</a>
+					</span>
+					<div class="mt-3">
+						<button class="button is-small is-danger is-outlined" (click)="removeFile()">
+							<span class="icon"><i class="fa fa-trash"></i></span>
+							<span>Remove</span>
+						</button>
+					</div>
 				</div>
 			</div>
       <p class="help has-text-left" [ngClass]="{'expanded': expanded}">
@@ -179,6 +195,16 @@
           <span *ngFor="let t of value" class="tag is-aime">
 						{{getValue(t.value, t.custom)}}
           </span>
+				</div>
+			</div>
+			<div class="control" *ngIf="question.type === 'file'">
+				<div *ngIf="value && value.file && value.name">
+					<span>
+						<a class="button is-aime" [href]="fileUrl()" target="_blank">
+							<span class="icon"><i class="fa fa-file"></i></span>
+							<span>{{value.name}}</span>
+						</a>
+					</span>
 				</div>
 			</div>
 			<p class="help has-text-left" [ngClass]="{'expanded': expanded}">

@@ -77,6 +77,15 @@ export function validate(q: IQuestion, a: any): { valid: boolean, msg?: string }
 		}
 		return {valid: false, msg: 'Selection is missing.'};
 	}
+	if (q.type === 'file') {
+		if (!a || !a.name) {
+			return {valid: false, msg: 'No file has been specified.'};
+		}
+		if (!a.file) {
+			return {valid: false, msg: 'Something went wrong during the file upload.'};
+		}
+		return {valid: true};
+	}
 	if (q.type === 'boolean') {
 		return {valid: true};
 	}
