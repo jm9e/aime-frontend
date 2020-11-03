@@ -14,6 +14,9 @@ export class ReportComponent implements OnInit {
 	@Input()
 	public id = '';
 
+	@Input()
+	public revision = 0;
+
 	public answersI: any;
 
 	@Input()

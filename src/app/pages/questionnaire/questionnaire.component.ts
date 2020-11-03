@@ -72,11 +72,13 @@ export class QuestionnaireComponent implements OnInit {
 	public reloadQuestionnaire() {
 		const jsonSpec = YAML.parse(this.yamlSpec, {});
 		this.questions = parseQuestions(jsonSpec);
-		const draft = localStorage.getItem('draft');
-		if (draft) {
-			this.answers = JSON.parse(draft);
-		} else {
-			this.createDefaults();
+		if (!this.revising) {
+			const draft = localStorage.getItem('draft');
+			if (draft) {
+				this.answers = JSON.parse(draft);
+			} else {
+				this.createDefaults();
+			}
 		}
 	}
 
@@ -160,12 +162,23 @@ export class QuestionnaireComponent implements OnInit {
 	}
 
 	public handleAnswerChange() {
-		localStorage.setItem('draft', JSON.stringify(this.answers));
+		if (!this.revising) {
+			localStorage.setItem('draft', JSON.stringify(this.answers));
+		}
 	}
 
 	public reset() {
-		localStorage.removeItem('draft');
-		this.reloadQuestionnaire();
+		if (this.revising) {
+			if (this.id && this.password) {
+				this.http.get<any>(`${environment.api}/report/${this.id}`).subscribe((resp) => {
+					this.answers = resp.answers;
+					this.revising = true;
+				});
+			}
+		} else {
+			localStorage.removeItem('draft');
+			this.reloadQuestionnaire();
+		}
 	}
 
 }

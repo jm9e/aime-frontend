@@ -1,7 +1,7 @@
 <section class="section">
 	<div class="container" *ngIf="id && answers && questions">
 		<div *ngIf="!error">
-			<app-report [questions]="questions" [answers]="answers" [id]="id"></app-report>
+			<app-report [questions]="questions" [answers]="answers" [id]="id" [revision]="revision"></app-report>
 
 			<article class="message mt-5 mb-5" *ngIf="revisions.length > 1">
 				<header class="message-header">
@@ -11,7 +11,7 @@
 				<div class="message-body">
 					<ul>
 						<li *ngFor="let rev of revisions">
-							Revision #{{rev.revision}}:
+							<span class="tag is-info mr-3">Revision #{{rev.revision}}</span>
 							<a [routerLink]="['/report', id, rev.revision]">https://aime.report/{{id}}/{{rev.revision}}</a>
 							created at {{rev.createdAt | date: 'short'}}
 							<span *ngIf="rev.revision === revision">
