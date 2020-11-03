@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {IReport} from '../../interfaces';
 import {BehaviorSubject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {environment} from "../../../environments/environment";
 
 @Component({
 	templateUrl: './database.component.html',
@@ -53,18 +54,10 @@ export class DatabaseComponent implements OnInit {
 	}
 
 	public search(page = 0) {
-		this.http.get<any>(
-			`/api/search?q=${escape(this.query.getValue())}&f=${this.getFields()}&o=${page * this.ITEMS_PER_PAGE}&l=${this.ITEMS_PER_PAGE}`)
+		this.http.get<any>(`${environment.api}search?q=${escape(this.query.getValue())}&f=${this.getFields()}&o=${page * this.ITEMS_PER_PAGE}&l=${this.ITEMS_PER_PAGE}`)
 			.subscribe((resp) => {
 				this.resultsCount = resp.count;
-				this.results = resp.results.map((result) => {
-					result.date = new Date(result.date);
-					result.versions = result.versions.map((revision) => {
-						revision.date = new Date(revision.date);
-						return revision;
-					});
-					return result;
-				});
+				this.results = resp.results as any;
 				this.currentPage = page;
 				this.lastQuery = resp.query;
 				this.pages = Array(Math.ceil(this.resultsCount / this.ITEMS_PER_PAGE)).fill(0).map((x, i) => i);

@@ -100,27 +100,27 @@
         <tr *ngFor="let result of results">
           <td class="is-hidden-mobile">{{result.id}}</td>
           <td>
-            <strong>{{result.questionnaire.title}}</strong>
-            <p class="content" *ngIf="expanded[result.id]">
-              {{result.questionnaire.description}}
-            </p>
-            <p class="content" *ngIf="!expanded[result.id]">
-              <button class="button is-small" (click)="expanded[result.id] = true">
-                <span class="icon">
-                  <i class="fa fa-expand-arrows"></i>
-                </span>
-                <span>
-                Show description
-                </span>
-              </button>
-            </p>
+            <strong>{{result.title}}</strong>
+<!--            <p class="content" *ngIf="expanded[result.id]">-->
+<!--              {{result.description}}-->
+<!--            </p>-->
+<!--            <p class="content" *ngIf="!expanded[result.id]">-->
+<!--              <button class="button is-small" (click)="expanded[result.id] = true">-->
+<!--                <span class="icon">-->
+<!--                  <i class="fa fa-expand-arrows"></i>-->
+<!--                </span>-->
+<!--                <span>-->
+<!--                Show description-->
+<!--                </span>-->
+<!--              </button>-->
+<!--            </p>-->
           </td>
           <td class="is-hidden-mobile">
-            {{result.versions.length}} ({{result.date | date: 'medium'}})
+            {{result.date | date: 'medium'}}
           </td>
           <td>
             <div class="buttons">
-              <a class="button is-small is-info" href="/report/{{result.id}}.pdf">
+              <a class="button is-small is-info" [routerLink]="['/report', result.id]">
                 <span class="icon">
                   <i class="fa fa-folder-open"></i>
                 </span>

@@ -1,4 +1,14 @@
-export type QuestionType = 'string' | 'text' | 'email' | 'boolean' | 'tags' | 'checkboxes' | 'radio' | 'select' | 'complex' | 'list' | 'file';
+export type QuestionType =
+	'string'
+	| 'text'
+	| 'boolean'
+	| 'tags'
+	| 'checkboxes'
+	| 'radio'
+	| 'select'
+	| 'complex'
+	| 'list'
+	| 'file';
 export type ScoreType = 'validation' | 'reproducibility';
 
 export interface IQuestion {
@@ -238,9 +248,8 @@ export interface IVersion {
 
 export interface IReport {
 	id: string;
+	title: string;
 	date: Date;
-	versions: IVersion[];
-	questionnaire: { [key: string]: any };
 }
 
 export function parseQuestions(jsonSpec: any): IQuestion {
