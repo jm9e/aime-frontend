@@ -27,8 +27,8 @@ children:
         title: Short description
         question: Short description of the AI.
         config:
-          minLength: 20
-          maxLength: 300
+          minLength: 16
+          maxLength: 512
       - id: '4'
         type: string
         default: ''
