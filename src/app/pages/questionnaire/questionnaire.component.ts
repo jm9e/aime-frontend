@@ -1,10 +1,8 @@
-import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
-import {IQuestion, createDefaults, score, validateRec, ScoreType, maxScore, parseQuestions} from '../../interfaces';
+import {Component, EventEmitter, OnInit} from '@angular/core';
+import {IQuestion, createDefaults, validateRec, parseQuestions} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
-import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
-import {questionnaire} from '../../../questionnaire';
 import YAML from 'yaml';
 
 @Component({
@@ -15,9 +13,6 @@ export class QuestionnaireComponent implements OnInit {
 
 	public id = '';
 	public password = '';
-
-	public showPreview = false; // TODO: Remove
-	public showSpec = false; // TODO: Remove
 
 	public yamlSpec = '';
 

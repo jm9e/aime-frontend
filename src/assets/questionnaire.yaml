@@ -99,7 +99,7 @@ children:
           question: Funding details relevant for the AI.
       - id: '8'
         type: boolean
-        default: false
+        default: true
         title: Appear in search
         question: Specify whether the AI should appear in the search.
       - id: '9'

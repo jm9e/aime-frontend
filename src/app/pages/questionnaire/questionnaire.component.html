@@ -1,26 +1,5 @@
 <section class="section">
   <div class="container">
-		<div class="card is-active spec">
-			<header class="card-header">
-				<div class="card-header-title">
-					<h2 class="title is-4">
-						AIMe specification
-					</h2>
-				</div>
-				<a class="card-header-icon" (click)="showSpec = !showSpec">
-              <span class="icon">
-                <i class="fas fa-angle-down" *ngIf="showSpec"></i>
-                <i class="fas fa-angle-left" *ngIf="!showSpec"></i>
-              </span>
-				</a>
-			</header>
-			<div class="card-content" *ngIf="showSpec">
-				<div style="height: 500px">
-					<ngx-monaco-editor style="height: 100%" [options]="{language: 'yaml'}" [(ngModel)]="yamlSpec"></ngx-monaco-editor>
-				</div>
-				<button (click)="reloadQuestionnaire()" class="button is-success">Reload</button>
-			</div>
-		</div>
     <div class="steps is-aime" *ngIf="!submitted">
       <div *ngFor="let s of steps" class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === s.step}" (click)="goToStep(s.step)">
         <div class="step-marker"><i class="fad {{s.icon}}"></i></div>
@@ -223,24 +202,5 @@
         </div>
       </article>
     </div>
-		<div class="card is-active">
-			<header class="card-header">
-				<div class="card-header-title">
-					<h2 class="title is-4">
-						JSON preview
-					</h2>
-				</div>
-				<a class="card-header-icon" (click)="showPreview = !showPreview">
-              <span class="icon">
-                <i class="fas fa-angle-down" *ngIf="showPreview"></i>
-                <i class="fas fa-angle-left" *ngIf="!showPreview"></i>
-              </span>
-				</a>
-			</header>
-			<div class="card-content" *ngIf="showPreview">
-				<pre>{{answers | json}}</pre>
-			</div>
-		</div>
   </div>
 </section>
-
