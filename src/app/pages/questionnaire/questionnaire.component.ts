@@ -24,6 +24,7 @@ export class QuestionnaireComponent implements OnInit {
 	public attachReport = true;
 	public revising = false;
 	public version = 0;
+	public isPublic = true;
 
 	public answers: { [key: string]: any } = {};
 
@@ -56,8 +57,9 @@ export class QuestionnaireComponent implements OnInit {
 			this.password = params.p;
 
 			if (this.id && this.password) {
-				this.http.get<any>(`${environment.api}/report/${this.id}`).subscribe((resp) => {
+				this.http.get<any>(`${environment.api}report/${this.id}`).subscribe((resp) => {
 					this.answers = resp.answers;
+					this.isPublic = resp.public;
 					this.revising = true;
 				});
 			}
@@ -119,6 +121,7 @@ export class QuestionnaireComponent implements OnInit {
 				attachReport: this.attachReport,
 				email: this.email,
 				password: this.password,
+				isPublic: this.isPublic,
 			}).subscribe((r) => {
 				this.id = r.id;
 				this.password = r.password;
@@ -129,6 +132,7 @@ export class QuestionnaireComponent implements OnInit {
 				answers: this.answers,
 				attachReport: this.attachReport,
 				email: this.email,
+				isPublic: this.isPublic,
 			}).subscribe((r) => {
 				this.id = r.id;
 				this.password = r.password;
@@ -160,12 +164,15 @@ export class QuestionnaireComponent implements OnInit {
 		if (!this.revising) {
 			localStorage.setItem('draft', JSON.stringify(this.answers));
 		}
+		if (this.answers.MD && typeof this.answers.MD['8'] !== 'undefined') {
+			this.isPublic = this.answers.MD['8'];
+		}
 	}
 
 	public reset() {
 		if (this.revising) {
 			if (this.id && this.password) {
-				this.http.get<any>(`${environment.api}/report/${this.id}`).subscribe((resp) => {
+				this.http.get<any>(`${environment.api}report/${this.id}`).subscribe((resp) => {
 					this.answers = resp.answers;
 					this.revising = true;
 				});
