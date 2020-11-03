@@ -1,5 +1,36 @@
 <section class="section">
 	<div class="container" *ngIf="id && answers && questions">
-		<app-report [questions]="questions" [answers]="answers" [id]="id"></app-report>
+		<div *ngIf="!error">
+			<app-report [questions]="questions" [answers]="answers" [id]="id"></app-report>
+
+			<article class="message mt-5 mb-5" *ngIf="revisions.length > 1">
+				<header class="message-header">
+					{{revisions.length}} Revisions for report {{id}}
+				</header>
+
+				<div class="message-body">
+					<ul>
+						<li *ngFor="let rev of revisions">
+							Revision #{{rev.revision}}:
+							<a [routerLink]="['/report', id, rev.revision]">https://aime.report/{{id}}/{{rev.revision}}</a>
+							created at {{rev.createdAt | date: 'short'}}
+							<span *ngIf="rev.revision === revision">
+								(currently displayed)
+							</span>
+						</li>
+					</ul>
+				</div>
+			</article>
+		</div>
+
+		<div *ngIf="error" class="notification is-danger">
+			<span class="icon"><i class="fas fa-ban"></i></span>
+			<span *ngIf="targetVersion === 0">
+				AIMe report {{id}} could not be found.
+			</span>
+			<span *ngIf="targetVersion > 0">
+				Revision {{targetVersion}} of AIMe report {{id}} could not be found.
+			</span>
+		</div>
 	</div>
 </section>

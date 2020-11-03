@@ -45,7 +45,7 @@ export class SurveyComponent implements OnInit {
     this.emailAddress = '';
     this.contactDetails = '';
 
-    this.http.post(`${environment.url}api/survey`, reqObj).toPromise()
+    this.http.post(`${environment.api}api/survey`, reqObj).toPromise()
       .catch((e: HttpErrorResponse) => {
       this.message = e.error;
       this.messageType = 'danger';

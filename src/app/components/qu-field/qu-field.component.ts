@@ -207,7 +207,7 @@ export class QuFieldComponent implements OnInit {
 
 			const fileBytes = reader.result;
 
-			this.http.post(`${environment.url}upload`, fileBytes).subscribe((data: any) => {
+			this.http.post(`${environment.api}upload`, fileBytes).subscribe((data: any) => {
 				this.value.file = data.file;
 				this.uploading = false;
 
@@ -225,7 +225,7 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	public fileUrl(): string {
-		return `${environment.url}documents/${this.value.file}`;
+		return `${environment.api}documents/${this.value.file}`;
 	}
 
 	public removeFile() {

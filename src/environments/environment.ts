@@ -3,10 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  url: 'http://localhost:9000/',
-  urlDisplay: 'https://aime-registry.org/',
-  domainDisplay: 'aime-registry.org',
+	production: false,
+	api: 'http://localhost:9000/',
 };
 
 /*

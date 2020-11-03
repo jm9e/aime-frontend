@@ -154,6 +154,10 @@ export function validateRec(prefix: string, q: IQuestion, a: any): { id: string,
 }
 
 export function score(q: IQuestion, a: any, t: ScoreType): number {
+	if (typeof a === 'undefined') {
+		return 0;
+	}
+
 	let sc = 0;
 	if (q.type === 'list') {
 		for (const ae of a) {
@@ -191,10 +195,16 @@ export function score(q: IQuestion, a: any, t: ScoreType): number {
 export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
 	let sc = 0;
 	if (q.type === 'list') {
+		if (typeof a === 'undefined') {
+			return 0;
+		}
 		for (const ae of a) {
 			sc += maxScore(q.child, ae, t) / a.length;
 		}
 	} else if (q.type === 'complex') {
+		if (typeof a === 'undefined') {
+			return 0;
+		}
 		for (const s of q.children) {
 			if (typeof s.condition === 'undefined' || s.condition(a)) {
 				sc += maxScore(s, a[s.id], t);

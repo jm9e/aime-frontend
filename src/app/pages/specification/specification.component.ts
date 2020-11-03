@@ -13,7 +13,7 @@ export class SpecificationComponent implements OnInit {
 	public questions: IQuestion = {type: 'complex', children: []};
 
 	public showTree = true;
-	public showSpec = false;
+	public showSpec = true;
 
 	constructor(private http: HttpClient) {
 		this.http.get('assets/questionnaire.yaml', {

@@ -63,7 +63,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="save()" [validationTrigger]="validationTrigger">
+            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="handleAnswerChange()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>
@@ -141,7 +141,7 @@
           </button>
         </div>
 				<div class="steps-action buttons">
-					<button data-nav="previous" class="button is-normal is-danger is-outlined" (click)="reset()">
+					<button data-nav="previous" class="button is-normal is-danger is-outlined" (click)="reset()" title="Reset all your answers">
             <span class="icon">
               <i class="fa fa-broom"></i>
             </span>
@@ -181,47 +181,35 @@
             Your AIMe report
           </p>
         </header>
-        <div class="message-body" *ngIf="!revising">
-          <p>
-            Your report <code>aime.report/{{id}}</code> has been generated.
+        <div class="message-body">
+					<p *ngIf="!revising">
+						Your report <code>aime.report/{{id}}</code> has been generated.
+					</p>
+          <p *ngIf="revising">
+            A new revision for your report <code>aime.report/{{id}}</code> has been generated.
           </p>
           <br>
+					<div *ngIf="!revising">
+						<p>
+							URL of your report:<br>
+							<a target="_blank" href="https://aime.report/{{id}}">https://aime.report/{{id}}</a>
+						</p>
+					</div>
+					<div *ngIf="revising">
+						<p>
+							URL for the latest revision of your report:<br>
+							<a target="_blank" href="https://aime.report/{{id}}">https://aime.report/{{id}}</a>
+						</p>
+						<br>
+						<p>
+							URL for this very revision:<br>
+							<a target="_blank" href="https://aime.report/{{id}}">https://aime.report/{{id}}/{{version}}</a>
+						</p>
+					</div>
+					<br>
           <p>
-            View your report here:<br>
-            <a target="_blank" href="https://aime.report/{{id}}">aime.report/{{id}}</a>
-          </p>
-          <br>
-          <p>
-            Edit your report here:<br>
-            <a target="_blank" href="https://aime-registry.org/questionnaire?id={{id}}&p={{password}}">aime-registry.org/questionnaire?id={{id}}&p={{password}}</a>
-          </p>
-          <br>
-          <p>
-            To cite your report, you can use the following BibTeX code:
-          </p>
-          <app-cite-report [id]="id"></app-cite-report>
-          <br>
-          <p>
-            These instructions have also been sent to {{email}}.
-          </p>
-          <br>
-          <p>
-            Thank you for using the AIMe registry.
-          </p>
-        </div>
-        <div class="message-body" *ngIf="revising">
-          <p>
-            Your report <code>aime.report/{{id}}</code> has been generated.
-          </p>
-          <br>
-          <p>
-            View your report here:<br>
-            <a target="_blank" href="https://aime.report/{{id}}">aime.report/{{id}}</a>
-          </p>
-          <br>
-          <p>
-            Edit your report here:<br>
-            <a target="_blank" href="{{'url' | env}}questionnaire?id={{id}}&p={{password}}">{{'urlDisplay' | env}}questionnaire?id={{id}}&p={{password}}</a>
+						Admin URL to create a new revision:<br>
+            <a target="_blank" href="https://aime-registry.org/questionnaire?id={{id}}&p={{password}}">https://aime-registry.org/questionnaire?id={{id}}&p={{password}}</a>
           </p>
           <br>
           <p>
@@ -230,7 +218,7 @@
 					<app-cite-report [id]="id"></app-cite-report>
           <br>
           <p>
-            Thank you for using the AIMe registry.
+            Thank you for using the AIMe registry!
           </p>
         </div>
       </article>

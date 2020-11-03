@@ -16,8 +16,8 @@ export class QuestionnaireComponent implements OnInit {
 	public id = '';
 	public password = '';
 
-	public showPreview = false;
-	public showSpec = false;
+	public showPreview = false; // TODO: Remove
+	public showSpec = false; // TODO: Remove
 
 	public yamlSpec = '';
 
@@ -28,6 +28,7 @@ export class QuestionnaireComponent implements OnInit {
 	public emailChanged = false;
 	public attachReport = true;
 	public revising = false;
+	public version = 0;
 
 	public answers: { [key: string]: any } = {};
 
@@ -59,11 +60,11 @@ export class QuestionnaireComponent implements OnInit {
 			this.id = params.id;
 			this.password = params.p;
 
-			if (this.id) {
-				// this.http.get<IQuestionnaire>(`${environment.url}api/questionnaire?id=${this.id}`).subscribe((resp) => {
-				//   this.questionnaire = expandQuestionnaireFields(resp);
-				//   this.revising = true;
-				// });
+			if (this.id && this.password) {
+				this.http.get<any>(`${environment.api}/report/${this.id}`).subscribe((resp) => {
+					this.answers = resp.answers;
+					this.revising = true;
+				});
 			}
 		});
 	}
@@ -116,20 +117,25 @@ export class QuestionnaireComponent implements OnInit {
 	public async submitReport() {
 		this.submitted = true;
 		if (this.id && this.password) {
-			// this.http.post<any>(`${environment.url}api/questionnaire?id=${this.id}&p=${this.password}`, {
-			//   questionnaire: this.questionnaire,
-			// }).subscribe((r) => {
-			//   this.id = r.id;
-			//   this.password = r.password;
-			// });
+			this.http.put<any>(`${environment.api}report/${this.id}`, {
+				answers: this.answers,
+				attachReport: this.attachReport,
+				email: this.email,
+				password: this.password,
+			}).subscribe((r) => {
+				this.id = r.id;
+				this.password = r.password;
+				this.version = r.version;
+			});
 		} else {
-			this.http.post<any>(`${environment.url}report`, {
+			this.http.post<any>(`${environment.api}report`, {
 				answers: this.answers,
 				attachReport: this.attachReport,
 				email: this.email,
 			}).subscribe((r) => {
 				this.id = r.id;
 				this.password = r.password;
+				this.version = r.version;
 			});
 		}
 	}
@@ -153,7 +159,7 @@ export class QuestionnaireComponent implements OnInit {
 		this.validate();
 	}
 
-	public save() {
+	public handleAnswerChange() {
 		localStorage.setItem('draft', JSON.stringify(this.answers));
 	}
 

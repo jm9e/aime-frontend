@@ -35,6 +35,10 @@ const routes: Routes = [
 		component: ReportComponent,
 	},
 	{
+		path: 'report/:id/:version',
+		component: ReportComponent,
+	},
+	{
 		path: 'about',
 		component: AboutComponent,
 	},
