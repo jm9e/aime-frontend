@@ -15,10 +15,12 @@ export class CiteReportComponent implements OnInit {
 		this.idI = id;
 
 		this.http.get<any>(`${environment.api}report/${id}`).subscribe((data) => {
+			this.title = data.answers.MD['1'];
 			this.authors = data.answers.MD['6'].map((contact) => contact['1'] as string);
 		});
 	}
 
+	public title: string = '';
 	public authors: string[] = [];
 
 	constructor(private http: HttpClient) {
