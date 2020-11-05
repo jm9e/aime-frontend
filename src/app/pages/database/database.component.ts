@@ -13,6 +13,17 @@ export class DatabaseComponent implements OnInit {
 
 	public keywords: IKeyword[] = [];
 
+	public categories: {category: string; name: string}[] = [
+		{category: 'Classification', name: 'Classification'},
+		{category: 'Continuous estimation / Regression', name: 'Continuous estimation / Regression'},
+		{category: 'Clustering', name: 'Clustering'},
+		{category: 'Dimensionality reduction', name: 'Dimensionality reduction'},
+		{category: 'Anomaly detection', name: 'Anomaly detection'},
+		{category: 'Ranking / Recommendation', name: 'Ranking / Recommendation'},
+		{category: 'Data generation', name: 'Data generation'},
+		{category: 'Other', name: 'Other'},
+	];
+
 	public sections: {id: string; name: string}[] = [
 		{id: 'MD', name: 'Metadata'},
 		{id: 'P', name: 'Purpose'},
@@ -22,7 +33,7 @@ export class DatabaseComponent implements OnInit {
 	];
 
 	public query = new BehaviorSubject<string>('');
-	public keyword = '';
+	public category = '';
 
 	public results: IReport[] = [];
 
@@ -31,6 +42,9 @@ export class DatabaseComponent implements OnInit {
 	public lastQuery = '';
 	public lastKeyword = '';
 
+	public keywordsExtended = false;
+
+	public keywordsActivated: { [key: string]: boolean } = {};
 	public sectionsActivated: { [key: string]: boolean } = {};
 
 	public reportCited: IReport | null = null;
@@ -55,30 +69,42 @@ export class DatabaseComponent implements OnInit {
 	ngOnInit() {
 		this.http.get<{ keywords: IKeyword[] }>(`${environment.api}keywords`)
 			.subscribe((resp) => {
-				this.keywords = resp.keywords;
+				this.keywords = resp.keywords.sort((a, b) => {
+					if (a.keyword > b.keyword) {
+						return 1;
+					} else {
+						return -1;
+					}
+				});
 			});
 	}
 
 	private getFields(): string {
-		let fields = '';
+		const fields: string[] = [];
 		for (const s of this.sections) {
-			if (fields !== '') {
-				fields += ',';
-			}
 			if (this.sectionsActivated[s.id]) {
-				fields += s.id;
+				fields.push(s.id);
 			}
 		}
-		return fields;
+		return fields.join(',');
+	}
+
+	private getKeywords(): string {
+		const keywords: string[] = [];
+		for (const s of this.keywords) {
+			if (this.keywordsActivated[s.keyword]) {
+				keywords.push(s.keyword);
+			}
+		}
+		return keywords.join(',');
 	}
 
 	public search(page = 0) {
-		this.http.get<any>(`${environment.api}search?k=${this.keyword}&q=${escape(this.query.getValue())}&f=${this.getFields()}&o=${page * this.ITEMS_PER_PAGE}&l=${this.ITEMS_PER_PAGE}`)
+		this.http.get<any>(`${environment.api}search?c=${this.category}&q=${escape(this.query.getValue())}&k=${this.getKeywords()}&f=${this.getFields()}&o=${page * this.ITEMS_PER_PAGE}&l=${this.ITEMS_PER_PAGE}`)
 			.subscribe((resp) => {
 				this.resultsCount = resp.count;
 				this.results = resp.results as any;
 				this.lastQuery = resp.query;
-				this.lastKeyword = resp.keyword;
 
 				this.pages = Array(Math.ceil(this.resultsCount / this.ITEMS_PER_PAGE)).fill(0).map((x, i) => i);
 
