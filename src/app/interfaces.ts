@@ -252,6 +252,11 @@ export interface IReport {
 	date: Date;
 }
 
+export interface IKeyword {
+	keyword: string;
+	count: number;
+}
+
 export function parseQuestions(jsonSpec: any): IQuestion {
 	const parseFunctions = (q) => {
 		if (typeof q.condition === 'string') {

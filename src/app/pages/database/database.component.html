@@ -23,14 +23,22 @@
   <div class="container">
     <h2 class="title is-4">Search the AIMe database</h2>
 
-    <div class="field">
-      <div class="control has-icons-left is-expanded">
-        <input class="input" type="text" placeholder="Find a report by keywords or id" [ngModel]="query.getValue()" (ngModelChange)="query.next($event)">
-        <span class="icon is-small is-left">
-          <i class="fa fa-search"></i>
-        </span>
-      </div>
-    </div>
+		<div class="field has-addons">
+			<p class="control has-icons-left is-expanded">
+				<input class="input" type="text" placeholder="Find a report by keywords or id" [ngModel]="query.getValue()" (ngModelChange)="query.next($event)">
+				<span class="icon is-small is-left">
+					<i class="fa fa-search"></i>
+				</span>
+			</p>
+			<p class="control">
+				<span class="select">
+					<select>
+						<option [value]="''">All</option>
+						<option *ngFor="let k of keywords" [value]="k.keyword">{{k.keyword}} ({{k.count}})</option>
+					</select>
+				</span>
+			</p>
+		</div>
 
     <div class="field search-toolbox">
       <div class="control">
@@ -91,46 +99,34 @@
         <thead>
         <tr>
           <th class="is-hidden-mobile">ID</th>
-          <th>Title & Description</th>
+          <th>Title</th>
           <th class="w250 is-hidden-mobile">Revisions (last modified)</th>
           <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let result of results">
-          <td class="is-hidden-mobile">{{result.id}}</td>
+          <td class="is-hidden-mobile">
+						<a [routerLink]="['/report', result.id]">
+							<span class="icon"><i class="fa fa-file-certificate"></i></span>
+							<span>{{result.id}}</span>
+						</a>
+					</td>
           <td>
-            <strong>{{result.title}}</strong>
-<!--            <p class="content" *ngIf="expanded[result.id]">-->
-<!--              {{result.description}}-->
-<!--            </p>-->
-<!--            <p class="content" *ngIf="!expanded[result.id]">-->
-<!--              <button class="button is-small" (click)="expanded[result.id] = true">-->
-<!--                <span class="icon">-->
-<!--                  <i class="fa fa-expand-arrows"></i>-->
-<!--                </span>-->
-<!--                <span>-->
-<!--                Show description-->
-<!--                </span>-->
-<!--              </button>-->
-<!--            </p>-->
+						<a [routerLink]="['/report', result.id]">
+							<strong>
+								{{result.title}}
+							</strong>
+						</a>
           </td>
           <td class="is-hidden-mobile">
             {{result.date | date: 'medium'}}
           </td>
           <td>
             <div class="buttons">
-              <a class="button is-small is-info" [routerLink]="['/report', result.id]">
-                <span class="icon">
-                  <i class="fa fa-folder-open"></i>
-                </span>
-                <span>
-                  Open
-                </span>
-              </a>
               <button class="button is-small is-success" (click)="reportCited = result">
                 <span class="icon">
-                  <i class="fa fa-link"></i>
+                  <i class="fa fa-feather"></i>
                 </span>
                 <span>
                   Cite
