@@ -11,24 +11,39 @@ import {environment} from '../../../environments/environment';
 })
 export class DatabaseComponent implements OnInit {
 
-	public results: IReport[] = [];
 	public keywords: IKeyword[] = [];
-	public resultsCount: number | null = null;
-	public lastQuery = '';
+
+	public sections: {id: string; name: string}[] = [
+		{id: 'MD', name: 'Metadata'},
+		{id: 'P', name: 'Purpose'},
+		{id: 'D', name: 'Data'},
+		{id: 'M', name: 'Method'},
+		{id: 'R', name: 'Reproducibility'},
+	];
+
 	public query = new BehaviorSubject<string>('');
-	public searchMetadata = true;
-	public searchPurpose = true;
-	public searchData = true;
-	public searchMethod = true;
-	public searchReproducibility = true;
+	public keyword = '';
+
+	public results: IReport[] = [];
+
+	public resultsCount: number | null = null;
+
+	public lastQuery = '';
+	public lastKeyword = '';
+
+	public sectionsActivated: { [key: string]: boolean } = {};
+
 	public reportCited: IReport | null = null;
-	public expanded: { [key: string]: any } = {};
+
 	public currentPage = 0;
 	public pages: number[] = [];
-	public keyword = '';
 	private ITEMS_PER_PAGE = 10;
 
 	constructor(private http: HttpClient) {
+		for (const s of this.sections) {
+			this.sectionsActivated[s.id] = true;
+		}
+
 		this.query.pipe(
 			debounceTime(300),
 			distinctUntilChanged())
@@ -46,16 +61,14 @@ export class DatabaseComponent implements OnInit {
 
 	private getFields(): string {
 		let fields = '';
-		fields += this.searchMetadata ? '1' : '0';
-		fields += ',';
-		fields += this.searchPurpose ? '1' : '0';
-		fields += ',';
-		fields += this.searchData ? '1' : '0';
-		fields += ',';
-		fields += this.searchMethod ? '1' : '0';
-		fields += ',';
-		fields += this.searchReproducibility ? '1' : '0';
-		fields += ',';
+		for (const s of this.sections) {
+			if (fields !== '') {
+				fields += ',';
+			}
+			if (this.sectionsActivated[s.id]) {
+				fields += s.id;
+			}
+		}
 		return fields;
 	}
 
@@ -64,10 +77,12 @@ export class DatabaseComponent implements OnInit {
 			.subscribe((resp) => {
 				this.resultsCount = resp.count;
 				this.results = resp.results as any;
-				this.currentPage = page;
 				this.lastQuery = resp.query;
+				this.lastKeyword = resp.keyword;
+
 				this.pages = Array(Math.ceil(this.resultsCount / this.ITEMS_PER_PAGE)).fill(0).map((x, i) => i);
-				this.expanded = {};
+
+				this.currentPage = page;
 			});
 	}
 

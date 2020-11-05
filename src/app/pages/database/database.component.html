@@ -32,7 +32,7 @@
 			</p>
 			<p class="control">
 				<span class="select">
-					<select>
+					<select [(ngModel)]="keyword" (ngModelChange)="search()">
 						<option [value]="''">All</option>
 						<option *ngFor="let k of keywords" [value]="k.keyword">{{k.keyword}} ({{k.count}})</option>
 					</select>
@@ -42,25 +42,9 @@
 
     <div class="field search-toolbox">
       <div class="control">
-        <label class="checkbox">
-          <input type="checkbox" [(ngModel)]="searchMetadata" (ngModelChange)="search()" />
-          Metadata
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" [(ngModel)]="searchPurpose" (ngModelChange)="search()" />
-          Purpose
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" [(ngModel)]="searchData" (ngModelChange)="search()" />
-          Data
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" [(ngModel)]="searchMethod" (ngModelChange)="search()" />
-          Method
-        </label>
-        <label class="checkbox">
-          <input type="checkbox" [(ngModel)]="searchReproducibility" (ngModelChange)="search()" />
-          Reproducibility
+        <label class="checkbox" *ngFor="let s of sections">
+          <input type="checkbox" [(ngModel)]="sectionsActivated[s.id]" (ngModelChange)="search()" />
+					{{s.name}}
         </label>
       </div>
     </div>
