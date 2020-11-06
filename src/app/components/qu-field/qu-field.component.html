@@ -44,7 +44,7 @@
           <div class="dropdown-trigger">
             <div class="field has-addons">
               <p class="control is-expanded has-icons-right">
-                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (focus)="showResults = true" (blur)="blurResults()"/>
+                <input [(ngModel)]="searchQ" (ngModelChange)="getResults()" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (focus)="getResults(); showResults = true" (blur)="blurResults()"/>
               </p>
               <div class="control" *ngIf="question.config.allowCustom">
                 <button class="button is-info" [disabled]="!searchQ" (click)="setOption(searchQ, true)">
@@ -54,11 +54,9 @@
             </div>
           </div>
           <div class="dropdown-menu" [id]="fullId" role="menu" *ngIf="showResults">
-            <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
-              <div class="dropdown-content" *ngIf="tags.length > 0">
-                <a class="dropdown-item" *ngFor="let t of tags" (click)="setOption(t.key, false)">{{t.value}}</a>
-              </div>
-            </ng-template>
+						<div class="dropdown-content" *ngIf="results.length > 0">
+							<a class="dropdown-item" *ngFor="let t of results" (click)="setOption(t.key, t.custom)">{{t.value}}</a>
+						</div>
           </div>
         </div>
       </div>
@@ -73,7 +71,7 @@
           <div class="dropdown-trigger">
             <div class="field has-addons">
               <p class="control is-expanded has-icons-right">
-                <input [(ngModel)]="searchQ" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (focus)="showResults = true" (blur)="validate(); blurResults()"/>
+                <input [(ngModel)]="searchQ" (ngModelChange)="getResults()" class="input" type="search" placeholder="Search..." [class.is-success]="valid === true" [class.is-danger]="valid === false" (focus)="getResults(); showResults = true" (blur)="validate(); blurResults()"/>
               </p>
               <div class="control" *ngIf="question.config.allowCustom">
                 <button class="button is-info" [disabled]="!searchQ" (click)="addTag(searchQ, true)">
@@ -83,11 +81,9 @@
             </div>
           </div>
           <div class="dropdown-menu" [id]="fullId" role="menu">
-            <ng-template let-tags="tags" [ngTemplateOutletContext]="{ tags: getResults() }" [ngTemplateOutlet]="selfie" #selfie>
-              <div class="dropdown-content" *ngIf="tags.length > 0">
-                <a class="dropdown-item" *ngFor="let t of tags" (click)="addTag(t.key, false)">{{t.value}}</a>
-              </div>
-            </ng-template>
+						<div class="dropdown-content" *ngIf="results.length > 0">
+							<a class="dropdown-item" *ngFor="let t of results" (click)="addTag(t.key, t.custom)">{{t.value}}</a>
+						</div>
           </div>
         </div>
       </div>

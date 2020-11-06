@@ -29,8 +29,11 @@ export class QuFieldComponent implements OnInit {
 	public expanded = false;
 
 	public showResults = false;
+	public results: { key: string; value: string; custom: boolean }[] = [];
 
 	public uploading = false;
+
+	private suggestions: string[] = null;
 
 	@ViewChild('fileInput')
 	public fileInputRef?: ElementRef<HTMLInputElement>;
@@ -48,21 +51,49 @@ export class QuFieldComponent implements OnInit {
 		this.validationTrigger?.subscribe(() => {
 			this.validate();
 		});
+
+		if (this.question.config?.suggestionUrl) {
+			this.http.get(this.question.config.suggestionUrl).subscribe((data: any) => {
+				this.suggestions = data;
+			});
+		} else {
+			this.suggestions = [];
+		}
 	}
 
-	public getResults(): [string, string][] {
-		const results: [string, string][] = [];
+	public getResults() {
+		if (!this.question.config) {
+			return;
+		}
+
+		const maxResults = 10;
+
+		const results: { key: string; value: string; custom: boolean }[] = [];
+		const valSet = new Set<string>();
 		for (const e of this.question.config.options) {
 			if (!this.searchQ || e.value.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
 				if (!this.hasValue(e.key, false)) {
-					results.push(e);
+					results.push({...e, custom: false});
+					valSet.add(e.value);
 				}
 			}
 		}
-		return results;
+		if (this.suggestions !== null) {
+			for (const e of this.suggestions) {
+				if (!this.searchQ || e.toLowerCase().indexOf(this.searchQ.toLowerCase()) !== -1) {
+					if (!this.hasValue(e, true) && !valSet.has(e)) {
+						results.push({key: e, value: e, custom: true});
+					}
+				}
+			}
+		}
+
+		this.results = results.slice(0, maxResults);
 	}
 
 	public addTag(value: string, custom: boolean) {
+		console.log('add tag', value, custom);
+
 		if (!this.value) {
 			this.value = [];
 		}

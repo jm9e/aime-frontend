@@ -42,6 +42,7 @@ children:
         question: Keywords relevant for the AI.
         config:
           allowCustom: true
+          suggestionUrl: https://aime-registry.org/api/keywords?format=list
           options:
             - key: omics
               value: Omics
