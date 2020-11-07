@@ -14,7 +14,7 @@
 
     <div id="navbarMain" class="navbar-menu" [ngClass]="{'is-active': navbarToggle}">
       <div class="navbar-start">
-        <a routerLink="/" class="navbar-item" [routerLinkActive]="['is-active']" [routerLinkActiveOptions]="{exact: true}">
+        <a [routerLink]="['/']" class="navbar-item" [routerLinkActive]="['is-active']" [routerLinkActiveOptions]="{exact: true}">
           <span class="icon">
             <i class="fad fa-home" aria-hidden="true"></i>
           </span>
@@ -23,7 +23,7 @@
           </span>
         </a>
 
-        <a routerLink="/questionnaire" class="navbar-item" [routerLinkActive]="['is-active']">
+        <a [routerLink]="['/questionnaire']" class="navbar-item" [routerLinkActive]="['is-active']">
           <span class="icon">
             <i class="fad fa-file-edit"></i>
           </span>
@@ -32,7 +32,7 @@
           </span>
         </a>
 
-				<a routerLink="/database" class="navbar-item" [routerLinkActive]="['is-active']">
+				<a [routerLink]="['/database']" class="navbar-item" [routerLinkActive]="['is-active']">
           <span class="icon">
             <i class="fad fa-database"></i>
           </span>
@@ -41,7 +41,7 @@
           </span>
 				</a>
 
-				<a routerLink="/specification" class="navbar-item" [routerLinkActive]="['is-active']">
+				<a [routerLink]="['/specification']" class="navbar-item" [routerLinkActive]="['is-active']">
           <span class="icon">
             <i class="fad fa-file-certificate"></i>
           </span>
@@ -49,7 +49,26 @@
             Specification
           </span>
 				</a>
+
+				<a [routerLink]="['/committee']" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-users-crown"></i>
+          </span>
+					<span>
+            Committee
+          </span>
+				</a>
       </div>
+			<div class="navbar-end">
+				<a [routerLink]="['/about']" class="navbar-item" [routerLinkActive]="['is-active']">
+          <span class="icon">
+            <i class="fad fa-info-square"></i>
+          </span>
+					<span>
+            About
+          </span>
+				</a>
+			</div>
     </div>
   </nav>
 
@@ -61,18 +80,18 @@
     <p>
       <img src="/assets/logo.png" style="height: 42px">
     </p>
-<!--    <p>-->
-<!--      <a href="{{'url' | env}}">{{'domainDisplay' | env}}</a>-->
-<!--    </p>-->
-<!--    <p>-->
-<!--      <a routerLink="/about">-->
-<!--        <span class="is-icon">-->
-<!--          <i class="fa fa-info-square"></i>-->
-<!--        </span>-->
-<!--        <span>-->
-<!--          About-->
-<!--        </span>-->
-<!--      </a>-->
-<!--    </p>-->
+    <p>
+      <a href="https://aime-registry.org">aime-registry.org</a>
+    </p>
+    <p>
+      <a [routerLink]="['/about']">
+        <span class="is-icon">
+          <i class="fa fa-info-square"></i>
+        </span>
+        <span>
+          About
+        </span>
+      </a>
+    </p>
   </div>
 </footer>

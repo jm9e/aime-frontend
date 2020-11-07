@@ -1,14 +1,21 @@
+@import '../../../../variables';
+
 .search-toolbox {
-  label.checkbox {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
+	label.checkbox {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
 }
 
 .w250 {
-  width: 250px;
+	width: 250px;
 }
 
 .w150 {
-  width: 250px;
+	width: 250px;
+}
+
+.keywords {
+	max-height: 240px !important;
+	overflow-y: auto;
 }

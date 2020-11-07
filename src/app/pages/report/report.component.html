@@ -31,6 +31,19 @@
 			<span *ngIf="targetVersion > 0">
 				Revision {{targetVersion}} of AIMe report {{id}} could not be found.
 			</span>
+			<p>
+				Try searching the <a [routerLink]="['database']" class="button is-rounded">AIMe database</a>.
+			</p>
+		</div>
+
+		<div *ngIf="error" class="notification is-danger">
+			<span class="icon"><i class="fas fa-ban"></i></span>
+			<span *ngIf="targetVersion === 0">
+				AIMe report {{id}} could not be found.
+			</span>
+			<span *ngIf="targetVersion > 0">
+				Revision {{targetVersion}} of AIMe report {{id}} could not be found.
+			</span>
 		</div>
 	</div>
 </section>

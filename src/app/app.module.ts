@@ -17,6 +17,7 @@ import {QuTreeComponent} from './components/qu-tree/qu-tree.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
 import {ReportComponent} from './components/report/report.component';
 import {ReportComponent as ReportComponentPage} from './pages/report/report.component';
+import { CommitteeComponent } from './pages/committee/committee.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
 	baseUrl: 'assets',
@@ -38,6 +39,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
 		SpecificationComponent,
 		ReportComponent,
 		ReportComponentPage,
+		CommitteeComponent,
 	],
 	imports: [
 		HttpClientModule,
