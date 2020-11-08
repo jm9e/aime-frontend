@@ -1,24 +1,122 @@
+<div class="modal is-active" *ngIf="raiseIssue">
+	<div class="modal-background" (click)="raiseIssue = undefined"></div>
+	<div class="modal-card">
+		<header class="modal-card-head">
+			<p class="modal-card-title">Raise issue for report {{id}}</p>
+			<button class="delete" aria-label="close" (click)="raiseIssue = undefined"></button>
+		</header>
+		<section class="modal-card-body" *ngIf="!commentSubmitted">
+			<div *ngIf="raiseIssue.question && raiseIssue.value">
+				<div class="mb-2">
+					You are about to raise an issue referring to answer {{raiseIssue.field.join('.')}} of report {{id}}.
+				</div>
+				<app-qu-field [id]="raiseIssue.field" [readonly]="true" [interactive]="false" [question]="raiseIssue.question" [value]="raiseIssue.value">
+				</app-qu-field>
+			</div>
+			<div *ngIf="!raiseIssue.question || !raiseIssue.value">
+				<div>
+					You are about to write a general comment on report {{id}}.
+				</div>
+			</div>
+			<div class="mt-3">
+				<div class="field">
+					<label for="comment-name" class="label">Your name</label>
+					<div class="control">
+						<input class="input" type="text" placeholder="Name" id="comment-name" [(ngModel)]="commentName">
+					</div>
+				</div>
+				<div class="field">
+					<label for="comment-email" class="label">Your email address</label>
+					<div class="control">
+						<input class="input" type="email" placeholder="Email" id="comment-email" [(ngModel)]="commentEmail">
+					</div>
+				</div>
+				<div class="field">
+					<label for="comment-content" class="label">Content</label>
+					<div class="control">
+						<textarea class="input" placeholder="Content" id="comment-content" style="height: 100px" [(ngModel)]="commentContent"></textarea>
+					</div>
+				</div>
+			</div>
+			<p class="mt-3 help">
+				After submitting your comment, you will receive an email to verify your email address.
+				Once it has been verified, the author of the report has got two weeks to respond to your comment.
+				After this time, or once the author has responded, your comment will become publicly visible.
+			</p>
+		</section>
+		<section class="modal-card-body" *ngIf="commentSubmitted">
+			<div>
+				Thank you for submitting your comment. Please note that it will not show up before you have verified your
+				email address and the author has responded or two weeks have passed. Please check your mailbox.
+			</div>
+		</section>
+		<footer class="modal-card-foot">
+			<button class="button is-success" *ngIf="!commentSubmitted" [disabled]="!commentName || !commentEmail || !commentContent" (click)="submitComment()">Submit</button>
+			<button class="button" (click)="raiseIssue = undefined">Close</button>
+		</footer>
+	</div>
+</div>
+
 <section class="section">
 	<div class="container" *ngIf="id && answers && questions">
 		<div *ngIf="!error">
-			<app-report [questions]="questions" [answers]="answers" [id]="id" [revision]="revision"></app-report>
+			<app-report
+				[questions]="questions"
+				[answers]="answers"
+				[id]="id"
+				[revision]="revision"
+				[interactive]="true"
+				(raiseIssue)="commentSubmitted = false; raiseIssue = $event">
+			</app-report>
 
 			<article class="message mt-5 mb-5" *ngIf="revisions.length > 1">
 				<header class="message-header">
-					{{revisions.length}} Revisions for report {{id}}
+					{{revisions.length}} revisions for report {{id}}
 				</header>
 
 				<div class="message-body">
-					<ul>
+					<ul class="report-items">
 						<li *ngFor="let rev of revisions">
-							<span class="tag is-info mr-3">Revision #{{rev.revision}}</span>
-							<a [routerLink]="['/report', id, rev.revision]">https://aime.report/{{id}}/{{rev.revision}}</a>
-							created at {{rev.createdAt | date: 'short'}}
+							<a [routerLink]="['/report', id, rev.revision]" class="report-item">
+								<span class="tag is-info mr-3">Revision #{{rev.revision}}</span>
+								<span class="report-link">https://aime.report/{{id}}/{{rev.revision}}</span>
+							</a>
+							<span>
+								created at {{rev.createdAt | date: 'short'}}
+							</span>
 							<span *ngIf="rev.revision === revision">
 								(currently displayed)
 							</span>
 						</li>
 					</ul>
+				</div>
+			</article>
+
+			<article class="message mt-5 mb-5">
+				<header class="message-header">
+					Comments for report {{id}}
+				</header>
+
+				<div class="message-body">
+					<ul class="report-items" *ngIf="comments.length > 0">
+						<li *ngFor="let c of comments">
+							<a [routerLink]="['/report', id, 'comment', c.id]" class="report-item">
+								<span class="tag is-info mr-3">Comment #{{c.id}}</span>
+								<span>by {{c.name}}</span>
+							</a>
+							<span>
+								created at {{c.createdAt | date: 'short'}}
+							</span>
+						</li>
+					</ul>
+					<i *ngIf="comments.length === 0">No comments so far.</i>
+
+					<div class="mt-5">
+						<button class="button is-info" (click)="commentSubmitted = false; raiseIssue = {}">
+							<span class="icon"><i class="fa fa-edit"></i></span>
+							<span>Write a comment</span>
+						</button>
+					</div>
 				</div>
 			</article>
 		</div>
@@ -32,18 +130,8 @@
 				Revision {{targetVersion}} of AIMe report {{id}} could not be found.
 			</span>
 			<p>
-				Try searching the <a [routerLink]="['database']" class="button is-rounded">AIMe database</a>.
+				Try searching the <a [routerLink]="['/database']">AIMe database</a>.
 			</p>
-		</div>
-
-		<div *ngIf="error" class="notification is-danger">
-			<span class="icon"><i class="fas fa-ban"></i></span>
-			<span *ngIf="targetVersion === 0">
-				AIMe report {{id}} could not be found.
-			</span>
-			<span *ngIf="targetVersion > 0">
-				Revision {{targetVersion}} of AIMe report {{id}} could not be found.
-			</span>
 		</div>
 	</div>
 </section>

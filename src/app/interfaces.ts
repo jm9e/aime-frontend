@@ -32,6 +32,32 @@ export interface IQuestion {
 	};
 }
 
+export interface IAnswer {
+	createdAt: Date;
+	content: string;
+	owner: boolean;
+}
+
+export interface IComment {
+	id?: number;
+	reportId?: string;
+	revisionId?: number;
+
+	name: string;
+	createdAt: Date;
+	type: number;
+	field: string[];
+	content: string;
+
+	answers: IAnswer[];
+}
+
+export interface ICommentReference {
+	field?: string[];
+	question?: IQuestion;
+	value?: any;
+}
+
 export function createDefaults(q: IQuestion): any {
 	if (q.type === 'list') {
 		if (q.optional) {
@@ -241,15 +267,12 @@ export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
 	return sc;
 }
 
-export interface IVersion {
-	revision: number;
-	date: Date;
-}
-
 export interface IReport {
 	id: string;
 	title: string;
 	date: Date;
+	revisions: number;
+	comments: number;
 }
 
 export interface IKeyword {

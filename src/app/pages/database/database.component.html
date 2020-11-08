@@ -94,10 +94,11 @@
 					<table class="table is-striped is-fullwidth">
 						<thead>
 						<tr>
-							<th class="is-hidden-mobile">ID</th>
+							<th class="w150 is-hidden-mobile">ID</th>
 							<th>Title</th>
 							<th class="w250 is-hidden-mobile">Last modified</th>
-							<th></th>
+							<th class="w150 is-hidden-mobile">Comments</th>
+							<th class="w100"></th>
 						</tr>
 						</thead>
 						<tbody>
@@ -117,6 +118,9 @@
 							</td>
 							<td class="is-hidden-mobile">
 								{{result.date | date: 'medium'}}
+							</td>
+							<td class="is-hidden-mobile">
+								{{result.comments}}
 							</td>
 							<td>
 								<div class="buttons">

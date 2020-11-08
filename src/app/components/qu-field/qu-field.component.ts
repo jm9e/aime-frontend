@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {createDefaults, validate, IQuestion} from '../../interfaces';
+import {createDefaults, validate, IQuestion, ICommentReference} from '../../interfaces';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from "../../../environments/environment";
 
@@ -15,8 +15,10 @@ export class QuFieldComponent implements OnInit {
 	@Input() question: IQuestion;
 	@Input() value: any;
 	@Input() hideId = false;
+	@Input() interactive = false;
 	@Input() validationTrigger: EventEmitter<void>;
 	@Output() valueChange = new EventEmitter();
+	@Output() raiseIssue = new EventEmitter<ICommentReference>();
 
 	public valid?: boolean;
 	public validMessage = '';

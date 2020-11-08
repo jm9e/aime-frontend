@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IQuestion, maxScore, score} from '../../interfaces';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ICommentReference, IQuestion, maxScore, score} from '../../interfaces';
 
 @Component({
 	selector: 'app-report',
@@ -17,6 +17,9 @@ export class ReportComponent implements OnInit {
 	@Input()
 	public revision = 0;
 
+	@Input()
+	public interactive = false
+
 	public answersI: any;
 
 	@Input()
@@ -29,9 +32,14 @@ export class ReportComponent implements OnInit {
 
 	@Input()
 	public set questions(q: IQuestion) {
+		if (typeof q === 'undefined') {
+			return;
+		}
 		this.questionsI = q;
 		this.calcScores();
 	};
+
+	@Output() raiseIssue = new EventEmitter<ICommentReference>();
 
 	constructor() {
 	}
