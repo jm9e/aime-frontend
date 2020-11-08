@@ -11,10 +11,9 @@ import {environment} from "../../../environments/environment";
 export class QuFieldComponent implements OnInit {
 
 	@Input() readonly: boolean;
-	@Input() id: string;
+	@Input() id: string[];
 	@Input() question: IQuestion;
 	@Input() value: any;
-	@Input() idPrefix: string;
 	@Input() hideId = false;
 	@Input() validationTrigger: EventEmitter<void>;
 	@Output() valueChange = new EventEmitter();
@@ -42,11 +41,7 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if (this.idPrefix && this.id) {
-			this.fullId = this.idPrefix + '.' + this.id;
-		} else {
-			this.fullId = this.idPrefix + this.id;
-		}
+		this.fullId = this.id.join('.');
 
 		this.validationTrigger?.subscribe(() => {
 			this.validate();
@@ -265,6 +260,12 @@ export class QuFieldComponent implements OnInit {
 
 		this.valueChange.emit(this.value);
 		this.validate();
+	}
+
+	public appendId(id: string): string[] {
+		const myId = Array.from(this.id);
+		myId.push(id);
+		return myId;
 	}
 
 }

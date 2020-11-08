@@ -8,9 +8,8 @@ import {IQuestion} from '../../interfaces';
 })
 export class QuTreeComponent implements OnInit {
 
-	@Input() id: string;
+	@Input() id: string[];
 	@Input() question: IQuestion;
-	@Input() idPrefix: string;
 	@Input() hideNode = false;
 
 	public fullId = '';
@@ -19,11 +18,13 @@ export class QuTreeComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		if (this.idPrefix && this.id) {
-			this.fullId = this.idPrefix + '.' + this.id;
-		} else {
-			this.fullId = this.idPrefix + this.id;
-		}
+		this.fullId = this.id.join('.');
+	}
+
+	public appendId(id: string): string[] {
+		const myId = Array.from(this.id);
+		myId.push(id);
+		return myId;
 	}
 
 }

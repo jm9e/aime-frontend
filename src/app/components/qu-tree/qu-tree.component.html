@@ -40,7 +40,7 @@
 				<span>&nbsp;-&nbsp;</span>
 				<span>{{question.title}}</span>
 			</div>
-			<app-qu-tree [idPrefix]="fullId" [id]="'x'" [question]="question.child">
+			<app-qu-tree [id]="appendId('x')" [question]="question.child">
 			</app-qu-tree>
 		</ng-container>
 		<ng-container *ngIf="question.type === 'complex'">
@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<ng-container *ngFor="let s of question.children">
-				<app-qu-tree [idPrefix]="fullId" [id]="s.id" [question]="s" [hideNode]="s.type === 'list'">
+				<app-qu-tree [id]="appendId(s.id)" [question]="s" [hideNode]="s.type === 'list'">
 				</app-qu-tree>
 			</ng-container>
 		</ng-container>

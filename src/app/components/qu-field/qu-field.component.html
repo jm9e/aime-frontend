@@ -234,7 +234,7 @@
         </div>
       </div>
     </div>
-    <app-qu-field [readonly]="readonly" [idPrefix]="fullId" [id]="(i + 1).toString(10)" [hideId]="true" [question]="question.child" [value]="value[i]" (valueChange)="value[i] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
+    <app-qu-field [readonly]="readonly" [id]="appendId((i + 1).toString(10))" [hideId]="true" [question]="question.child" [value]="value[i]" (valueChange)="value[i] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
     </app-qu-field>
   </ng-container>
   <div class="field is-horizontal" *ngIf="!readonly">
@@ -285,7 +285,7 @@
 		</div>
 	</div>
   <ng-container *ngFor="let s of question.children">
-    <app-qu-field [readonly]="readonly" [idPrefix]="fullId" [id]="s.id" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="value[s.id] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
+    <app-qu-field [readonly]="readonly" [id]="appendId(s.id)" *ngIf="s.condition === undefined || s.condition(value)" [question]="s" [(value)]="value[s.id]" (valueChange)="value[s.id] = $event; valueChange.emit(value)" [validationTrigger]="validationTrigger">
     </app-qu-field>
   </ng-container>
 </ng-container>

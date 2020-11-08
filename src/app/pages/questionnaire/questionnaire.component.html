@@ -42,7 +42,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [hideId]="true" [idPrefix]="''" [id]="s.short" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="handleAnswerChange()" [validationTrigger]="validationTrigger">
+            <app-qu-field [hideId]="true" [id]="[s.short]" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="handleAnswerChange()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>
@@ -97,14 +97,14 @@
                   Make sure that it is a valid address that you have access to, otherwise you will not be able to create revisions later on.
                 </p>
               </div>
-              <div class="field">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" class="checkbox" name="attachReport" [(ngModel)]="attachReport">
-                    Attach report to email
-                  </label>
-                </div>
-              </div>
+<!--              <div class="field">-->
+<!--                <div class="control">-->
+<!--                  <label class="checkbox">-->
+<!--                    <input type="checkbox" class="checkbox" name="attachReport" [(ngModel)]="attachReport">-->
+<!--                    Attach report to email-->
+<!--                  </label>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
