@@ -18,6 +18,7 @@ import {SpecificationComponent} from './pages/specification/specification.compon
 import {ReportComponent} from './components/report/report.component';
 import {ReportComponent as ReportComponentPage} from './pages/report/report.component';
 import { CommitteeComponent } from './pages/committee/committee.component';
+import { IssueComponent } from './pages/issue/issue.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
 	baseUrl: 'assets',
@@ -40,6 +41,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
 		ReportComponent,
 		ReportComponentPage,
 		CommitteeComponent,
+		IssueComponent,
 	],
 	imports: [
 		HttpClientModule,

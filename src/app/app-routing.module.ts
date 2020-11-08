@@ -8,6 +8,7 @@ import {AboutComponent} from './pages/about/about.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
 import {ReportComponent} from './pages/report/report.component';
 import {CommitteeComponent} from './pages/committee/committee.component';
+import {IssueComponent} from './pages/issue/issue.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
 	{
 		path: 'report/:id/:version',
 		component: ReportComponent,
+	},
+	{
+		path: 'report/:id/issue/:issue',
+		component: IssueComponent,
 	},
 	{
 		path: 'about',
