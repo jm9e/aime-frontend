@@ -100,8 +100,8 @@
 				<div class="message-body">
 					<ul class="report-items" *ngIf="comments.length > 0">
 						<li *ngFor="let c of comments">
-							<a [routerLink]="['/report', id, 'comment', c.id]" class="report-item">
-								<span class="tag is-info mr-3">Issue #{{c.id}}</span>
+							<a [routerLink]="['/report', id, 'issue', c.id]" class="report-item">
+								<span class="tag is-warning mr-3">Issue #{{c.id}}</span>
 								<span>by {{c.name}}</span>
 							</a>
 							<span>
