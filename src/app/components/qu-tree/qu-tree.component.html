@@ -22,6 +22,9 @@
 					<span *ngIf="question.type === 'tags'" class="tag is-small is-light" title="Tags">
 						<i class="far fa-tags"></i>
 					</span>
+					<span *ngIf="question.type === 'file'" class="tag is-small is-light" title="File">
+						<i class="far fa-file"></i>
+					</span>
 					<span *ngIf="question.scores?.reproducibility" class="tag is-small is-light is-info" title="Affects reproducibility score">
 						<i class="fa fa-star-half-alt"></i>
 					</span>
