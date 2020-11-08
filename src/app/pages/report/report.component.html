@@ -109,11 +109,11 @@
 							</span>
 						</li>
 					</ul>
-					<i *ngIf="comments.length === 0">No comments so far.</i>
+					<i *ngIf="comments.length === 0">No reported issues so far.</i>
 
 					<div class="mt-5">
-						<button class="button is-info" (click)="commentSubmitted = false; raiseIssue = {}">
-							<span class="icon"><i class="fa fa-edit"></i></span>
+						<button class="button is-warning is-outlined has-text-grey" (click)="commentSubmitted = false; raiseIssue = {}">
+							<span class="icon"><i class="fa fa-exclamation-triangle"></i></span>
 							<span>Raise an issue</span>
 						</button>
 					</div>

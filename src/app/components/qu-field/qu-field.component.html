@@ -175,7 +175,10 @@
         </span>
 			</p>
 			<p *ngIf="interactive" class="help is-pulled-right">
-				<button class="button is-small is-info is-outlined" (click)="raiseIssue.emit({field: id, question: question, value: value})">Raise issue</button>
+				<button class="button is-small is-warning is-outlined has-text-grey" (click)="raiseIssue.emit({field: id, question: question, value: value})">
+					<span class="icon"><i class="fal fa-exclamation-triangle"></i></span>
+					<span>Raise issue</span>
+				</button>
 			</p>
 			<div class="control" *ngIf="question.type === 'string'">
 				<span class="tag is-aime is-medium">{{value}}</span>
