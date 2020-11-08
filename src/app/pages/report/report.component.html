@@ -106,6 +106,9 @@
 								<span>
 									created at {{c.createdAt | date: 'short'}}
 								</span>
+								<span *ngIf="c.revisionId !== revision">
+									(refers to revision {{c.revisionId}})
+								</span>
 							</a>
 						</li>
 					</ul>

@@ -14,7 +14,7 @@ export class ReportComponent implements OnInit {
 	public id = '';
 	public revision = 0;
 	public revisions: { createdAt: Date, revision: number }[] = [];
-	public issues: { id: number, createdAt: Date, name: string, type: number }[] = [];
+	public issues: { id: number, revisionId: number, createdAt: Date, name: string, type: number }[] = [];
 	public targetVersion = 0;
 	public yamlSpec = '';
 	public questions: IQuestion = {type: 'complex', children: []};

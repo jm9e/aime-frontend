@@ -33,6 +33,7 @@ export interface IQuestion {
 }
 
 export interface IAnswer {
+	id: number;
 	createdAt: Date;
 	content: string;
 	owner: boolean;

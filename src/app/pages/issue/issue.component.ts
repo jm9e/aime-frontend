@@ -16,7 +16,7 @@ export class IssueComponent implements OnInit {
 	public password = '';
 	public confirm = false;
 	public issue?: IIssue;
-	public answerContent = '';
+	public responseContent = '';
 	public yamlSpec = '';
 	public questions: IQuestion = {type: 'complex', children: []};
 
@@ -77,7 +77,14 @@ export class IssueComponent implements OnInit {
 	}
 
 	public respond() {
-
+		this.http.post<IIssue>(
+			`${environment.api}report/${this.reportId}/issue/${this.issueId}?p=${this.password}`, {
+				content: this.responseContent,
+			})
+			.subscribe(() => {
+				this.loadIssue();
+			}, () => {
+			});
 	}
 
 }
