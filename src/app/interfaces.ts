@@ -272,7 +272,7 @@ export interface IReport {
 	title: string;
 	date: Date;
 	revisions: number;
-	comments: number;
+	issues: number;
 }
 
 export interface IKeyword {

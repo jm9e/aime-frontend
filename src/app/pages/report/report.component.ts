@@ -14,7 +14,7 @@ export class ReportComponent implements OnInit {
 	public id = '';
 	public revision = 0;
 	public revisions: { createdAt: Date, revision: number }[] = [];
-	public comments: { id: number, createdAt: Date, name: string, type: number }[] = [];
+	public issues: { id: number, createdAt: Date, name: string, type: number }[] = [];
 	public targetVersion = 0;
 	public yamlSpec = '';
 	public questions: IQuestion = {type: 'complex', children: []};
@@ -22,10 +22,10 @@ export class ReportComponent implements OnInit {
 	public error = false;
 	public raiseIssue?: ICommentReference;
 
-	public commentName = '';
-	public commentEmail = '';
-	public commentContent = '';
-	public commentSubmitted = false;
+	public issueName = '';
+	public issueEmail = '';
+	public issueContent = '';
+	public issueSubmitted = false;
 
 	constructor(private http: HttpClient, private route: ActivatedRoute) {
 		this.http.get('assets/questionnaire.yaml', {
@@ -53,7 +53,7 @@ export class ReportComponent implements OnInit {
 				this.answers = data.answers;
 				this.revision = data.revision;
 				this.revisions = data.revisions ?? [];
-				this.comments = data.comments ?? [];
+				this.issues = data.issues ?? [];
 			}, () => {
 				this.error = true;
 			});
@@ -62,7 +62,7 @@ export class ReportComponent implements OnInit {
 				this.answers = data.answers;
 				this.revision = data.revision;
 				this.revisions = data.revisions ?? [];
-				this.comments = data.comments ?? [];
+				this.issues = data.issues ?? [];
 			}, () => {
 				this.error = true;
 			});
@@ -75,16 +75,16 @@ export class ReportComponent implements OnInit {
 	}
 
 	public submitComment() {
-		this.commentSubmitted = true;
+		this.issueSubmitted = true;
 
-		this.http.post<any>(`${environment.api}report/${this.id}/comment`, {
-			name: this.commentName,
-			email: this.commentEmail,
+		this.http.post<any>(`${environment.api}report/${this.id}/issue`, {
+			name: this.issueName,
+			email: this.issueEmail,
 			field: this.raiseIssue.field,
-			content: this.commentContent,
+			content: this.issueContent,
 			type: 0,
 		}).subscribe(() => {
-			this.commentContent = '';
+			this.issueContent = '';
 		}, () => {
 		});
 	}
