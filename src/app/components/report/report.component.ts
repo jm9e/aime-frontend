@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ICommentReference, IQuestion, maxScore, score} from '../../interfaces';
+import {IIssueReference, IQuestion, maxScore, score} from '../../interfaces';
 
 @Component({
 	selector: 'app-report',
@@ -39,7 +39,7 @@ export class ReportComponent implements OnInit {
 		this.calcScores();
 	};
 
-	@Output() raiseIssue = new EventEmitter<ICommentReference>();
+	@Output() raiseIssue = new EventEmitter<IIssueReference>();
 
 	constructor() {
 	}

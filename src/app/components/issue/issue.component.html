@@ -1,0 +1,26 @@
+<div>
+	<div class="issue-field">
+		<label class="label">
+			Refers to
+		</label>
+		<a [routerLink]="['/report', issue.reportId]">
+			<span class="tag is-aime">Report {{issue.reportId}}</span>
+		</a>
+		<ng-container *ngIf="issue.field">
+			/
+			<span class="tag is-aime" *ngIf="issue.field">{{issue.field.join('.')}}</span>
+		</ng-container>
+	</div>
+	<div class="issue-field mt-3">
+		<label class="label">
+			Raised by
+		</label>
+		<span class="tag is-aime">{{issue.name}}</span> at <span class="tag is-aime">{{issue.createdAt | date: 'short'}}</span>
+	</div>
+	<div class="issue-field mt-3">
+		<label class="label">
+			Issue
+		</label>
+		<div class="tag is-aime is-medium">{{issue.content}}</div>
+	</div>
+</div>

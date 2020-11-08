@@ -15,10 +15,11 @@ import {SurveyComponent} from './pages/survey/survey.component';
 import {MonacoEditorModule, NgxMonacoEditorConfig} from 'ngx-monaco-editor';
 import {QuTreeComponent} from './components/qu-tree/qu-tree.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
+import {CommitteeComponent} from './pages/committee/committee.component';
 import {ReportComponent} from './components/report/report.component';
 import {ReportComponent as ReportComponentPage} from './pages/report/report.component';
-import { CommitteeComponent } from './pages/committee/committee.component';
-import { IssueComponent } from './pages/issue/issue.component';
+import {IssueComponent} from './components/issue/issue.component';
+import {IssueComponent as IssueComponentPage} from './pages/issue/issue.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
 	baseUrl: 'assets',
@@ -40,7 +41,9 @@ const monacoConfig: NgxMonacoEditorConfig = {
 		SpecificationComponent,
 		ReportComponent,
 		ReportComponentPage,
+		IssueComponentPage,
 		CommitteeComponent,
+		IssueComponent,
 		IssueComponent,
 	],
 	imports: [

@@ -49,6 +49,18 @@
 	background-color: $aime;
 	color: #FFF;
 }
+
+.tag.is-aime {
+	background-color: transparent;
+	color: $dark;
+	border: 1px solid $aime;
+	white-space: pre-wrap;
+	height: auto;
+	min-height: 32px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
 //
 //.report {
 //	border-radius: 0.25rem;

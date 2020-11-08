@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import YAML from 'yaml';
-import {IComment, ICommentReference, IQuestion, parseQuestions} from '../../interfaces';
+import {IIssue, IIssueReference, IQuestion, parseQuestions} from '../../interfaces';
 
 @Component({
 	templateUrl: './report.component.html',
@@ -20,7 +20,7 @@ export class ReportComponent implements OnInit {
 	public questions: IQuestion = {type: 'complex', children: []};
 	public answers = {};
 	public error = false;
-	public raiseIssue?: ICommentReference;
+	public raiseIssue?: IIssueReference;
 
 	public issueName = '';
 	public issueEmail = '';

@@ -80,13 +80,13 @@
 							<a [routerLink]="['/report', id, rev.revision]" class="report-item">
 								<span class="tag is-info mr-3">Revision #{{rev.revision}}</span>
 								<span class="report-link">https://aime.report/{{id}}/{{rev.revision}}</span>
+								<span>
+									created at {{rev.createdAt | date: 'short'}}
+								</span>
+								<span *ngIf="rev.revision === revision">
+									(currently displayed)
+								</span>
 							</a>
-							<span>
-								created at {{rev.createdAt | date: 'short'}}
-							</span>
-							<span *ngIf="rev.revision === revision">
-								(currently displayed)
-							</span>
 						</li>
 					</ul>
 				</div>
@@ -103,10 +103,10 @@
 							<a [routerLink]="['/report', id, 'issue', c.id]" class="report-item">
 								<span class="tag is-warning mr-3">Issue #{{c.id}}</span>
 								<span>by {{c.name}}</span>
+								<span>
+									created at {{c.createdAt | date: 'short'}}
+								</span>
 							</a>
-							<span>
-								created at {{c.createdAt | date: 'short'}}
-							</span>
 						</li>
 					</ul>
 					<i *ngIf="issues.length === 0">No reported issues so far.</i>

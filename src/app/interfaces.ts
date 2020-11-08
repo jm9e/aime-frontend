@@ -38,7 +38,7 @@ export interface IAnswer {
 	owner: boolean;
 }
 
-export interface IComment {
+export interface IIssue {
 	id?: number;
 	reportId?: string;
 	revisionId?: number;
@@ -49,10 +49,14 @@ export interface IComment {
 	field: string[];
 	content: string;
 
+	confirmed: boolean;
+	pending: boolean;
+	pendingUntil: Date;
+
 	answers: IAnswer[];
 }
 
-export interface ICommentReference {
+export interface IIssueReference {
 	field?: string[];
 	question?: IQuestion;
 	value?: any;
