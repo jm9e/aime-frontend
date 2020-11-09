@@ -58,6 +58,9 @@
 					</div>
 					<div class="field-body">
 						<div class="field">
+							<div *ngIf="!captchaLoaded">
+								<i class="fa fa-spin fa-spinner"></i> Loading captcha
+							</div>
 							<div id="g-recaptcha"></div>
 						</div>
 					</div>
@@ -65,7 +68,7 @@
 
 				<div class="field">
 					<div class="control">
-						<button data-nav="next" class="button is-info" (click)="submitSurvey()">
+						<button data-nav="next" class="button is-info" (click)="submitSurvey()" [disabled]="!captchaLoaded">
               <span class="icon">
                 <i class="fa fa-paper-plane"></i>
               </span>

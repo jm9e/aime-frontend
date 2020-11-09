@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, NgZone, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {createDefaults, IQuestion, validateRec} from '../../interfaces';
@@ -92,7 +92,9 @@ export class ContributeComponent implements OnInit {
 
 	public answers: any = {};
 
-	constructor(private http: HttpClient) {
+	public captchaLoaded = false;
+
+	constructor(private http: HttpClient, private zone: NgZone) {
 	}
 
 	ngOnInit() {
@@ -127,6 +129,9 @@ export class ContributeComponent implements OnInit {
 		(window as any).onloadCallback = () => {
 			grecaptcha.render('g-recaptcha', {
 				sitekey: '6LeEEvoUAAAAAE6Z2TvqeVFnNTiqnC2_bPOikyP3',
+			});
+			this.zone.run(() => {
+				this.captchaLoaded = true;
 			});
 		};
 
