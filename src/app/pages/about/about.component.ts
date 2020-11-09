@@ -21,7 +21,7 @@ export class AboutComponent implements OnInit {
 		{firstName: 'Martin', lastName: 'Golebiewski', institution: 'HITS gGmbH', country: 'Germany', version: '2021.0'},
 		{firstName: 'Dominik G.', lastName: 'Grimm', institution: 'Technical University of Munich; Weihenstephan-Triesdorf University of Applied Sciences', country: 'Germany', version: '2021.0'},
 		{firstName: 'Lukas', lastName: 'Heumos', institution: 'University of Tübingen', country: 'Germany', version: '2021.0'},
-		{firstName: 'Tim', lastName: 'Kacprowski', institution: 'Peter L. Reichertz Institute for Medical Informatics; Technical University of Brunswick and Hannover Medical School', country: 'Germany', version: '2021.0'},
+		{firstName: 'Tim', lastName: 'Kacprowski', institution: 'Technical University of Braunschweig', country: 'Germany', version: '2021.0'},
 		{firstName: 'Josch', lastName: 'Pauling', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
 		{firstName: 'Markus', lastName: 'List', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
 		{firstName: 'Nico', lastName: 'Pfeifer', institution: 'University of Tübingen', country: 'Germany', version: '2021.0'},
