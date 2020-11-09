@@ -23,6 +23,7 @@
     </div>
   </div>
 </section>
+
 <section class="section">
   <div class="container">
     <h2 class="title is-5">
@@ -42,6 +43,32 @@
       </p>
     </div>
   </div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<h2 class="title is-5">
+			Steering committee
+		</h2>
+		<div class="content">
+			<p>
+				The AIMe steering committee maintains the AIMe specification and has currently {{members.length}} members.
+			</p>
+			<h3 class="title is-6">Members</h3>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Institution</th>
+					<th>Since version</th>
+				</tr>
+				<tr *ngFor="let m of members">
+					<td>{{m.lastName}}, {{m.firstName}}</td>
+					<td>{{m.institution}}</td>
+					<td>AIMe {{m.version}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </section>
 
 <section class="section">

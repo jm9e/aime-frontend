@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommitteeComponent } from './committee.component';
+import { ContributeComponent } from './contribute.component';
 
 describe('ConsortiumComponent', () => {
-  let component: CommitteeComponent;
-  let fixture: ComponentFixture<CommitteeComponent>;
+  let component: ContributeComponent;
+  let fixture: ComponentFixture<ContributeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommitteeComponent ]
+      declarations: [ ContributeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommitteeComponent);
+    fixture = TestBed.createComponent(ContributeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

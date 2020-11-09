@@ -15,7 +15,7 @@ import {SurveyComponent} from './pages/survey/survey.component';
 import {MonacoEditorModule, NgxMonacoEditorConfig} from 'ngx-monaco-editor';
 import {QuTreeComponent} from './components/qu-tree/qu-tree.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
-import {CommitteeComponent} from './pages/committee/committee.component';
+import {ContributeComponent} from './pages/contribute/contribute.component';
 import {ReportComponent} from './components/report/report.component';
 import {ReportComponent as ReportComponentPage} from './pages/report/report.component';
 import {IssueComponent} from './components/issue/issue.component';
@@ -42,7 +42,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
 		ReportComponent,
 		ReportComponentPage,
 		IssueComponentPage,
-		CommitteeComponent,
+		ContributeComponent,
 		IssueComponent,
 		IssueComponent,
 	],

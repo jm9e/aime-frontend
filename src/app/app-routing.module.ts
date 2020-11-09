@@ -7,7 +7,7 @@ import {SurveyComponent} from './pages/survey/survey.component';
 import {AboutComponent} from './pages/about/about.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
 import {ReportComponent} from './pages/report/report.component';
-import {CommitteeComponent} from './pages/committee/committee.component';
+import {ContributeComponent} from './pages/contribute/contribute.component';
 import {IssueComponent} from './pages/issue/issue.component';
 
 
@@ -33,8 +33,8 @@ const routes: Routes = [
 		component: SpecificationComponent,
 	},
 	{
-		path: 'committee',
-		component: CommitteeComponent,
+		path: 'contribute',
+		component: ContributeComponent,
 	},
 	{
 		path: 'report/:id',
