@@ -9,6 +9,7 @@ import {SpecificationComponent} from './pages/specification/specification.compon
 import {ReportComponent} from './pages/report/report.component';
 import {ContributeComponent} from './pages/contribute/contribute.component';
 import {IssueComponent} from './pages/issue/issue.component';
+import {LegalNoticeComponent} from "./pages/legal-notice/legal-notice.component";
 
 
 const routes: Routes = [
@@ -51,6 +52,10 @@ const routes: Routes = [
 	{
 		path: 'about',
 		component: AboutComponent,
+	},
+	{
+		path: 'legal-notice',
+		component: LegalNoticeComponent,
 	},
 ];
 

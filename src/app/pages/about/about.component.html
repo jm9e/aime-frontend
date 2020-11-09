@@ -1,25 +1,52 @@
 <section class="section">
   <div class="container">
-    <h2 class="title is-4">
-      About AIMe
-    </h2>
     <div class="content">
-      <p>
-        New promising AI technologies for biomedical applications are suggested almost every day.
-        However, a major hurdle for their application in clinical practice is that practitioners generally do not yet
-        trust these technologies.
-        One reason for this is that AI decisions are often opaque and difficult to explain.
-        The AIMe registry is designed to address this problem by providing authors of new AIs with a means to report
-        their AI models in an explicit and transparent fashion.
-      </p>
-      <p>
-        AIMe has been developed and is being maintained by the
-        <a href="https://baumbachlab.net">Chair of Experimental Bioinformatics</a> at the
-        <a href="https://www.tum.de/en/">Technical University of Munich</a>.
-      </p>
-      <p>
-        For inquiries, please refer to <a href="mailto:info@aime-registry.org">info@aime-registry.org</a>.
-      </p>
+			<h2 class="title is-3">
+				About AIMe
+			</h2>
+			<div class="box">
+				<article class="media">
+					<div class="media-left is-hidden-mobile">
+						<figure class="image is-128x128">
+							<img src="/assets/logo/aime.png">
+						</figure>
+					</div>
+					<div class="media-content">
+						<div class="content">
+							<p>
+								New promising AI technologies for biomedical applications are suggested almost every day.
+								However, a major hurdle for their application in clinical practice is that practitioners generally do not yet
+								trust these technologies.
+								One reason for this is that AI decisions are often opaque and difficult to explain.
+								The AIMe registry is designed to address this problem by providing authors of new AIs with a means to report
+								their AI models in an explicit and transparent fashion.
+							</p>
+						</div>
+						<nav class="level is-mobile">
+							<div class="level-left">
+								<a class="level-item" href="https://aime-registry.org">
+									<span class="icon is-small">
+										<i class="fas fa-globe" aria-hidden="true"></i>
+									</span>
+									&nbsp;
+									<span>
+										aime-registry.org
+									</span>
+								</a>
+								<a class="level-item" href="mailto:info@aime-registry.org">
+									<span class="icon is-small">
+										<i class="fas fa-envelope" aria-hidden="true"></i>
+									</span>
+									&nbsp;
+									<span>
+										info@aime-registry.org
+									</span>
+								</a>
+							</div>
+						</nav>
+					</div>
+				</article>
+			</div>
     </div>
   </div>
 </section>
@@ -58,13 +85,13 @@
 			<table>
 				<tr>
 					<th>Name</th>
-					<th>Institution</th>
-					<th>Since version</th>
+					<th class="is-hidden-mobile">Institution</th>
+					<th class="is-hidden-mobile">Since version</th>
 				</tr>
 				<tr *ngFor="let m of members">
 					<td>{{m.lastName}}, {{m.firstName}}</td>
-					<td>{{m.institution}}</td>
-					<td>AIMe {{m.version}}</td>
+					<td class="is-hidden-mobile">{{m.institution}}</td>
+					<td class="is-hidden-mobile">AIMe {{m.version}}</td>
 				</tr>
 			</table>
 		</div>
@@ -79,7 +106,7 @@
 		<div class="content">
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/featurecloud.png">
 						</figure>
@@ -124,7 +151,7 @@
 			<h6 class="title is-6">Frontend</h6>
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/angular.png">
 						</figure>
@@ -160,7 +187,7 @@
 			</div>
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/typescript.png">
 						</figure>
@@ -196,7 +223,7 @@
 			</div>
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/bulma.png">
 						</figure>
@@ -233,7 +260,7 @@
 			<h6 class="title is-6">Backend</h6>
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/golang.png">
 						</figure>
@@ -270,7 +297,7 @@
 			<h6 class="title is-6">Development and deployment</h6>
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/gitlab.png">
 						</figure>
@@ -308,7 +335,7 @@
 			</div>
 			<div class="box">
 				<article class="media">
-					<div class="media-left">
+					<div class="media-left is-hidden-mobile">
 						<figure class="image is-128x128">
 							<img src="/assets/logo/cloudflare.png">
 						</figure>
