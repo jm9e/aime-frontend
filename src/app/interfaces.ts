@@ -275,6 +275,7 @@ export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
 export interface IReport {
 	id: string;
 	title: string;
+	authors: string[];
 	date: Date;
 	revisions: number;
 	issues: number;
