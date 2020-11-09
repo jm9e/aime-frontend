@@ -2,11 +2,13 @@
   <div class="modal-background" (click)="reportCited = null"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Cite AIMe Report {{reportCited.id}}</p>
+      <p class="modal-card-title">Cite AIMe report {{reportCited.id}}</p>
       <button class="delete" aria-label="close" (click)="reportCited = null"></button>
     </header>
     <section class="modal-card-body">
-      <h2 class="is-4">BibTeX</h2>
+			<h2 class="title is-6">Direct link</h2>
+			<pre class="mb-5">https://aime.report/{{reportCited.id}}</pre>
+      <h2 class="title is-6">BibTeX</h2>
       <app-cite-report [id]="reportCited.id"></app-cite-report>
       <br>
       <p>
