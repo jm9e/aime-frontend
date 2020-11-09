@@ -3,13 +3,12 @@ import {Routes, RouterModule} from '@angular/router';
 import {QuestionnaireComponent} from './pages/questionnaire/questionnaire.component';
 import {IndexComponent} from './pages/index/index.component';
 import {DatabaseComponent} from './pages/database/database.component';
-import {SurveyComponent} from './pages/survey/survey.component';
 import {AboutComponent} from './pages/about/about.component';
 import {SpecificationComponent} from './pages/specification/specification.component';
 import {ReportComponent} from './pages/report/report.component';
 import {ContributeComponent} from './pages/contribute/contribute.component';
 import {IssueComponent} from './pages/issue/issue.component';
-import {LegalNoticeComponent} from "./pages/legal-notice/legal-notice.component";
+import {LegalNoticeComponent} from './pages/legal-notice/legal-notice.component';
 
 
 const routes: Routes = [
@@ -24,10 +23,6 @@ const routes: Routes = [
 	{
 		path: 'database',
 		component: DatabaseComponent,
-	},
-	{
-		path: 'survey',
-		component: SurveyComponent,
 	},
 	{
 		path: 'specification',
