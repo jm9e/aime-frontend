@@ -88,6 +88,12 @@
 					<ngx-monaco-editor style="height: 100%" [options]="{language: 'yaml', readOnly: true}" [(ngModel)]="yamlSpec"></ngx-monaco-editor>
 				</div>
 			</div>
+			<footer class="card-footer" *ngIf="showSpec">
+				<a href="/assets/questionnaire.yaml" class="card-footer-item" download>
+					<span class="icon"><i class="fa fa-download"></i></span>
+					<span>Download</span>
+				</a>
+			</footer>
 		</div>
 	</div>
 </section>
