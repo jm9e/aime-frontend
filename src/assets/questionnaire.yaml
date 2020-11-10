@@ -45,15 +45,15 @@ children:
           suggestionUrl: https://aime-registry.org/api/keywords?format=list
           options:
             - key: omics
-              value: Omics
+              value: omics
             - key: clinical
-              value: Clinical
+              value: clinical
             - key: medical_speciality
-              value: Medical speciality
+              value: medical speciality
             - key: endocrinology
-              value: Endocrinology
+              value: endocrinology
             - key: cardiology
-              value: Cardiology
+              value: cardiology
           minLength: 2
           maxLength: 10
       - id: '6'
