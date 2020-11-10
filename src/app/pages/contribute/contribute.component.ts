@@ -1,7 +1,7 @@
 import {Component, EventEmitter, NgZone, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {createDefaults, IQuestion, validateRec} from '../../interfaces';
+import {createDefaults, getter, IQuestion, validateRec} from '../../interfaces';
 
 declare var grecaptcha;
 
@@ -94,6 +94,10 @@ export class ContributeComponent implements OnInit {
 
 	public captchaLoaded = false;
 
+	public getter = (id: string) => {
+		return getter(this.questions, this.answers, id.split('.'));
+	};
+
 	constructor(private http: HttpClient, private zone: NgZone) {
 	}
 
@@ -105,7 +109,9 @@ export class ContributeComponent implements OnInit {
 
 	public async submitSurvey() {
 		this.validationTrigger.next();
-		this.validationErrors = validateRec('', this.questions, this.answers);
+		this.validationErrors = validateRec('', this.questions, this.answers, (id: string) => {
+			return getter(this.questions, this.answers, id.split('.'));
+		});
 
 		if (this.validationErrors.length > 0) {
 			return;

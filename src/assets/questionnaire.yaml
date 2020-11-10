@@ -103,6 +103,7 @@ children:
         default: true
         title: Appear in search
         question: Specify whether the AI should appear in the search.
+        validate: '!val && getter("MD.4") ? "Must be checked if MD.4 is provided." : undefined'
       - id: '9'
         type: list
         title: Other report or checklist

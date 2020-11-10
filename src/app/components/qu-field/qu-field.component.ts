@@ -16,6 +16,7 @@ export class QuFieldComponent implements OnInit {
 	@Input() value: any;
 	@Input() hideId = false;
 	@Input() interactive = false;
+	@Input() getter: (id: string) => any;
 	@Input() validationTrigger: EventEmitter<void>;
 	@Output() valueChange = new EventEmitter();
 	@Output() raiseIssue = new EventEmitter<IIssueReference>();
@@ -89,8 +90,6 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	public addTag(value: string, custom: boolean) {
-		console.log('add tag', value, custom);
-
 		if (!this.value) {
 			this.value = [];
 		}
@@ -197,7 +196,7 @@ export class QuFieldComponent implements OnInit {
 	}
 
 	public validate() {
-		const {valid, msg} = validate(this.question, this.value);
+		const {valid, msg} = validate(this.question, this.value, this.getter);
 		this.valid = valid;
 		this.validMessage = msg;
 	}

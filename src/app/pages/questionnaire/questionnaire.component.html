@@ -42,7 +42,7 @@
             </div>
           </header>
           <div class="card-content">
-            <app-qu-field [hideId]="true" [id]="[s.short]" [question]="getSection(s.short)" [(value)]="answers[s.short]" (valueChange)="handleAnswerChange()" [validationTrigger]="validationTrigger">
+            <app-qu-field [hideId]="true" [id]="[s.short]" [question]="getSection(s.short)" [(value)]="answers[s.short]" [getter]="getter" (valueChange)="handleAnswerChange()" [validationTrigger]="validationTrigger">
             </app-qu-field>
           </div>
         </div>

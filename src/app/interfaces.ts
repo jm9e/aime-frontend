@@ -26,6 +26,7 @@ export interface IQuestion {
 	help?: string;
 
 	condition?: (value: any) => boolean;
+	validate?: (value: any, getter?: (id: string) => any) => string | undefined;
 	scores?: {
 		validation?: (value: any) => number;
 		reproducibility?: (value: any) => number;
@@ -89,7 +90,30 @@ export function createDefaults(q: IQuestion): any {
 	return JSON.parse(JSON.stringify(q.default));
 }
 
-export function validate(q: IQuestion, a: any): { valid: boolean, msg?: string } {
+export function getter(q: IQuestion, a: any, id: string[]): any {
+	if (id.length === 0) {
+		return a;
+	}
+	if (q.type === 'complex') {
+		for (const c of q.children) {
+			if (c.id === id[0]) {
+				return getter(c, a[id[0]], id.splice(1));
+			}
+		}
+		return undefined;
+	}
+	if (q.type === 'list') {
+		return getter(q.child, a[Number.parseInt(id[0], 10)], id.splice(1));
+	}
+}
+
+export function validate(q: IQuestion, a: any, g: (id: string) => any): { valid: boolean, msg?: string } {
+	if (typeof q.validate === 'function') {
+		const msg = q.validate(a, g);
+		if (typeof msg !== 'undefined') {
+			return {valid: false, msg}
+		}
+	}
 	if (q.type === 'string' || q.type === 'text') {
 		if (q.optional || a) {
 			if (a && q.config) {
@@ -156,9 +180,9 @@ export function validate(q: IQuestion, a: any): { valid: boolean, msg?: string }
 	return {valid: false, msg: 'Validation error (unknown type).'};
 }
 
-export function validateRec(prefix: string, q: IQuestion, a: any): { id: string, msg: string }[] {
+export function validateRec(prefix: string, q: IQuestion, a: any, g: (id: string) => any): { id: string, msg: string }[] {
 	const msgs: { id: string, msg: string }[] = [];
-	const {valid, msg} = validate(q, a);
+	const {valid, msg} = validate(q, a, g);
 	if (!valid) {
 		if (q.id) {
 			if (prefix) {
@@ -176,7 +200,7 @@ export function validateRec(prefix: string, q: IQuestion, a: any): { id: string,
 			prefix += q.id;
 		}
 		for (let i = 0; i < a.length; i++) {
-			msgs.push(...validateRec(prefix + '.' + (i + 1), q.child, a[i]));
+			msgs.push(...validateRec(prefix + '.' + (i + 1), q.child, a[i], g));
 		}
 	} else if (q.type === 'complex') {
 		if (q.id) {
@@ -187,7 +211,7 @@ export function validateRec(prefix: string, q: IQuestion, a: any): { id: string,
 		}
 		for (const s of q.children) {
 			if (typeof s.condition === 'undefined' || s.condition(a)) {
-				msgs.push(...validateRec(prefix, s, a[s.id]));
+				msgs.push(...validateRec(prefix, s, a[s.id], g));
 			}
 		}
 	}
@@ -290,6 +314,9 @@ export function parseQuestions(jsonSpec: any): IQuestion {
 	const parseFunctions = (q) => {
 		if (typeof q.condition === 'string') {
 			q.condition = new Function('val', 'return ' + q.condition);
+		}
+		if (typeof q.validate === 'string') {
+			q.validate = new Function('val', 'getter', 'return ' + q.validate);
 		}
 		if (typeof q.scores !== 'undefined') {
 			if (typeof q.scores.validation === 'string') {

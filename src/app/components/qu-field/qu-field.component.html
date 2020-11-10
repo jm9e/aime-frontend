@@ -249,6 +249,7 @@
 			[question]="question.child"
 			[value]="value[i]"
 			[validationTrigger]="validationTrigger"
+			[getter]="getter"
 			(valueChange)="value[i] = $event; valueChange.emit(value)"
 			(raiseIssue)="raiseIssue.emit($event)">
     </app-qu-field>
@@ -309,6 +310,7 @@
 			[question]="s"
 			[value]="value[s.id]"
 			[validationTrigger]="validationTrigger"
+			[getter]="getter"
 			(valueChange)="value[s.id] = $event; valueChange.emit(value)"
 			(raiseIssue)="raiseIssue.emit($event)">
     </app-qu-field>

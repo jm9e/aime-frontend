@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {IQuestion, createDefaults, validateRec, parseQuestions} from '../../interfaces';
+import {IQuestion, createDefaults, validateRec, parseQuestions, getter} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../environments/environment';
@@ -41,6 +41,10 @@ export class QuestionnaireComponent implements OnInit {
 	];
 
 	public questions: IQuestion = {type: 'complex', children: []};
+
+	public getter = (id: string) => {
+		return getter(this.questions, this.answers, id.split('.'));
+	};
 
 	constructor(private http: HttpClient, private route: ActivatedRoute) {
 		this.http.get('assets/questionnaire.yaml', {
@@ -152,7 +156,7 @@ export class QuestionnaireComponent implements OnInit {
 
 	public validate() {
 		this.validationTrigger.next();
-		this.validationErrors = validateRec('', this.questions, this.answers);
+		this.validationErrors = validateRec('', this.questions, this.answers, this.getter);
 	}
 
 	public updateFields() {
