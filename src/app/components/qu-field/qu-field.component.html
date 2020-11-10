@@ -170,6 +170,12 @@
 				<span>
           {{question.question}}
         </span>
+				<span *ngIf="question.scores?.reproducibility" [class.is-light]="question.scores.reproducibility(value) === 0" [class.is-info]="question.scores.reproducibility(value) !== undefined" class="tag is-small is-info" title="Affects reproducibility score">
+					<i class="fa fa-star-half-alt"></i>
+				</span>
+				<span *ngIf="question.scores?.validation" [class.is-light]="question.scores.validation(value) === 0" [class.is-warning]="question.scores.validation(value) !== undefined" class="tag is-small is-light" title="Affects validation score">
+					<i class="fa fa-star-half-alt"></i>
+				</span>
 				<span *ngIf="question.optional" class="tag is-light">
           Optional
         </span>

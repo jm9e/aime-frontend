@@ -70,7 +70,7 @@ export class DatabaseComponent implements OnInit {
 		this.http.get<{ keywords: IKeyword[] }>(`${environment.api}keywords`)
 			.subscribe((resp) => {
 				this.keywords = resp.keywords
-					.filter((k) => k.count > 1)
+					.filter((k) => k.count > 0)
 					.sort((a, b) => {
 						if (a.keyword.toLowerCase() > b.keyword.toLowerCase()) {
 							return 1;
