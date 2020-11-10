@@ -54,7 +54,7 @@ children:
               value: endocrinology
             - key: cardiology
               value: cardiology
-          minLength: 2
+          minLength: 4
           maxLength: 10
       - id: '6'
         type: list
