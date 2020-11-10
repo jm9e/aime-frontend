@@ -68,7 +68,7 @@
 						<div class="control" *ngFor="let k of keywords">
 							<label class="checkbox">
 								<input type="checkbox" [(ngModel)]="keywordsActivated[k.keyword]" (ngModelChange)="search()" />
-								{{k.keyword}}
+								{{k.keyword}} ({{k.count}})
 							</label>
 						</div>
 					</div>

@@ -13,7 +13,7 @@ export class DatabaseComponent implements OnInit {
 
 	public keywords: IKeyword[] = [];
 
-	public categories: {category: string; name: string}[] = [
+	public categories: { category: string; name: string }[] = [
 		{category: 'Classification', name: 'Classification'},
 		{category: 'Continuous estimation / Regression', name: 'Continuous estimation / Regression'},
 		{category: 'Clustering', name: 'Clustering'},
@@ -24,7 +24,7 @@ export class DatabaseComponent implements OnInit {
 		{category: 'Other', name: 'Other'},
 	];
 
-	public sections: {id: string; name: string}[] = [
+	public sections: { id: string; name: string }[] = [
 		{id: 'MD', name: 'Metadata'},
 		{id: 'P', name: 'Purpose'},
 		{id: 'D', name: 'Data'},
@@ -69,13 +69,15 @@ export class DatabaseComponent implements OnInit {
 	ngOnInit() {
 		this.http.get<{ keywords: IKeyword[] }>(`${environment.api}keywords`)
 			.subscribe((resp) => {
-				this.keywords = resp.keywords.sort((a, b) => {
-					if (a.keyword.toLowerCase() > b.keyword.toLowerCase()) {
-						return 1;
-					} else {
-						return -1;
-					}
-				});
+				this.keywords = resp.keywords
+					.filter((k) => k.count > 1)
+					.sort((a, b) => {
+						if (a.keyword.toLowerCase() > b.keyword.toLowerCase()) {
+							return 1;
+						} else {
+							return -1;
+						}
+					});
 			});
 	}
 
