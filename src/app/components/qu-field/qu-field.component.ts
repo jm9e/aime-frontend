@@ -199,6 +199,10 @@ export class QuFieldComponent implements OnInit {
 		const {valid, msg} = validate(this.question, this.value, this.getter);
 		this.valid = valid;
 		this.validMessage = msg;
+
+		if (this.question.type === 'string' || this.question.type === 'text') {
+
+		}
 	}
 
 	public blurResults() {

@@ -118,10 +118,10 @@ export function validate(q: IQuestion, a: any, g: (id: string) => any): { valid:
 		if (q.optional || a) {
 			if (a && q.config) {
 				if (typeof q.config.maxLength !== 'undefined' && a.length > q.config.maxLength) {
-					return {valid: false, msg: `Maximum length of ${q.config.maxLength} exceeded.`};
+					return {valid: false, msg: `Maximum length of ${q.config.maxLength} exceeded by ${a.length - q.config.maxLength} characters.`};
 				}
 				if (typeof q.config.minLength !== 'undefined' && a.length < q.config.minLength) {
-					return {valid: false, msg: `Minimum length of ${q.config.minLength} not reached.`};
+					return {valid: false, msg: `Minimum length of ${q.config.minLength} missed by ${q.config.minLength - a.length} characters.`};
 				}
 			}
 			return {valid: true};
@@ -132,7 +132,7 @@ export function validate(q: IQuestion, a: any, g: (id: string) => any): { valid:
 		if (q.optional || a.length > 0) {
 			if (a.length > 0 && q.config) {
 				if (typeof q.config.maxLength !== 'undefined' && a.length > q.config.maxLength) {
-					return {valid: false, msg: `Maximum number of ${q.config.maxLength} exceeded.`};
+					return {valid: false, msg: `Maximum number of ${q.config.maxLength} exceeded by ${a.length - q.config.maxLength}.`};
 				}
 				if (typeof q.config.minLength !== 'undefined' && a.length < q.config.minLength) {
 					return {valid: false, msg: `Minimum number of ${q.config.minLength} not reached.`};

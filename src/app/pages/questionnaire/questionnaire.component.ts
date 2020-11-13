@@ -187,4 +187,14 @@ export class QuestionnaireComponent implements OnInit {
 		}
 	}
 
+	public newReport() {
+		this.step = 1;
+		this.id = '';
+		this.password = '';
+		this.revising = false;
+		this.submitted = false;
+
+		this.reset();
+	}
+
 }
