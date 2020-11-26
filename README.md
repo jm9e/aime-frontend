@@ -1,27 +1,23 @@
-# AimeFrontend
+# AIMe Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.6.
+AIMe website: https://aime-registry.org
 
-## Development server
+## Build instructions
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Make sure you have NodeJS installed: https://nodejs.org
 
-## Code scaffolding
+Install dependencies:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`npm install`
 
-## Build
+Run the frontend on a local dev server:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+`npm run start`
 
-## Running unit tests
+## Dependencies
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Dependencies can be found in the `package.json` file.
 
-## Running end-to-end tests
+## Supported platforms
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The source code should work on all platforms NodeJS supports. See also https://nodejs.org/en/download/
