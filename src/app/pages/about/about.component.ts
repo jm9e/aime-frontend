@@ -8,6 +8,9 @@ type aimeVersion = '2021.0';
 })
 export class AboutComponent implements OnInit {
 
+	public showExecutive = true;
+	public showSteering = true;
+
 	public executives: {firstName: string; lastName: string; sortName?: string; institution: string, country: string; version: aimeVersion}[] = [
 		{firstName: 'Julian', lastName: 'Matschinske', institution: 'University of Hamburg', country: 'Germany', version: '2021.0'},
 		{firstName: 'David B.', lastName: 'Blumenthal', institution: 'FAU Erlangen-Nuremberg', country: 'Germany', version: '2021.0'},
@@ -55,6 +58,7 @@ export class AboutComponent implements OnInit {
 			return 0;
 		};
 
+		this.executives = this.executives.sort(sortFunc);
 		this.members = this.members.sort(sortFunc);
 	}
 

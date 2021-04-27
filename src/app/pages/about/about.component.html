@@ -82,19 +82,29 @@
 				The AIMe executive board is responsible for coordinating the yearly reviews of the AIMe standard and for
 				hosting and technical maintenance of the AIMe platform.
 			</p>
-			<h3 class="title is-6">Members</h3>
-			<table>
-				<tr>
-					<th>Name</th>
-					<th class="is-hidden-mobile">Institution</th>
-					<th class="is-hidden-mobile">Since version</th>
-				</tr>
-				<tr *ngFor="let m of executives">
-					<td>{{m.firstName}} {{m.lastName}}</td>
-					<td class="is-hidden-mobile">{{m.institution}}</td>
-					<td class="is-hidden-mobile">AIMe {{m.version}}</td>
-				</tr>
-			</table>
+			<h3 class="title is-6">
+				{{executives.length}} Members
+				<span class="is-pulled-right has-text-weight-light">
+					<a (click)="showExecutive = !showExecutive">
+						<span *ngIf="showExecutive"><i class="fal fa-chevron-double-up"></i> Collapse</span>
+						<span *ngIf="!showExecutive"><i class="fal fa-chevron-double-down"></i> Expand</span>
+					</a>
+				</span>
+			</h3>
+			<div class="table-container" *ngIf="showExecutive">
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Institution</th>
+						<th>Since version</th>
+					</tr>
+					<tr *ngFor="let m of executives">
+						<td>{{m.firstName}} {{m.lastName}}</td>
+						<td>{{m.institution}}</td>
+						<td>AIMe {{m.version}}</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </section>
@@ -106,21 +116,31 @@
 		</h2>
 		<div class="content">
 			<p>
-				The AIMe steering committee maintains the AIMe specification and has currently {{members.length}} members.
+				The AIMe steering committee maintains the AIMe specification and reviews it at least once a year.
 			</p>
-			<h3 class="title is-6">Members</h3>
-			<table>
-				<tr>
-					<th>Name</th>
-					<th class="is-hidden-mobile">Institution</th>
-					<th class="is-hidden-mobile">Since version</th>
-				</tr>
-				<tr *ngFor="let m of members">
-					<td>{{m.firstName}} {{m.lastName}}</td>
-					<td class="is-hidden-mobile">{{m.institution}}</td>
-					<td class="is-hidden-mobile">AIMe {{m.version}}</td>
-				</tr>
-			</table>
+			<h3 class="title is-6">
+				{{members.length}} Members
+				<span class="is-pulled-right has-text-weight-light">
+					<a (click)="showSteering = !showSteering">
+						<span *ngIf="showSteering"><i class="fal fa-chevron-double-up"></i> Collapse</span>
+						<span *ngIf="!showSteering"><i class="fal fa-chevron-double-down"></i> Expand</span>
+					</a>
+				</span>
+			</h3>
+			<div class="table-container" *ngIf="showSteering">
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Institution</th>
+						<th>Since version</th>
+					</tr>
+					<tr *ngFor="let m of members">
+						<td>{{m.firstName}} {{m.lastName}}</td>
+						<td>{{m.institution}}</td>
+						<td>AIMe {{m.version}}</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </section>
