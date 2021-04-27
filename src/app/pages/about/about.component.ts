@@ -8,11 +8,17 @@ type aimeVersion = '2021.0';
 })
 export class AboutComponent implements OnInit {
 
+	public executives: {firstName: string; lastName: string; sortName?: string; institution: string, country: string; version: aimeVersion}[] = [
+		{firstName: 'Julian', lastName: 'Matschinske', institution: 'University of Hamburg', country: 'Germany', version: '2021.0'},
+		{firstName: 'David B.', lastName: 'Blumenthal', institution: 'FAU Erlangen-Nuremberg', country: 'Germany', version: '2021.0'},
+		{firstName: 'Jan', lastName: 'Baumbach', institution: 'University of Hamburg; University of Southern Denmark', country: 'Germany; Denmark', version: '2021.0'},
+	];
+
 	public members: {firstName: string; lastName: string; sortName?: string; institution: string, country: string; version: aimeVersion}[] = [
-		{firstName: 'David B.', lastName: 'Blumenthal', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
-		{firstName: 'Julian', lastName: 'Matschinske', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
-		{firstName: 'Jan', lastName: 'Baumbach', institution: 'Technical University of Munich; University of Southern Denmark', country: 'Germany; Denmark', version: '2021.0'},
-		{firstName: 'Nina', lastName: 'Wenke', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
+		{firstName: 'David B.', lastName: 'Blumenthal', institution: 'FAU Erlangen-Nuremberg', country: 'Germany', version: '2021.0'},
+		{firstName: 'Julian', lastName: 'Matschinske', institution: 'University of Hamburg', country: 'Germany', version: '2021.0'},
+		{firstName: 'Jan', lastName: 'Baumbach', institution: 'University of Hamburg; University of Southern Denmark', country: 'Germany; Denmark', version: '2021.0'},
+		{firstName: 'Nina', lastName: 'Wenke', institution: 'University of Hamburg', country: 'Germany', version: '2021.0'},
 		{firstName: 'Olga', lastName: 'Lazareva', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
 		{firstName: 'Olga', lastName: 'Zolotareva', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
 		{firstName: 'Zakaria', lastName: 'Louadi', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
@@ -20,7 +26,7 @@ export class AboutComponent implements OnInit {
 		{firstName: 'Arriel', lastName: 'Benis', institution: 'Holon Institute of Technology', country: 'Israel', version: '2021.0'},
 		{firstName: 'Martin', lastName: 'Golebiewski', institution: 'HITS gGmbH', country: 'Germany', version: '2021.0'},
 		{firstName: 'Dominik G.', lastName: 'Grimm', institution: 'Technical University of Munich; Weihenstephan-Triesdorf University of Applied Sciences', country: 'Germany', version: '2021.0'},
-		{firstName: 'Lukas', lastName: 'Heumos', institution: 'University of Tübingen', country: 'Germany', version: '2021.0'},
+		{firstName: 'Lukas', lastName: 'Heumos', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
 		{firstName: 'Tim', lastName: 'Kacprowski', institution: 'Technical University of Braunschweig', country: 'Germany', version: '2021.0'},
 		{firstName: 'Josch', lastName: 'Pauling', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
 		{firstName: 'Markus', lastName: 'List', institution: 'Technical University of Munich', country: 'Germany', version: '2021.0'},
@@ -37,7 +43,7 @@ export class AboutComponent implements OnInit {
 	];
 
 	constructor() {
-		this.members = this.members.sort((a, b) => {
+		const sortFunc = (a, b) => {
 			const aName = a.sortName ?? a.lastName;
 			const bName = b.sortName ?? b.lastName;
 			if (aName > bName) {
@@ -47,7 +53,9 @@ export class AboutComponent implements OnInit {
 				return -1;
 			}
 			return 0;
-		});
+		};
+
+		this.members = this.members.sort(sortFunc);
 	}
 
 	ngOnInit() {
