@@ -20,6 +20,7 @@ import {ReportComponent as ReportComponentPage} from './pages/report/report.comp
 import {IssueComponent} from './components/issue/issue.component';
 import {IssueComponent as IssueComponentPage} from './pages/issue/issue.component';
 import { LegalNoticeComponent } from './pages/legal-notice/legal-notice.component';
+import { CiteAimeComponent } from './components/cite-aime/cite-aime.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
 	baseUrl: 'assets',
@@ -45,6 +46,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
 		IssueComponent,
 		IssueComponent,
 		LegalNoticeComponent,
+		CiteAimeComponent,
 	],
 	imports: [
 		HttpClientModule,
