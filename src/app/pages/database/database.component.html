@@ -2,7 +2,7 @@
   <div class="modal-background" (click)="reportCited = null"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Cite AIMe report {{reportCited.id}}</p>
+      <p class="modal-card-title">Cite AIMe report <span class="aime-id">{{reportCited.id}}</span></p>
       <button class="delete" aria-label="close" (click)="reportCited = null"></button>
     </header>
     <section class="modal-card-body">
@@ -109,7 +109,7 @@
 							<td class="is-hidden-mobile">
 								<a [routerLink]="['/report', result.id]">
 									<span class="icon"><i class="fa fa-file-certificate"></i></span>
-									<span>{{result.id}}</span>
+									<span class="aime-id">{{result.id}}</span>
 								</a>
 							</td>
 							<td>

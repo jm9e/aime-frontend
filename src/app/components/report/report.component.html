@@ -3,7 +3,7 @@
 		AIMe report (preview)
 	</header>
 	<header class="message-header" *ngIf="id">
-		AIMe report {{id}}
+		<span><i class="fa fa-file-certificate"></i> AIMe report <span class="aime-id">{{id}}</span></span>
 		<span *ngIf="revision">Revision #{{revision}}</span>
 	</header>
 

@@ -94,7 +94,7 @@
 
 			<article class="message mt-5 mb-5">
 				<header class="message-header">
-					Issues for report {{id}}
+					Issues for report <span class="aime-id">{{id}}</span>
 				</header>
 
 				<div class="message-body">
@@ -127,10 +127,10 @@
 		<div *ngIf="error" class="notification is-danger">
 			<span class="icon"><i class="fas fa-ban"></i></span>
 			<span *ngIf="targetVersion === 0">
-				AIMe report {{id}} could not be found.
+				AIMe report <span class="aime-id">{{id}}</span> could not be found.
 			</span>
 			<span *ngIf="targetVersion > 0">
-				Revision {{targetVersion}} of AIMe report {{id}} could not be found.
+				Revision {{targetVersion}} of AIMe report <span class="aime-id">{{id}}</span> could not be found.
 			</span>
 			<p>
 				Try searching the <a [routerLink]="['/database']">AIMe database</a>.
