@@ -17,11 +17,13 @@ export class CiteReportComponent implements OnInit {
 		this.http.get<any>(`${environment.api}report/${id}`).subscribe((data) => {
 			this.title = data.answers.MD['1'];
 			this.authors = data.answers.MD['6'].map((contact) => contact['1'] as string);
+			this.year = new Date(data.createdAt).getUTCFullYear();
 		});
 	}
 
-	public title: string = '';
+	public title = '';
 	public authors: string[] = [];
+	public year: number;
 
 	constructor(private http: HttpClient) {
 	}
