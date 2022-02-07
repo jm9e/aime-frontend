@@ -9,6 +9,7 @@ import {ReportComponent} from './pages/report/report.component';
 import {ContributeComponent} from './pages/contribute/contribute.component';
 import {IssueComponent} from './pages/issue/issue.component';
 import {LegalNoticeComponent} from './pages/legal-notice/legal-notice.component';
+import {AdminComponent} from "./components/admin/admin.component";
 
 
 const routes: Routes = [
@@ -51,6 +52,10 @@ const routes: Routes = [
 	{
 		path: 'legal-notice',
 		component: LegalNoticeComponent,
+	},
+	{
+		path: 'admin',
+		component: AdminComponent,
 	},
 ];
 
