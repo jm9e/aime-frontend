@@ -1,331 +1,333 @@
-<div class="container mb-5" *ngIf="token">
-	<h2 class="title is-3">
-		Admin area
-		<button (click)="logout()" class="button is-small is-warning is-pulled-right">
-			<span class="icon"><i class="fal fa-sign-out"></i></span>
-			<span>Logout</span>
-		</button>
-	</h2>
-	<h3 class="subtitle is-6 has-text-grey-light">
-		logged in as {{token.email}} since {{token.createdAt | date: 'medium'}}
-	</h3>
-</div>
-
-<div class="container mb-5" *ngIf="!token">
-	<div class="content">
-		<div class="notification is-warning">
-			<i class="fal fa-exclamation-triangle"></i> Login required
-		</div>
+<div *ngIf="token">
+	<div class="container mb-5">
+		<h2 class="title is-3">
+			Admin area
+			<button (click)="logout()" class="button is-small is-warning is-pulled-right">
+				<span class="icon"><i class="fal fa-sign-out"></i></span>
+				<span>Logout</span>
+			</button>
+		</h2>
+		<h3 class="subtitle is-6 has-text-grey-light">
+			logged in as {{token.email}} since {{token.createdAt | date: 'medium'}}
+		</h3>
 	</div>
-</div>
-
-<div class="container mb-5" *ngIf="token">
-	<h2 class="title is-4">
-		Message
-	</h2>
-	<h3 class="subtitle is-6 has-text-grey-light">
-		Write an email to all consortium members and see all past messages.
-	</h3>
-	<div class="content">
-		<div class="field is-horizontal">
-			<div class="field-label is-normal">
-				<label class="label" for="message">Subject</label>
+	<div class="container mb-5">
+		<h2 class="title is-4">
+			Message
+		</h2>
+		<h3 class="subtitle is-6 has-text-grey-light">
+			Write an email to all consortium members and see all past messages.
+		</h3>
+		<div class="content">
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					<label class="label" for="message">Subject</label>
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<p class="control">
+							<input [(ngModel)]="subject" name="subject" class="input" id="subject" placeholder="Subject...">
+						</p>
+					</div>
+				</div>
 			</div>
-			<div class="field-body">
-				<div class="field">
-					<p class="control">
-						<input [(ngModel)]="subject" name="subject" class="input" id="subject" placeholder="Subject...">
-					</p>
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+					<label class="label" for="message">Message</label>
+				</div>
+				<div class="field-body">
+					<div class="field">
+						<p class="control">
+							<textarea [(ngModel)]="message" name="message" class="input" id="message" placeholder="Message..."></textarea>
+						</p>
+						<p class="help">
+							String templates for subject and message: <code>%FIRST_NAME%</code>, <code>%LAST_NAME%</code>, <code>%EMAIL%</code>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="field is-horizontal">
+				<div class="field-label is-normal">
+				</div>
+				<div class="field-body">
+					<button class="button is-success is-small mb-3" (click)="sendMessage()" [disabled]="!message || !subject">
+						<span class="icon"><i class="fal fa-paper-plane"></i></span>
+						<span>Send</span>
+					</button>
 				</div>
 			</div>
 		</div>
-		<div class="field is-horizontal">
-			<div class="field-label is-normal">
-				<label class="label" for="message">Message</label>
-			</div>
-			<div class="field-body">
-				<div class="field">
-					<p class="control">
-						<textarea [(ngModel)]="message" name="message" class="input" id="message" placeholder="Message..."></textarea>
-					</p>
-					<p class="help">
-						String templates for subject and message: <code>%FIRST_NAME%</code>, <code>%LAST_NAME%</code>, <code>%EMAIL%</code>
-					</p>
-				</div>
-			</div>
-		</div>
-		<div class="field is-horizontal">
-			<div class="field-label is-normal">
-			</div>
-			<div class="field-body">
-				<button class="button is-success is-small mb-3" (click)="sendMessage()" [disabled]="!message || !subject">
-					<span class="icon"><i class="fal fa-paper-plane"></i></span>
-					<span>Send</span>
-				</button>
+
+		<h4 class="title is-5">
+			Past messages ({{messages ? messages.length : 0}})
+		</h4>
+		<div class="content">
+			<div class="table-container" *ngIf="messages && messages.length > 0">
+				<table>
+					<tr>
+						<th>Subject</th>
+						<th>Sender</th>
+						<th>Date</th>
+						<th></th>
+					</tr>
+					<tr *ngFor="let m of messages">
+						<td>{{m.subject}}</td>
+						<td>{{m.senderEmail}}</td>
+						<td>{{m.createdAt | date: 'medium'}}</td>
+						<td>
+							<div class="buttons are-small">
+								<button class="button is-success" (click)="subject = m.subject; message = m.message">
+									<span class="icon"><i class="fal fa-share"></i></span>
+								</button>
+							</div>
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
 
-	<h4 class="title is-5">
-		Past messages ({{messages ? messages.length : 0}})
-	</h4>
-	<div class="content">
-		<div class="table-container" *ngIf="messages && messages.length > 0">
-			<table>
-				<tr>
-					<th>Subject</th>
-					<th>Sender</th>
-					<th>Date</th>
-					<th></th>
-				</tr>
-				<tr *ngFor="let m of messages">
-					<td>{{m.subject}}</td>
-					<td>{{m.senderEmail}}</td>
-					<td>{{m.createdAt | date: 'medium'}}</td>
-					<td>
-						<div class="buttons are-small">
-							<button class="button is-success" (click)="subject = m.subject; message = m.message">
-								<span class="icon"><i class="fal fa-share"></i></span>
-							</button>
+	<div class="container mb-5">
+		<h2 class="title is-4">
+			Committee members ({{members ? members.length : 0}})
+		</h2>
+		<h3 class="subtitle is-6 has-text-grey-light">
+			Manage the list of committee members.
+		</h3>
+		<div class="content">
+			<button class="button is-success is-small mb-3" (click)="addMember()">
+				<span class="icon"><i class="fal fa-user-plus"></i></span>
+				<span>Add committee member</span>
+			</button>
+			<div class="table-container" *ngIf="members && members.length > 0">
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Institution</th>
+						<th>Executive</th>
+						<th class="action-bar"></th>
+					</tr>
+					<tr *ngFor="let m of members">
+						<td>{{m.firstName}} {{m.lastName}}</td>
+						<td *ngIf="m.email">{{m.email}}</td>
+						<td *ngIf="!m.email"><i>None</i></td>
+						<td>{{m.institution}}</td>
+						<td *ngIf="m.executive"><i class="fal fa-check"></i></td>
+						<td *ngIf="!m.executive"><i class="fal fa-times"></i></td>
+						<td>
+							<div class="buttons are-small">
+								<button class="button is-primary" (click)="editMember(m)">
+									<span class="icon"><i class="fal fa-edit"></i></span>
+								</button>
+								<button class="button is-danger" (click)="deleteMember(m)">
+									<span class="icon"><i class="fal fa-trash"></i></span>
+								</button>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal is-large" [ngClass]="{'is-active': memberAction}" *ngIf="memberSelected">
+		<div class="modal-background" (click)="resetLoading()"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<p class="modal-card-title" *ngIf="memberAction === 'edit'">
+					<span class="icon mr-3"><i class="fal fa-edit"></i></span>
+					<span>Edit member</span>
+				</p>
+			</header>
+			<section class="modal-card-body">
+				<div *ngIf="notification && notificationType" class="notification is-{{notificationType}}">
+					{{notification}}
+				</div>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="memberEmail">Email</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="memberSelected.email" name="email" type="email" class="input" id="memberEmail"
+											 placeholder="Email..." [disabled]="memberAction === 'delete'">
+							</p>
 						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-<div class="container mb-5">
-	<h2 class="title is-4">
-		Committee members ({{members ? members.length : 0}})
-	</h2>
-	<h3 class="subtitle is-6 has-text-grey-light">
-		Manage the list of committee members.
-	</h3>
-	<div class="content">
-		<button class="button is-success is-small mb-3" (click)="addMember()">
-			<span class="icon"><i class="fal fa-user-plus"></i></span>
-			<span>Add committee member</span>
-		</button>
-		<div class="table-container" *ngIf="members && members.length > 0">
-			<table>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Institution</th>
-					<th>Executive</th>
-					<th class="action-bar"></th>
-				</tr>
-				<tr *ngFor="let m of members">
-					<td>{{m.firstName}} {{m.lastName}}</td>
-					<td *ngIf="m.email">{{m.email}}</td>
-					<td *ngIf="!m.email"><i>None</i></td>
-					<td>{{m.institution}}</td>
-					<td *ngIf="m.executive"><i class="fal fa-check"></i></td>
-					<td *ngIf="!m.executive"><i class="fal fa-times"></i></td>
-					<td>
-						<div class="buttons are-small">
-							<button class="button is-primary" (click)="editMember(m)">
-								<span class="icon"><i class="fal fa-edit"></i></span>
-							</button>
-							<button class="button is-danger" (click)="deleteMember(m)">
-								<span class="icon"><i class="fal fa-trash"></i></span>
-							</button>
+					</div>
+				</div>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="firstName">First name</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="memberSelected.firstName" name="firstName" type="text" class="input" id="firstName"
+											 placeholder="First name..." [disabled]="memberAction === 'delete'">
+							</p>
 						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-<div class="modal is-large" [ngClass]="{'is-active': memberAction}" *ngIf="memberSelected">
-	<div class="modal-background" (click)="resetLoading()"></div>
-	<div class="modal-card">
-		<header class="modal-card-head">
-			<p class="modal-card-title" *ngIf="memberAction === 'edit'">
-				<span class="icon mr-3"><i class="fal fa-edit"></i></span>
-				<span>Edit member</span>
-			</p>
-		</header>
-		<section class="modal-card-body">
-			<div *ngIf="notification && notificationType" class="notification is-{{notificationType}}">
-				{{notification}}
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="memberEmail">Email</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="memberSelected.email" name="email" type="email" class="input" id="memberEmail"
-										 placeholder="Email..." [disabled]="memberAction === 'delete'">
-						</p>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="firstName">First name</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="memberSelected.firstName" name="firstName" type="text" class="input" id="firstName"
-										 placeholder="First name..." [disabled]="memberAction === 'delete'">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="lastName">Last name</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="memberSelected.lastName" name="lastName" type="text" class="input" id="lastName"
+											 placeholder="Last name..." [disabled]="memberAction === 'delete'">
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="lastName">Last name</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="memberSelected.lastName" name="lastName" type="text" class="input" id="lastName"
-										 placeholder="Last name..." [disabled]="memberAction === 'delete'">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="sortName">Sort name</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="memberSelected.sortName" name="sortName" type="text" class="input" id="sortName"
+											 placeholder="Sort name..." [disabled]="memberAction === 'delete'">
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="sortName">Sort name</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="memberSelected.sortName" name="sortName" type="text" class="input" id="sortName"
-										 placeholder="Sort name..." [disabled]="memberAction === 'delete'">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="lastName">Institution</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="memberSelected.institution" name="institution" type="text" class="input"
+											 id="institution" placeholder="Institution..." [disabled]="memberAction === 'delete'">
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="lastName">Institution</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="memberSelected.institution" name="institution" type="text" class="input"
-										 id="institution" placeholder="Institution..." [disabled]="memberAction === 'delete'">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="lastName">Country</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="memberSelected.country" name="country" type="text" class="input" id="country"
+											 placeholder="Country..." [disabled]="memberAction === 'delete'">
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="lastName">Country</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="memberSelected.country" name="country" type="text" class="input" id="country"
-										 placeholder="Country..." [disabled]="memberAction === 'delete'">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="version">Version</label>
+					</div>
+					<div class="field-body">
+						<div class="select">
+							<select [(ngModel)]="memberSelected.version" id="version" name="version"
+											[disabled]="memberAction === 'delete'">
+								<option [ngValue]="'2021.0'">2021.0</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="version">Version</label>
-				</div>
-				<div class="field-body">
-					<div class="select">
-						<select [(ngModel)]="memberSelected.version" id="version" name="version"
-										[disabled]="memberAction === 'delete'">
-							<option [ngValue]="'2021.0'">2021.0</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="executive">
-						Executive
-					</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<label class="checkbox" for="executive">
-							<input id="executive" type="checkbox" [(ngModel)]="memberSelected.executive"
-										 [disabled]="memberAction === 'delete'">
-							Is executive member
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="executive">
+							Executive
 						</label>
 					</div>
+					<div class="field-body">
+						<div class="field">
+							<label class="checkbox" for="executive">
+								<input id="executive" type="checkbox" [(ngModel)]="memberSelected.executive"
+											 [disabled]="memberAction === 'delete'">
+								Is executive member
+							</label>
+						</div>
+					</div>
 				</div>
-			</div>
-		</section>
-		<footer class="modal-card-foot" *ngIf="memberAction === 'delete'">
-			<button class="button is-danger" (click)="deleteMember(memberSelected, true)">
-				<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
-				<span>Delete</span>
-			</button>
-		</footer>
-		<footer class="modal-card-foot" *ngIf="memberAction === 'add'">
-			<button class="button is-success" (click)="editMember(memberSelected, true)">
-				<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
-				<span>Add</span>
-			</button>
-		</footer>
-		<footer class="modal-card-foot" *ngIf="memberAction === 'edit'">
-			<button class="button is-success" (click)="editMember(memberSelected, true)">
-				<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
-				<span>Save</span>
-			</button>
-		</footer>
+			</section>
+			<footer class="modal-card-foot" *ngIf="memberAction === 'delete'">
+				<button class="button is-danger" (click)="deleteMember(memberSelected, true)">
+					<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
+					<span>Delete</span>
+				</button>
+			</footer>
+			<footer class="modal-card-foot" *ngIf="memberAction === 'add'">
+				<button class="button is-success" (click)="editMember(memberSelected, true)">
+					<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
+					<span>Add</span>
+				</button>
+			</footer>
+			<footer class="modal-card-foot" *ngIf="memberAction === 'edit'">
+				<button class="button is-success" (click)="editMember(memberSelected, true)">
+					<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
+					<span>Save</span>
+				</button>
+			</footer>
+		</div>
 	</div>
 </div>
 
-<div class="modal is-large" [ngClass]="{'is-active': !token}">
-	<div class="modal-background"></div>
-	<div class="modal-card">
-		<header class="modal-card-head">
-			<p class="modal-card-title">
-				<span class="icon mr-3"><i class="fal fa-sign-in"></i></span>
-				<span>Login</span>
-			</p>
-		</header>
-		<section class="modal-card-body">
-			<div *ngIf="notification && notificationType" class="notification is-{{notificationType}}">
-				{{notification}}
+<div *ngIf="!token">
+	<div class="container mb-5">
+		<div class="content">
+			<div class="notification is-warning">
+				<i class="fal fa-exclamation-triangle"></i> Login required
 			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="email">Email</label>
+		</div>
+	</div>
+	<div class="modal is-large" [ngClass]="{'is-active': !token}">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<p class="modal-card-title">
+					<span class="icon mr-3"><i class="fal fa-sign-in"></i></span>
+					<span>Login</span>
+				</p>
+			</header>
+			<section class="modal-card-body">
+				<div *ngIf="notification && notificationType" class="notification is-{{notificationType}}">
+					{{notification}}
 				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="loginEmail" name="email" type="email" class="input" id="email"
-										 placeholder="Enter email...">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="email">Email</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="loginEmail" name="email" type="email" class="input" id="email"
+											 placeholder="Enter email...">
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="field is-horizontal">
-				<div class="field-label is-normal">
-					<label class="label" for="email">Password</label>
-				</div>
-				<div class="field-body">
-					<div class="field">
-						<p class="control">
-							<input [(ngModel)]="loginPassword" name="password" type="password" class="input" id="password"
-										 placeholder="Enter password...">
-						</p>
+				<div class="field is-horizontal">
+					<div class="field-label is-normal">
+						<label class="label" for="email">Password</label>
+					</div>
+					<div class="field-body">
+						<div class="field">
+							<p class="control">
+								<input [(ngModel)]="loginPassword" name="password" type="password" class="input" id="password"
+											 placeholder="Enter password...">
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-		<footer class="modal-card-foot">
-			<button class="button is-success" (click)="login()" [disabled]="!loginEmail || !loginPassword">
-				<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
-				<span>Login</span>
-			</button>
-		</footer>
+			</section>
+			<footer class="modal-card-foot">
+				<button class="button is-success" (click)="login()" [disabled]="!loginEmail || !loginPassword">
+					<span class="icon" *ngIf="loading"><i class="fal fa-spinner fa-spin"></i></span>
+					<span>Login</span>
+				</button>
+			</footer>
+		</div>
 	</div>
 </div>
