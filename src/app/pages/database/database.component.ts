@@ -4,6 +4,7 @@ import {IKeyword, IReport} from '../../interfaces';
 import {BehaviorSubject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {MetaService} from "../../services/meta.service";
 
 @Component({
 	templateUrl: './database.component.html',
@@ -53,7 +54,9 @@ export class DatabaseComponent implements OnInit {
 	public pages: number[] = [];
 	private ITEMS_PER_PAGE = 10;
 
-	constructor(private http: HttpClient) {
+	constructor(private meta: MetaService, private http: HttpClient) {
+		meta.setTitle('Database');
+
 		for (const s of this.sections) {
 			this.sectionsActivated[s.id] = true;
 		}

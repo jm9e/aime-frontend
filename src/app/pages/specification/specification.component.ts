@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {IQuestion, parseQuestions} from '../../interfaces';
 import {HttpClient} from '@angular/common/http';
 import YAML from 'yaml';
+import {MetaService} from "../../services/meta.service";
 
 @Component({
 	templateUrl: './specification.component.html',
@@ -15,7 +16,8 @@ export class SpecificationComponent implements OnInit {
 	public showTree = true;
 	public showSpec = true;
 
-	constructor(private http: HttpClient) {
+	constructor(private meta: MetaService, private http: HttpClient) {
+		meta.setTitle('Specification');
 		this.http.get('assets/questionnaire.yaml', {
 			responseType: 'text',
 		}).subscribe(data => {

@@ -2,6 +2,7 @@ import {Component, EventEmitter, NgZone, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {createDefaults, getter, IQuestion, validateRec} from '../../interfaces';
+import {MetaService} from "../../services/meta.service";
 
 declare var grecaptcha;
 
@@ -98,7 +99,8 @@ export class ContributeComponent implements OnInit {
 		return getter(this.questions, this.answers, id.split('.'));
 	};
 
-	constructor(private http: HttpClient, private zone: NgZone) {
+	constructor(private meta: MetaService, private http: HttpClient, private zone: NgZone) {
+		meta.setTitle('Contribute');
 	}
 
 	ngOnInit() {

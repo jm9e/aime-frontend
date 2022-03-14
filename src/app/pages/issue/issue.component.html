@@ -1,7 +1,7 @@
 <section class="section">
 	<div class="container">
 		<div>
-			<h2 class="title is-4">Issue {{reportId}} #{{issueId}}</h2>
+			<h2 class="title is-4">Issue #{{issueId}} for {{reportId}}</h2>
 			<app-issue [issue]="issue"></app-issue>
 		</div>
 		<div class="mt-5" *ngIf="confirm && !issue.confirmed">

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {MetaService} from "../../services/meta.service";
 
 type aimeVersion = '2021.0';
 
@@ -59,7 +60,8 @@ export class AdminComponent implements OnInit {
 	public memberSelected?: Member;
 	public memberAction?: 'edit' | 'delete' | 'add';
 
-	constructor(private http: HttpClient) {
+	constructor(private meta: MetaService, private http: HttpClient) {
+		meta.setTitle('Admin area');
 		const tokenStr = localStorage.getItem('token');
 		if (tokenStr) {
 			this.token = JSON.parse(tokenStr);

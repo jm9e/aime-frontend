@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MetaService} from "../../services/meta.service";
 
 @Component({
 	templateUrl: './index.component.html',
@@ -6,7 +7,8 @@ import {Component, OnInit} from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-	constructor() {
+	constructor(private meta: MetaService) {
+		meta.setTitle();
 	}
 
 	ngOnInit() {

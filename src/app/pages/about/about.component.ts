@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {MetaService} from '../../services/meta.service';
 
 type aimeVersion = '2021.0';
 
@@ -23,33 +24,12 @@ export class AboutComponent implements OnInit {
 	public showExecutive = true;
 	public showSteering = true;
 
-	public executives: Member[] = [
-		{
-			firstName: 'Julian',
-			lastName: 'Matschinske',
-			institution: 'University of Hamburg',
-			country: 'Germany',
-			version: '2021.0'
-		},
-		{
-			firstName: 'David B.',
-			lastName: 'Blumenthal',
-			institution: 'FAU Erlangen-Nuremberg',
-			country: 'Germany',
-			version: '2021.0'
-		},
-		{
-			firstName: 'Jan',
-			lastName: 'Baumbach',
-			institution: 'University of Hamburg; University of Southern Denmark',
-			country: 'Germany; Denmark',
-			version: '2021.0'
-		},
-	];
-
+	public executives: Member[] = [];
 	public members: Member[] = [];
 
-	constructor(private http: HttpClient) {
+	constructor(private meta: MetaService, private http: HttpClient) {
+		meta.setTitle('About');
+
 		const sortFunc = (a, b) => {
 			const aName = a.sortName ?? a.lastName;
 			const bName = b.sortName ?? b.lastName;

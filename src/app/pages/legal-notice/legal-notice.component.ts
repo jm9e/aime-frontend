@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MetaService} from "../../services/meta.service";
 
 @Component({
-  selector: 'app-legal-notice',
-  templateUrl: './legal-notice.component.html',
-  styleUrls: ['./legal-notice.component.scss']
+	selector: 'app-legal-notice',
+	templateUrl: './legal-notice.component.html',
+	styleUrls: ['./legal-notice.component.scss']
 })
 export class LegalNoticeComponent implements OnInit {
 
-  constructor() { }
+	constructor(private meta: MetaService) {
+		meta.setTitle('Legal notice');
+	}
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void {
+	}
 
 }

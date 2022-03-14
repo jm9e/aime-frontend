@@ -3,7 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import YAML from 'yaml';
-import {IIssue, IIssueReference, IQuestion, parseQuestions} from '../../interfaces';
+import {IIssueReference, IQuestion, parseQuestions} from '../../interfaces';
+import {MetaService} from '../../services/meta.service';
 
 @Component({
 	templateUrl: './report.component.html',
@@ -27,7 +28,8 @@ export class ReportComponent implements OnInit {
 	public issueContent = '';
 	public issueSubmitted = false;
 
-	constructor(private http: HttpClient, private route: ActivatedRoute) {
+	constructor(private meta: MetaService, private http: HttpClient, private route: ActivatedRoute) {
+		meta.setTitle('Report');
 		this.http.get('assets/questionnaire.yaml', {
 			responseType: 'text',
 		}).subscribe(data => {
@@ -54,6 +56,7 @@ export class ReportComponent implements OnInit {
 				this.revision = data.revision;
 				this.revisions = data.revisions ?? [];
 				this.issues = data.issues ?? [];
+				this.meta.setTitle(`Report ${this.id}`);
 			}, () => {
 				this.error = true;
 			});
@@ -63,6 +66,7 @@ export class ReportComponent implements OnInit {
 				this.revision = data.revision;
 				this.revisions = data.revisions ?? [];
 				this.issues = data.issues ?? [];
+				this.meta.setTitle(`Report ${this.id} / Version ${this.targetVersion}`);
 			}, () => {
 				this.error = true;
 			});

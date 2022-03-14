@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import YAML from 'yaml';
+import {MetaService} from '../../services/meta.service';
 
 @Component({
 	templateUrl: './questionnaire.component.html',
@@ -46,7 +47,8 @@ export class QuestionnaireComponent implements OnInit {
 		return getter(this.questions, this.answers, id.split('.'));
 	};
 
-	constructor(private http: HttpClient, private route: ActivatedRoute) {
+	constructor(private meta: MetaService, private http: HttpClient, private route: ActivatedRoute) {
+		meta.setTitle('New report');
 		this.http.get('assets/questionnaire.yaml', {
 			responseType: 'text',
 		}).subscribe(data => {

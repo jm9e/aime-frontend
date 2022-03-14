@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {IIssue, IQuestion, parseQuestions} from '../../interfaces';
 import YAML from 'yaml';
+import {MetaService} from "../../services/meta.service";
 
 @Component({
 	templateUrl: './issue.component.html',
@@ -20,7 +21,8 @@ export class IssueComponent implements OnInit {
 	public yamlSpec = '';
 	public questions: IQuestion = {type: 'complex', children: []};
 
-	constructor(private http: HttpClient, private route: ActivatedRoute) {
+	constructor(private meta: MetaService, private http: HttpClient, private route: ActivatedRoute) {
+		meta.setTitle('Issue');
 		this.http.get('assets/questionnaire.yaml', {
 			responseType: 'text',
 		}).subscribe(data => {
@@ -58,6 +60,7 @@ export class IssueComponent implements OnInit {
 	public loadIssue(p?: string) {
 		this.http.get<IIssue>(`${environment.api}report/${this.reportId}/issue/${this.issueId}?p=${this.password}`).subscribe((issue) => {
 			this.issue = issue;
+			this.meta.setTitle(`Issue ${issue.id} for ${issue.reportId}`);
 		}, () => {
 		});
 	}
