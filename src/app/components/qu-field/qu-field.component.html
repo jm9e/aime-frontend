@@ -1,6 +1,6 @@
 <div class="field is-horizontal" *ngIf="question.type !== 'list' && question.type !== 'complex' && (!readonly || !question.optional || value)">
   <div class="field-label is-normal">
-    <label class="label" *ngIf="!hideId">{{fullId}}</label>
+    <label class="label" *ngIf="!hideId" [ngStyle]="{'color': question.color}">{{fullId}}</label>
   </div>
   <div class="field-body" *ngIf="!readonly">
     <div class="field">

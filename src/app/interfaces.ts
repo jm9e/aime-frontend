@@ -15,6 +15,7 @@ export interface IQuestion {
 	id?: string;
 
 	type: QuestionType;
+	color?: string;
 	optional?: boolean;
 	default?: any;
 	child?: IQuestion;

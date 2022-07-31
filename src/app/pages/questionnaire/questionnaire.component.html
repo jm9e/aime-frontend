@@ -2,12 +2,12 @@
   <div class="container">
     <div class="steps is-aime" *ngIf="!submitted">
       <div *ngFor="let s of steps" class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === s.step}" (click)="goToStep(s.step)">
-        <div class="step-marker"><i class="fad {{s.icon}}"></i></div>
+        <div class="step-marker" [ngStyle]="{'border-color': getSection(s.short).color}"><i class="fad {{s.icon}}"></i></div>
         <div class="step-details">
           <p class="step-title">{{s.title}}</p>
         </div>
       </div>
-      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 6}" (click)="goToStep(6)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === lastStep}" (click)="goToStep(lastStep)">
         <div class="step-marker"><i class="fad fa-check"></i></div>
         <div class="step-details">
           <p class="step-title">Review & submit</p>
@@ -22,7 +22,7 @@
             <div class="select is-fullwidth">
               <select name="clinical" [ngModel]="step" (ngModelChange)="goToStep($event)">
                 <option [value]="s.step" *ngFor="let s of steps">{{s.title}}</option>
-                <option [value]="6">Review & Submit</option>
+                <option [value]="lastStep">Review & Submit</option>
               </select>
             </div>
             <p class="help">
@@ -46,7 +46,7 @@
             </app-qu-field>
           </div>
         </div>
-        <div class="step-content card" [ngClass]="{'is-active': step === 6}">
+        <div class="step-content card" [ngClass]="{'is-active': step === lastStep}">
           <header class="card-header">
             <div class="card-header-title">
               <h2 class="title is-4">
@@ -128,13 +128,13 @@
 					</button>
 				</div>
         <div class="steps-action">
-          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < 6">
+          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < lastStep">
             <span>Next</span>
             <span class="icon">
               <i class="fa fa-arrow-right"></i>
             </span>
           </button>
-          <button data-nav="next" class="button is-info" (click)="submitReport()" *ngIf="step == 6" [disabled]="(!email && !revising) || validationErrors.length > 0">
+          <button data-nav="next" class="button is-info" (click)="submitReport()" *ngIf="step == lastStep" [disabled]="(!email && !revising) || validationErrors.length > 0">
             <span class="icon">
               <i class="fa fa-paper-plane"></i>
             </span>

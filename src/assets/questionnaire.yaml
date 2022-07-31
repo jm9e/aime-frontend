@@ -772,3 +772,31 @@ children:
                 default: ''
                 title: 'Required computing resources'
                 question: Specify the computing resources required to run your AI.
+  - id: PR
+    type: complex
+    title: Privacy
+    color: '#a00000'
+    children:
+      - id: '1'
+        type: string
+        default: ''
+        title: Title
+        question: Title of the AI.
+        config:
+          minLength: 8
+          maxLength: 128
+        color: '#a00000'
+  - id: E
+    type: complex
+    title: Explainability
+    color: '#a00000'
+    children:
+      - id: '1'
+        type: string
+        default: ''
+        title: Title
+        question: Title of the AI.
+        config:
+          minLength: 8
+          maxLength: 128
+        color: '#a00000'
