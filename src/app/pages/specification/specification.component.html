@@ -4,8 +4,9 @@
 		<div class="field">
 			<div class="control">
 				<div class="select is-rounded">
-					<select id="version">
-						<option>AIMe 2021.0</option>
+					<select id="version" [(ngModel)]="spec" (ngModelChange)="switchSpecification()">
+						<option [ngValue]="'questionnaire'">AIMe 2022.0</option>
+						<option [ngValue]="'questionnaire_2021'">AIMe 2021.0</option>
 					</select>
 				</div>
 			</div>

@@ -22,7 +22,7 @@ import {IssueComponent as IssueComponentPage} from './pages/issue/issue.componen
 import { LegalNoticeComponent } from './pages/legal-notice/legal-notice.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
-	baseUrl: 'assets',
+	// baseUrl: 'assets',
 	defaultOptions: {scrollBeyondLastLine: false}
 };
 
