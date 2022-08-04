@@ -24,13 +24,17 @@
 			<div class="field-body">
 				<div class="field">
 					<div class="scores">
-						<div class="progress--circle progress--{{reproducibilityScore}}">
+						<div class="progress--circle progress--{{reproducibilityScore}}" *ngIf="reproducibilityScore !== undefined">
 							<div class="progress__number">{{reproducibilityScore / 10}}</div>
 							<div class="score-title">Reproducibility</div>
 						</div>
-						<div class="progress--circle progress--{{validationScore}}">
+						<div class="progress--circle progress--{{validationScore}}" *ngIf="validationScore !== undefined">
 							<div class="progress__number">{{validationScore / 10}}</div>
 							<div class="score-title">Validation</div>
+						</div>
+						<div class="progress--circle progress--{{privacyScore}}" *ngIf="privacyScore !== undefined">
+							<div class="progress__number">{{privacyScore / 10}}</div>
+							<div class="score-title">Privacy</div>
 						</div>
 					</div>
 				</div>

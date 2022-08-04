@@ -775,28 +775,186 @@ children:
   - id: PR
     type: complex
     title: Privacy
-    color: '#a00000'
+    color: '#00b080'
     children:
       - id: '1'
-        type: string
-        default: ''
-        title: Title
-        question: Title of the AI.
-        config:
-          minLength: 8
-          maxLength: 128
-        color: '#a00000'
-  - id: E
-    type: complex
-    title: Explainability
-    color: '#a00000'
-    children:
-      - id: '1'
-        type: string
-        default: ''
-        title: Title
-        question: Title of the AI.
-        config:
-          minLength: 8
-          maxLength: 128
-        color: '#a00000'
+        type: complex
+        title: Local training
+        color: '#00b080'
+        children:
+          - id: '1'
+            title: Data traces in model
+            color: '#00b080'
+            type: radio
+            default: 'na'
+            question: 'Does your method produce a model possibly containing data points or parts of data point of the training data?'
+            config:
+              options:
+                - key: 'yes'
+                  value: 'Yes'
+                - key: 'no'
+                  value: 'No'
+                - key: na
+                  value: Doesn't apply
+            scores:
+              privacy: "({yes: 0.0, no: 1.0}[val.value])"
+          - id: '2'
+            condition: "val['1']?.value !== 'na'"
+            title: Elaboration on data traces
+            type: string
+            default: ''
+            question: Elaborate on possible data traces in your model or why there cannot be any.
+            color: '#00b080'
+          - id: '3'
+            condition: "val['1']?.value !== 'na'"
+            type: complex
+            title: Privacy-preserving techniques
+            color: '#00b080'
+            children:
+              - id: '1'
+                title: Privacy-preserving techniques
+                color: '#00b080'
+                type: checkboxes
+                default: [ ]
+                optional: true
+                question: 'Which privacy-preserving techniques did you apply during local model training?'
+                config:
+                  options:
+                    - key: dp
+                      value: Differential privacy (DP)
+                    - key: 'other'
+                      value: 'Other'
+                scores:
+                  privacy: "val.length > 0 ? 1.0 : 0.0"
+              - id: '2'
+                condition: "val['1']?.length > 0"
+                title: Elaboration on privacy-preserving techniques
+                type: string
+                default: ''
+                question: Elaborate on how you applied privacy-preserving techniques.
+                color: '#00b080'
+      - id: '2'
+        type: complex
+        title: Federated learning
+        color: '#00b080'
+        children:
+          - id: '1'
+            title: Federated learning
+            type: radio
+            default: 'na'
+            question: 'Is your model being trained in a federated fashion, i.e. with other participants?'
+            color: '#00b080'
+            config:
+              options:
+                - key: 'yes'
+                  value: 'Yes'
+                - key: 'no'
+                  value: 'No'
+                - key: na
+                  value: Doesn't apply
+          - id: '2'
+            condition: "val['1']?.value === 'yes'"
+            title: Elaboration on shared data
+            type: text
+            default: ''
+            question: Which data is shared with other participants?
+            color: '#00b080'
+          - id: '3'
+            condition: "val['1']?.value === 'yes'"
+            type: complex
+            title: Mode of communication
+            color: '#00b080'
+            children:
+              - id: '1'
+                title: Type of communication
+                type: radio
+                optional: false
+                question: 'Which types of communication do you use between participants?'
+                color: '#00b080'
+                default: 'star'
+                config:
+                  options:
+                    - key: 'star'
+                      value: Star-based (i.e. central aggregator)
+                    - key: 'p2p'
+                      value: Peer-to-peer (P2P)
+                    - key: 'other'
+                      value: Other
+              - id: '2'
+                condition: "val['1']?.value === 'other'"
+                title: Elaboration on mode of communication
+                type: string
+                default: ''
+                question: Which other mode of communication did you use to collectively train the model?
+                color: '#00b080'
+          - id: '4'
+            condition: "val['1']?.value === 'yes'"
+            type: complex
+            title: Privacy-preserving techniques
+            color: '#00b080'
+            children:
+              - id: '1'
+                title: Privacy-preserving techniques
+                type: checkboxes
+                default: [ ]
+                optional: true
+                question: 'Which privacy-preserving techniques did you apply during the federated training?'
+                color: '#00b080'
+                config:
+                  options:
+                    - key: smpc
+                      value: Secure multi-party computation (SMPC)
+                    - key: he
+                      value: Homomorphic encryption (HE)
+                    - key: 'other'
+                      value: 'Other'
+                scores:
+                  privacy: "val.length > 0 ? 1.0 : 0.0"
+              - id: '2'
+                condition: "val['1']?.length > 0"
+                title: Elaboration on federated privacy-preserving techniques
+                type: string
+                default: ''
+                question: Elaborate on how you applied federated privacy-preserving techniques.
+                color: '#00b080'
+          - id: '5'
+            condition: "val['1']?.value === 'yes'"
+            type: radio
+            question: How does the transmitted data relate to the training data (over all iterations)?
+            default: na
+            color: '#00b080'
+            help:
+              When you train your model in a federated fashion, you usually need to transmit model parameters or other
+                data and share it with a central aggregator or other participants.
+                How does this amount of shared data change when the training data is increased?
+                If the amount of shared data depends on individual data values (e.g., due to lengthy convergence) choose
+                'unpredictable'.
+            config:
+              allowCustom: true
+              options:
+                - key: 'na'
+                  value: 'Unpredictable'
+                - key: 'const'
+                  value: 'Constant'
+                - key: 'sublin'
+                  value: 'Sub-linear'
+                - key: 'lin'
+                  value: 'Linear'
+                - key: 'suplin'
+                  value: 'Super-linear'
+            scores:
+              privacy: "({na: 0.0, const: 1.0, sublin: 0.5, lin: 0.0, suplin: 0.0}[val.value])"
+#  - id: E
+#    type: complex
+#    title: Explainability
+#    color: '#00b080'
+#    children:
+#      - id: '1'
+#        type: string
+#        default: ''
+#        title: Title
+#        question: Title of the AI.
+#        config:
+#          minLength: 8
+#          maxLength: 128
+#        color: '#00b080'

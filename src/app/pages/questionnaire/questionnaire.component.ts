@@ -39,10 +39,10 @@ export class QuestionnaireComponent implements OnInit {
 		{step: 4, short: 'M', title: 'Method', icon: 'fa-function'},
 		{step: 5, short: 'R', title: 'Reproducibility', icon: 'fa-redo'},
 		{step: 6, short: 'PR', title: 'Privacy', icon: 'fa-mask'},
-		{step: 7, short: 'E', title: 'Explainability', icon: 'fa-lightbulb'},
+		// {step: 7, short: 'E', title: 'Explainability', icon: 'fa-lightbulb'},
 	];
 
-	public lastStep = 8;
+	public lastStep = this.steps.length + 1;
 
 	public questions: IQuestion = {type: 'complex', children: []};
 
