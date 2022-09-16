@@ -779,7 +779,7 @@ children:
     children:
       - id: '1'
         type: complex
-        title: Local training
+        title: Training on sensitive data
         color: '#00b080'
         children:
           - id: '1'
@@ -944,17 +944,77 @@ children:
                   value: 'Super-linear'
             scores:
               privacy: "({na: 0.0, const: 1.0, sublin: 0.5, lin: 0.0, suplin: 0.0}[val.value])"
-#  - id: E
-#    type: complex
-#    title: Explainability
-#    color: '#00b080'
-#    children:
-#      - id: '1'
-#        type: string
-#        default: ''
-#        title: Title
-#        question: Title of the AI.
-#        config:
-#          minLength: 8
-#          maxLength: 128
-#        color: '#00b080'
+  - id: EP
+    type: complex
+    title: Epistasis
+    color: '#00b080'
+    children:
+      - id: '1'
+        type: complex
+        title: Loci
+        color: '#00b080'
+        children:
+        - id: '1'
+          title: Multiple loci
+          type: radio
+          default: 'na'
+          question: 'Is there a measure or procedure to capture the joint importance of multiple loci?'
+          color: '#00b080'
+          config:
+            options:
+              - key: 'yes'
+                value: 'Yes'
+              - key: 'no'
+                value: 'No'
+              - key: na
+                value: Doesn't apply
+        - id: '2'
+          condition: "val['1']?.value === 'yes'"
+          title: Elaboration on the measure or procedure
+          type: text
+          default: ''
+          question: Which measure or procedure was applied?
+          color: '#00b080'
+        - id: '3'
+          condition: "val['1']?.value === 'yes'"
+          title: Conversion into an OR/RR
+          type: radio
+          default: ''
+          question: Can it be converted into an OR/RR?
+          color: '#00b080'
+          config:
+            options:
+              - key: 'yes'
+                value: 'Yes'
+              - key: 'no'
+                value: 'No'
+          help:
+            See https://academic.oup.com/ije/article/41/2/514/692957 for more information.
+      - id: '2'
+        type: complex
+        title: Affected biological levels
+        color: '#00b080'
+        children:
+          - id: '1'
+            title: Multiple affected biological levels
+            type: radio
+            default: 'na'
+            question: 'Does your AI account for multiple affected biological levels?'
+            color: '#00b080'
+            config:
+              options:
+                - key: 'yes'
+                  value: 'Yes'
+                - key: 'no'
+                  value: 'No'
+                - key: na
+                  value: Doesn't apply
+            help:
+              Describe the affected biological levels such as SNPs, genes, and biochemical pathways.
+          - id: '2'
+            condition: "val['1']?.value === 'yes'"
+            title: Elaboration on the affected levels
+            type: text
+            default: ''
+            question: Elaborate on the affected biological levels.
+            color: '#00b080'

@@ -32,15 +32,24 @@ export class QuestionnaireComponent implements OnInit {
 
 	public validationTrigger = new EventEmitter<void>();
 
-	public steps: { step: number, short: string; title: string; icon: string; }[] = [
+	public composing = true;
+
+	public sections: {[_: string]: boolean} = { PR: false, EP: false };
+
+	public stepsAvailable: {[_: string]: { title: string; icon: string; }} = {
+		PR: {title: 'Privacy', icon: 'fa-mask'},
+		EP: {title: 'Epistasis', icon: 'fa-dna'},
+	};
+
+	public mandatorySteps: { step: number, short: string; title: string; icon: string; }[] = [
 		{step: 1, short: 'MD', title: 'Metadata', icon: 'fa-at'},
 		{step: 2, short: 'P', title: 'Purpose', icon: 'fa-bullseye-arrow'},
 		{step: 3, short: 'D', title: 'Data', icon: 'fa-database'},
 		{step: 4, short: 'M', title: 'Method', icon: 'fa-function'},
 		{step: 5, short: 'R', title: 'Reproducibility', icon: 'fa-redo'},
-		{step: 6, short: 'PR', title: 'Privacy', icon: 'fa-mask'},
-		// {step: 7, short: 'E', title: 'Explainability', icon: 'fa-lightbulb'},
 	];
+
+	public steps: { step: number, short: string; title: string; icon: string; }[] = [];
 
 	public lastStep = this.steps.length + 1;
 
@@ -72,6 +81,23 @@ export class QuestionnaireComponent implements OnInit {
 				});
 			}
 		});
+	}
+
+	public compose(skip = false) {
+		this.steps = JSON.parse(JSON.stringify(this.mandatorySteps));
+		if (!skip) {
+			for (const key of Object.keys(this.sections)) {
+				if (this.sections[key]) {
+					this.steps.push({
+						step: this.steps.length + 1,
+						short: key, title: this.stepsAvailable[key].title,
+						icon: this.stepsAvailable[key].icon,
+					});
+				}
+			}
+		}
+		this.lastStep = this.steps.length + 1;
+		this.composing = false;
 	}
 
 	public reloadQuestionnaire() {
@@ -189,6 +215,7 @@ export class QuestionnaireComponent implements OnInit {
 			localStorage.removeItem('draft');
 			this.reloadQuestionnaire();
 		}
+		this.composing = true;
 	}
 
 	public newReport() {
