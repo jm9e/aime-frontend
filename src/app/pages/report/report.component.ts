@@ -21,7 +21,7 @@ export class ReportComponent implements OnInit {
 	public answers = {};
 	public error = false;
 	public raiseIssue?: IIssueReference;
-	public version?: string;
+	public spec?: string;
 
 	public issueName = '';
 	public issueEmail = '';
@@ -49,7 +49,7 @@ export class ReportComponent implements OnInit {
 				this.revision = data.revision;
 				this.revisions = data.revisions ?? [];
 				this.issues = data.issues ?? [];
-				this.version = data.version;
+				this.spec = data.version;
 				this.loadQuestions();
 			}, () => {
 				this.error = true;
@@ -60,7 +60,7 @@ export class ReportComponent implements OnInit {
 				this.revision = data.revision;
 				this.revisions = data.revisions ?? [];
 				this.issues = data.issues ?? [];
-				this.version = data.version;
+				this.spec = data.version;
 				this.loadQuestions();
 			}, () => {
 				this.error = true;
@@ -69,14 +69,14 @@ export class ReportComponent implements OnInit {
 	}
 
 	private loadQuestions() {
-		if (this.version === '2023.0') {
+		if (this.spec === '2023.0') {
 			this.http.get('assets/questionnaire_2023.yaml', {
 				responseType: 'text',
 			}).subscribe(data => {
 				this.yamlSpec = data;
 				this.initQuestions();
 			});
-		} else if (this.version === '2021.0') {
+		} else if (this.spec === '2021.0') {
 			this.http.get('assets/questionnaire_2021.yaml', {
 				responseType: 'text',
 			}).subscribe(data => {
@@ -84,7 +84,7 @@ export class ReportComponent implements OnInit {
 				this.initQuestions();
 			});
 		} else {
-			throw new Error(`invalid version ${this.version}`);
+			throw new Error(`invalid version ${this.spec}`);
 		}
 	}
 
