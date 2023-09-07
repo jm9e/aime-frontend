@@ -5,7 +5,7 @@
 			<div class="control">
 				<div class="select is-rounded">
 					<select id="version" [(ngModel)]="spec" (ngModelChange)="switchSpecification()">
-						<option [ngValue]="'questionnaire'">AIMe 2022.0</option>
+						<option [ngValue]="'questionnaire_2023'">AIMe 2023.0</option>
 						<option [ngValue]="'questionnaire_2021'">AIMe 2021.0</option>
 					</select>
 				</div>
@@ -94,7 +94,7 @@
 				</div>
 			</div>
 			<footer class="card-footer" *ngIf="showSpec">
-				<a href="/assets/questionnaire.yaml" class="card-footer-item" download>
+				<a href="/src/assets/questionnaire_2023.yaml" class="card-footer-item" download>
 					<span class="icon"><i class="fa fa-download"></i></span>
 					<span>Download</span>
 				</a>

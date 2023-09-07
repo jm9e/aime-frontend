@@ -320,6 +320,7 @@ export interface IReport {
 	date: Date;
 	revisions: number;
 	issues: number;
+	version: string;
 }
 
 export interface IKeyword {

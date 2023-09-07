@@ -25,6 +25,7 @@ export class QuestionnaireComponent implements OnInit {
 	public revising = false;
 	public version = 0;
 	public isPublic = true;
+	public spec = '';
 
 	public answers: { [key: string]: any } = {};
 
@@ -60,12 +61,6 @@ export class QuestionnaireComponent implements OnInit {
 	};
 
 	constructor(private http: HttpClient, private route: ActivatedRoute) {
-		this.http.get('assets/questionnaire.yaml', {
-			responseType: 'text',
-		}).subscribe(data => {
-			this.yamlSpec = data;
-			this.reloadQuestionnaire();
-		});
 	}
 
 	public ngOnInit() {
@@ -78,9 +73,31 @@ export class QuestionnaireComponent implements OnInit {
 					this.answers = resp.answers;
 					this.isPublic = resp.public;
 					this.revising = true;
+					this.spec = resp.version;
+					this.loadQuestions();
 				});
 			}
 		});
+	}
+
+	private loadQuestions() {
+		if (this.spec === '2023.0') {
+			this.http.get('assets/questionnaire_2023.yaml', {
+				responseType: 'text',
+			}).subscribe(data => {
+				this.yamlSpec = data;
+				this.reloadQuestionnaire();
+			});
+		} else if (this.spec === '2021.0') {
+			this.http.get('assets/questionnaire_2021.yaml', {
+				responseType: 'text',
+			}).subscribe(data => {
+				this.yamlSpec = data;
+				this.reloadQuestionnaire();
+			});
+		} else {
+			throw new Error(`invalid version ${this.version}`);
+		}
 	}
 
 	public compose(skip = false) {

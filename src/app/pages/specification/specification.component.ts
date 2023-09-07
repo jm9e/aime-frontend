@@ -15,7 +15,7 @@ export class SpecificationComponent implements OnInit {
 	public showTree = true;
 	public showSpec = true;
 
-	public spec = 'questionnaire';
+	public spec = 'questionnaire_2023';
 
 	constructor(private http: HttpClient) {
 	}
