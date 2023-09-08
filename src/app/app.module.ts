@@ -24,7 +24,7 @@ import { CiteAimeComponent } from './components/cite-aime/cite-aime.component';
 import { AdminComponent } from './pages/admin/admin.component';
 
 const monacoConfig: NgxMonacoEditorConfig = {
-	baseUrl: 'assets',
+	// baseUrl: 'assets',
 	defaultOptions: {scrollBeyondLastLine: false}
 };
 

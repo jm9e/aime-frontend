@@ -23,15 +23,16 @@ export class IssueComponent implements OnInit {
 
 	constructor(private meta: MetaService, private http: HttpClient, private route: ActivatedRoute) {
 		meta.setTitle('Issue');
-		this.http.get('assets/questionnaire.yaml', {
+	}
+
+	ngOnInit(): void {
+		this.http.get('assets/questionnaire_2023.yaml', {
 			responseType: 'text',
 		}).subscribe(data => {
 			this.yamlSpec = data;
 			this.initQuestions();
 		});
-	}
 
-	ngOnInit(): void {
 		this.route.params.subscribe((params) => {
 			this.reportId = params.id;
 			this.issueId = params.issue;

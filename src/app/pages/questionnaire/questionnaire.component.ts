@@ -26,6 +26,7 @@ export class QuestionnaireComponent implements OnInit {
 	public revising = false;
 	public version = 0;
 	public isPublic = true;
+	public spec = '';
 
 	public answers: { [key: string]: any } = {};
 
@@ -33,13 +34,26 @@ export class QuestionnaireComponent implements OnInit {
 
 	public validationTrigger = new EventEmitter<void>();
 
-	public steps: { step: number, short: string; title: string; icon: string; }[] = [
+	public composing = true;
+
+	public sections: {[_: string]: boolean} = { PR: false, EP: false };
+
+	public stepsAvailable: {[_: string]: { title: string; icon: string; }} = {
+		PR: {title: 'Privacy', icon: 'fa-mask'},
+		EP: {title: 'Epistasis', icon: 'fa-dna'},
+	};
+
+	public mandatorySteps: { step: number, short: string; title: string; icon: string; }[] = [
 		{step: 1, short: 'MD', title: 'Metadata', icon: 'fa-at'},
 		{step: 2, short: 'P', title: 'Purpose', icon: 'fa-bullseye-arrow'},
 		{step: 3, short: 'D', title: 'Data', icon: 'fa-database'},
 		{step: 4, short: 'M', title: 'Method', icon: 'fa-function'},
 		{step: 5, short: 'R', title: 'Reproducibility', icon: 'fa-redo'},
 	];
+
+	public steps: { step: number, short: string; title: string; icon: string; }[] = [];
+
+	public lastStep = this.steps.length + 1;
 
 	public questions: IQuestion = {type: 'complex', children: []};
 
@@ -49,12 +63,6 @@ export class QuestionnaireComponent implements OnInit {
 
 	constructor(private meta: MetaService, private http: HttpClient, private route: ActivatedRoute) {
 		meta.setTitle('New report');
-		this.http.get('assets/questionnaire.yaml', {
-			responseType: 'text',
-		}).subscribe(data => {
-			this.yamlSpec = data;
-			this.reloadQuestionnaire();
-		});
 	}
 
 	public ngOnInit() {
@@ -67,9 +75,51 @@ export class QuestionnaireComponent implements OnInit {
 					this.answers = resp.answers;
 					this.isPublic = resp.public;
 					this.revising = true;
+					this.spec = resp.version;
+					this.loadQuestions();
 				});
+			} else {
+				this.spec = '2023.0';
+				this.loadQuestions();
 			}
 		});
+	}
+
+	private loadQuestions() {
+		if (this.spec === '2023.0') {
+			this.http.get('assets/questionnaire_2023.yaml', {
+				responseType: 'text',
+			}).subscribe(data => {
+				this.yamlSpec = data;
+				this.reloadQuestionnaire();
+			});
+		} else if (this.spec === '2021.0') {
+			this.http.get('assets/questionnaire_2021.yaml', {
+				responseType: 'text',
+			}).subscribe(data => {
+				this.yamlSpec = data;
+				this.reloadQuestionnaire();
+			});
+		} else {
+			throw new Error(`invalid version ${this.version}`);
+		}
+	}
+
+	public compose(skip = false) {
+		this.steps = JSON.parse(JSON.stringify(this.mandatorySteps));
+		if (!skip) {
+			for (const key of Object.keys(this.sections)) {
+				if (this.sections[key]) {
+					this.steps.push({
+						step: this.steps.length + 1,
+						short: key, title: this.stepsAvailable[key].title,
+						icon: this.stepsAvailable[key].icon,
+					});
+				}
+			}
+		}
+		this.lastStep = this.steps.length + 1;
+		this.composing = false;
 	}
 
 	public reloadQuestionnaire() {
@@ -109,7 +159,7 @@ export class QuestionnaireComponent implements OnInit {
 	public async goToStep(step: number) {
 		this.step = Number(step);
 
-		if (this.step === 6) {
+		if (this.step === this.lastStep) {
 			this.updateFields();
 			if (this.validationErrors.length === 0) {
 				// TODO
@@ -187,6 +237,7 @@ export class QuestionnaireComponent implements OnInit {
 			localStorage.removeItem('draft');
 			this.reloadQuestionnaire();
 		}
+		this.composing = true;
 	}
 
 	public newReport() {

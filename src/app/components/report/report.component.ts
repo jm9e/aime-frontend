@@ -8,8 +8,9 @@ import {IIssueReference, IQuestion, maxScore, score} from '../../interfaces';
 })
 export class ReportComponent implements OnInit {
 
-	public validationScore = 0;
-	public reproducibilityScore = 0;
+	public validationScore?;
+	public reproducibilityScore?;
+	public privacyScore?;
 
 	@Input()
 	public id = '';
@@ -50,11 +51,19 @@ export class ReportComponent implements OnInit {
 	public calcScores() {
 		this.validationScore = score(this.questionsI, this.answersI, 'validation') /
 			maxScore(this.questionsI, this.answersI, 'validation');
+		this.validationScore = Math.floor(this.validationScore * 20) * 5;
+
 		this.reproducibilityScore = score(this.questionsI, this.answersI, 'reproducibility') /
 			maxScore(this.questionsI, this.answersI, 'reproducibility');
-
-		this.validationScore = Math.floor(this.validationScore * 20) * 5;
 		this.reproducibilityScore = Math.floor(this.reproducibilityScore * 20) * 5;
+
+		const maxPrivacy = maxScore(this.questionsI, this.answersI, 'privacy');
+		if (maxPrivacy > 0) {
+			this.privacyScore = score(this.questionsI, this.answersI, 'privacy') / maxPrivacy;
+			this.privacyScore = Math.floor(this.privacyScore * 20) * 5;
+		} else {
+			this.privacyScore = undefined;
+		}
 	}
 
 }

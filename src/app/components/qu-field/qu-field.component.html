@@ -1,6 +1,6 @@
 <div class="field is-horizontal" *ngIf="question.type !== 'list' && question.type !== 'complex' && (!readonly || !question.optional || value)">
   <div class="field-label is-normal">
-    <label class="label" *ngIf="!hideId">{{fullId}}</label>
+    <label class="label" *ngIf="!hideId" [ngStyle]="{'color': question.color}">{{fullId}}</label>
   </div>
   <div class="field-body" *ngIf="!readonly">
     <div class="field">
@@ -13,6 +13,9 @@
 						<i class="fa fa-star-half-alt"></i>
 					</span>
 					<span *ngIf="question.scores?.validation" [class.is-light]="question.scores.validation(value) === 0" [class.is-warning]="question.scores.validation(value) !== undefined" class="tag is-small is-light" title="Affects validation score">
+						<i class="fa fa-star-half-alt"></i>
+					</span>
+					<span *ngIf="question.scores?.privacy" [class.is-light]="question.scores.privacy(value) === 0" [class.is-danger]="question.scores.privacy(value) !== undefined" class="tag is-small is-light" title="Affects privacy score">
 						<i class="fa fa-star-half-alt"></i>
 					</span>
 					<span *ngIf="question.optional" class="tag is-small is-light">
@@ -176,6 +179,9 @@
 				<span *ngIf="question.scores?.validation" [class.is-light]="question.scores.validation(value) === 0" [class.is-warning]="question.scores.validation(value) !== undefined" class="tag is-small is-light" title="Affects validation score">
 					<i class="fa fa-star-half-alt"></i>
 				</span>
+				<span *ngIf="question.scores?.privacy" [class.is-light]="question.scores.privacy(value) === 0" [class.is-danger]="question.scores.privacy(value) !== undefined" class="tag is-small is-light" title="Affects privacy score">
+						<i class="fa fa-star-half-alt"></i>
+					</span>
 				<span *ngIf="question.optional" class="tag is-light">
           Optional
         </span>
@@ -230,7 +236,7 @@
   <ng-container *ngFor="let v of value; let i=index; trackBy:trackByFn">
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label" *ngIf="!hideId">{{fullId}}.{{(i + 1).toString(10)}}</label>
+        <label class="label" *ngIf="!hideId" [ngStyle]="{'color': question.color}">{{fullId}}.{{(i + 1).toString(10)}}</label>
       </div>
       <div class="field-body">
         <div class="field">
@@ -256,7 +262,7 @@
   </ng-container>
   <div class="field is-horizontal" *ngIf="!readonly">
     <div class="field-label is-normal">
-      <label class="label has-text-grey-light" *ngIf="!hideId">{{fullId}}.{{(value.length + 1).toString(10)}}</label>
+      <label class="label has-text-grey-light" *ngIf="!hideId" [ngStyle]="{'color': question.color}">{{fullId}}.{{(value.length + 1).toString(10)}}</label>
     </div>
     <div class="field-body">
       <div class="field">
@@ -293,7 +299,7 @@
 <ng-container class="field is-horizontal" *ngIf="question && question.type === 'complex' && question.children && value !== undefined">
 	<div class="field is-horizontal" *ngIf="!hideId && question.title">
 		<div class="field-label is-normal">
-			<label class="label" *ngIf="!hideId">{{fullId}}</label>
+			<label class="label" *ngIf="!hideId" [ngStyle]="{'color': question.color}">{{fullId}}</label>
 		</div>
 		<div class="field-body">
 			<div class="field">

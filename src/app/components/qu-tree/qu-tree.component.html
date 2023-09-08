@@ -1,9 +1,9 @@
-<div [class.node]="!hideNode">
+<div [class.node]="!hideNode" [ngStyle]="{'border-color': question.color}">
 	<div class="inner">
-		<div class="hl"></div>
+		<div class="hl" [ngStyle]="{'border-color': question.color}"></div>
 		<div *ngIf="question.type !== 'list' && question.type !== 'complex'">
 			<div class="item">
-				<span class="has-text-weight-bold">{{fullId}}</span>
+				<span class="has-text-weight-bold" [ngStyle]="{'color': question.color}">{{fullId}}</span>
 				<span>&nbsp;-&nbsp;</span>
 				<span>{{question.question}}</span>
 				<span class="badges tags">
@@ -31,6 +31,9 @@
 					<span *ngIf="question.scores?.validation" class="tag is-small is-light is-warning" title="Affects validation score">
 						<i class="fa fa-star-half-alt"></i>
 					</span>
+					<span *ngIf="question.scores?.privacy" class="tag is-small is-light is-danger" title="Affects privacy score">
+						<i class="fa fa-star-half-alt"></i>
+					</span>
 					<span *ngIf="question.optional" class="tag is-small is-light">
 						optional
 					</span>
@@ -39,7 +42,7 @@
 		</div>
 		<ng-container *ngIf="question.type === 'list'">
 			<div class="item has-sub" *ngIf="!hideNode">
-				<span class="has-text-weight-bold">{{fullId}}</span>
+				<span class="has-text-weight-bold" [ngStyle]="{'color': question.color}">{{fullId}}</span>
 				<span>&nbsp;-&nbsp;</span>
 				<span>{{question.title}}</span>
 			</div>
@@ -49,7 +52,7 @@
 		<ng-container *ngIf="question.type === 'complex'">
 			<div *ngIf="question.title">
 				<div class="item has-sub">
-					<span class="has-text-weight-bold">{{fullId}}</span>
+					<span class="has-text-weight-bold" [ngStyle]="{'color': question.color}">{{fullId}}</span>
 					<span>&nbsp;-&nbsp;</span>
 					<span>{{question.title}}</span>
 				</div>

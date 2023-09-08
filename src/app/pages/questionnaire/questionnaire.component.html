@@ -1,13 +1,106 @@
-<section class="section">
+<section class="section" *ngIf="composing">
+	<div class="container">
+		<div>
+			<p class="mt-1 mb-1">
+				Here, you can create a new AIMe report to improve the validity and reproducibility of your method, as well as making
+				sure you provide relevant information in a structured way.
+			</p>
+
+			<p class="mt-1 mb-1">
+				AIMe reports are modularized since version 2022.0, consisting of 5 mandatory sections and optional section which
+				depend on the domain of your paper.
+				Choose optional sections below, depending on the area of your method, and click <i>Create new report</i> to start
+				filling in your report.
+			</p>
+
+			<p class="mt-1 mb-1">
+				Thanks for using AIMe!
+			</p>
+		</div>
+
+		<h1 class="title is-4 mt-4">Mandatory sections</h1>
+		<div class="mt-3">
+			<div class="control">
+				<label class="checkbox" for="sectionMD">
+					<input type="checkbox" [ngModel]="true" id="sectionMD" [disabled]="true"> Metadata
+				</label>
+				<p class="help">
+					Meta information about the paper and its authors.
+				</p>
+			</div>
+			<div class="control">
+				<label class="checkbox" for="sectionP">
+					<input type="checkbox" [ngModel]="true" id="sectionP" [disabled]="true"> Purpose
+				</label>
+				<p class="help">
+					Information about the purpose of the method.
+				</p>
+			</div>
+			<div class="control">
+				<label class="checkbox" for="sectionD">
+					<input type="checkbox" [ngModel]="true" id="sectionD" [disabled]="true"> Data
+				</label>
+				<p class="help">
+					Information about the datasets, their shape and source URL.
+				</p>
+			</div>
+			<div class="control">
+				<label class="checkbox" for="sectionM">
+					<input type="checkbox" [ngModel]="true" id="sectionM" [disabled]="true"> Method
+				</label>
+				<p class="help">
+					Information about the method.
+				</p>
+			</div>
+			<div class="control">
+				<label class="checkbox" for="sectionR">
+					<input type="checkbox" [ngModel]="true" id="sectionR" [disabled]="true"> Reproducibility
+				</label>
+				<p class="help">
+					Information required to reproduce the results.
+				</p>
+			</div>
+		</div>
+
+		<h1 class="title is-4 mt-4">Optional sections</h1>
+		<div class="mt-3">
+			<div class="control">
+				<label class="checkbox" for="sectionPR">
+					<input type="checkbox" [(ngModel)]="sections['PR']" id="sectionPR"> Privacy
+				</label>
+				<p class="help">
+					Information related to privacy-relevant methods, e.g., for federated learning.
+				</p>
+			</div>
+			<div class="control">
+				<label class="checkbox" for="sectionEP">
+					<input type="checkbox" [(ngModel)]="sections['EP']" id="sectionEP"> Epistasis
+				</label>
+				<p class="help">
+					Information for epistasis-related methods.
+				</p>
+			</div>
+		</div>
+
+		<div class="buttons mt-3">
+			<button class="button is-success" (click)="compose()">
+				<span class="icon"><i class="fa fa-play"></i></span>
+				<span>Create new report</span>
+			</button>
+		</div>
+	</div>
+</section>
+
+<section class="section" *ngIf="!composing">
   <div class="container">
     <div class="steps is-aime" *ngIf="!submitted">
       <div *ngFor="let s of steps" class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === s.step}" (click)="goToStep(s.step)">
-        <div class="step-marker"><i class="fad {{s.icon}}"></i></div>
+        <div class="step-marker" [ngStyle]="{'border-color': getSection(s.short).color}"><i class="fad {{s.icon}}"></i></div>
         <div class="step-details">
           <p class="step-title">{{s.title}}</p>
         </div>
       </div>
-      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === 6}" (click)="goToStep(6)">
+      <div class="step-item is-active is-hidden-mobile" [ngClass]="{'is-selected': step === lastStep}" (click)="goToStep(lastStep)">
         <div class="step-marker"><i class="fad fa-check"></i></div>
         <div class="step-details">
           <p class="step-title">Review & submit</p>
@@ -22,7 +115,7 @@
             <div class="select is-fullwidth">
               <select name="clinical" [ngModel]="step" (ngModelChange)="goToStep($event)">
                 <option [value]="s.step" *ngFor="let s of steps">{{s.title}}</option>
-                <option [value]="6">Review & Submit</option>
+                <option [value]="lastStep">Review & Submit</option>
               </select>
             </div>
             <p class="help">
@@ -46,7 +139,7 @@
             </app-qu-field>
           </div>
         </div>
-        <div class="step-content card" [ngClass]="{'is-active': step === 6}">
+        <div class="step-content card" [ngClass]="{'is-active': step === lastStep}">
           <header class="card-header">
             <div class="card-header-title">
               <h2 class="title is-4">
@@ -119,7 +212,7 @@
             <span>Previous</span>
           </button>
         </div>
-				<div class="steps-action buttons">
+				<div class="steps-action">
 					<button data-nav="previous" class="button is-normal is-danger is-outlined" (click)="reset()" title="Reset all your answers">
             <span class="icon">
               <i class="fa fa-broom"></i>
@@ -128,13 +221,13 @@
 					</button>
 				</div>
         <div class="steps-action">
-          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < 6">
+          <button data-nav="next" class="button is-success" (click)="goToStep(step + 1)" *ngIf="step < lastStep">
             <span>Next</span>
             <span class="icon">
               <i class="fa fa-arrow-right"></i>
             </span>
           </button>
-          <button data-nav="next" class="button is-info" (click)="submitReport()" *ngIf="step == 6" [disabled]="(!email && !revising) || validationErrors.length > 0">
+          <button data-nav="next" class="button is-info" (click)="submitReport()" *ngIf="step == lastStep" [disabled]="(!email && !revising) || validationErrors.length > 0">
             <span class="icon">
               <i class="fa fa-paper-plane"></i>
             </span>

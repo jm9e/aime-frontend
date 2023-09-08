@@ -9,12 +9,13 @@ export type QuestionType =
 	| 'complex'
 	| 'list'
 	| 'file';
-export type ScoreType = 'validation' | 'reproducibility';
+export type ScoreType = 'validation' | 'reproducibility' | 'privacy';
 
 export interface IQuestion {
 	id?: string;
 
 	type: QuestionType;
+	color?: string;
 	optional?: boolean;
 	default?: any;
 	child?: IQuestion;
@@ -30,6 +31,7 @@ export interface IQuestion {
 	scores?: {
 		validation?: (value: any) => number;
 		reproducibility?: (value: any) => number;
+		privacy?: (value: any) => number;
 	};
 }
 
@@ -252,6 +254,14 @@ export function score(q: IQuestion, a: any, t: ScoreType): number {
 					}
 				}
 				break;
+			case 'privacy':
+				if (typeof q.scores !== 'undefined' && typeof q.scores.privacy === 'function') {
+					const as = q.scores.privacy(a);
+					if (typeof as !== 'undefined') {
+						sc += as;
+					}
+				}
+				break;
 		}
 	}
 	return sc;
@@ -291,6 +301,13 @@ export function maxScore(q: IQuestion, a: any, t: ScoreType): number {
 					}
 				}
 				break;
+			case 'privacy':
+				if (typeof q.scores !== 'undefined' && typeof q.scores.privacy === 'function') {
+					if (typeof q.scores.privacy(a) !== 'undefined') {
+						sc += 1.0;
+					}
+				}
+				break;
 		}
 	}
 	return sc;
@@ -303,6 +320,7 @@ export interface IReport {
 	date: Date;
 	revisions: number;
 	issues: number;
+	version: string;
 }
 
 export interface IKeyword {
@@ -324,6 +342,9 @@ export function parseQuestions(jsonSpec: any): IQuestion {
 			}
 			if (typeof q.scores.reproducibility === 'string') {
 				q.scores.reproducibility = new Function('val', 'return ' + q.scores.reproducibility);
+			}
+			if (typeof q.scores.privacy === 'string') {
+				q.scores.privacy = new Function('val', 'return ' + q.scores.privacy);
 			}
 		}
 		if (q.type === 'list') {

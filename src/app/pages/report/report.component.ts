@@ -22,6 +22,7 @@ export class ReportComponent implements OnInit {
 	public answers = {};
 	public error = false;
 	public raiseIssue?: IIssueReference;
+	public spec?: string;
 
 	public issueName = '';
 	public issueEmail = '';
@@ -30,12 +31,6 @@ export class ReportComponent implements OnInit {
 
 	constructor(private meta: MetaService, private http: HttpClient, private route: ActivatedRoute) {
 		meta.setTitle('Report');
-		this.http.get('assets/questionnaire.yaml', {
-			responseType: 'text',
-		}).subscribe(data => {
-			this.yamlSpec = data;
-			this.initQuestions();
-		});
 	}
 
 	ngOnInit(): void {
@@ -57,6 +52,8 @@ export class ReportComponent implements OnInit {
 				this.revisions = data.revisions ?? [];
 				this.issues = data.issues ?? [];
 				this.meta.setTitle(`Report ${this.id}`);
+				this.spec = data.version;
+				this.loadQuestions();
 			}, () => {
 				this.error = true;
 			});
@@ -67,9 +64,31 @@ export class ReportComponent implements OnInit {
 				this.revisions = data.revisions ?? [];
 				this.issues = data.issues ?? [];
 				this.meta.setTitle(`Report ${this.id} / Version ${this.targetVersion}`);
+				this.spec = data.version;
+				this.loadQuestions();
 			}, () => {
 				this.error = true;
 			});
+		}
+	}
+
+	private loadQuestions() {
+		if (this.spec === '2023.0') {
+			this.http.get('assets/questionnaire_2023.yaml', {
+				responseType: 'text',
+			}).subscribe(data => {
+				this.yamlSpec = data;
+				this.initQuestions();
+			});
+		} else if (this.spec === '2021.0') {
+			this.http.get('assets/questionnaire_2021.yaml', {
+				responseType: 'text',
+			}).subscribe(data => {
+				this.yamlSpec = data;
+				this.initQuestions();
+			});
+		} else {
+			throw new Error(`invalid version ${this.spec}`);
 		}
 	}
 

@@ -16,18 +16,24 @@ export class SpecificationComponent implements OnInit {
 	public showTree = true;
 	public showSpec = true;
 
+	public spec = 'questionnaire_2023';
+
 	constructor(private meta: MetaService, private http: HttpClient) {
 		meta.setTitle('Specification');
-		this.http.get('assets/questionnaire.yaml', {
+	}
+
+	async ngOnInit(): Promise<void> {
+		await this.switchSpecification();
+	}
+
+	async switchSpecification() {
+		this.http.get(`assets/${this.spec}.yaml`, {
 			responseType: 'text',
 		}).subscribe(data => {
 			this.yamlSpec = data;
 			const jsonSpec = YAML.parse(this.yamlSpec, {});
 			this.questions = parseQuestions(jsonSpec);
 		});
-	}
-
-	ngOnInit(): void {
 	}
 
 }
