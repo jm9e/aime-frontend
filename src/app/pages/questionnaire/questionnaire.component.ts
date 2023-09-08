@@ -76,6 +76,9 @@ export class QuestionnaireComponent implements OnInit {
 					this.spec = resp.version;
 					this.loadQuestions();
 				});
+			} else {
+				this.spec = '2023.0';
+				this.loadQuestions();
 			}
 		});
 	}
